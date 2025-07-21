@@ -740,8 +740,417 @@ const toolExplanations = {
                     </div>
                 </div>
             `
+        },
+        hashGenerator: {
+            title: "مولد الهاش",
+            icon: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو مولد الهاش؟</h4>
+                    <p>أداة متقدمة تحول النصوص إلى قيم هاش مشفرة باستخدام خوارزميات التشفير المختلفة لضمان الأمان وحماية البيانات.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>خوارزميات الهاش المدعومة</h4>
+                    <ul>
+                        <li><strong>MD5:</strong> 128 بت، سريع ولكن أقل أماناً</li>
+                        <li><strong>SHA-1:</strong> 160 بت، متوسط الأمان</li>
+                        <li><strong>SHA-256:</strong> 256 بت، عالي الأمان</li>
+                        <li><strong>SHA-512:</strong> 512 بت، أقصى درجات الأمان</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>استخدامات الهاش</h4>
+                    <ul>
+                        <li><strong>التحقق من سلامة البيانات:</strong> اكتشاف التعديلات</li>
+                        <li><strong>تخزين كلمات المرور:</strong> حماية آمنة</li>
+                        <li><strong>التوقيعات الرقمية:</strong> تأكيد الأصالة</li>
+                        <li><strong>Blockchain:</strong> أساس العملات المشفرة</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>مثال على الهاش:</h5>
+                    <div class="code-example">
+                    النص: "CyberGuard"
+                    MD5: a1b2c3d4e5f6...
+                    SHA-256: 9a8b7c6d5e4f...
+                    
+                    ملاحظة: أي تغيير صغير في النص ينتج هاش مختلف تماماً
+                    </div>
+                </div>
+            `
+        },
+        portScanner: {
+            title: "فاحص المنافذ",
+            icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو فاحص المنافذ؟</h4>
+                    <p>أداة شبكة تفحص المنافذ المفتوحة على الخوادم والأجهزة لتحديد الخدمات النشطة والثغرات الأمنية المحتملة.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>كيف يعمل؟</h4>
+                    <ul>
+                        <li>إرسال طلبات TCP/UDP للمنافذ المحددة</li>
+                        <li>تحليل الاستجابات لتحديد حالة المنفذ</li>
+                        <li>تحديد الخدمات النشطة</li>
+                        <li>اكتشاف نظام التشغيل</li>
+                        <li>تقييم الثغرات الأمنية</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>حالات المنافذ</h4>
+                    <ul>
+                        <li><strong>مفتوح:</strong> يقبل الاتصالات</li>
+                        <li><strong>مغلق:</strong> لا يقبل الاتصالات</li>
+                        <li><strong>مصفى:</strong> محجوب بواسطة جدار حماية</li>
+                        <li><strong>غير محدد:</strong> لا يمكن تحديد الحالة</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>أمثلة على المنافذ الشائعة:</h5>
+                    <div class="code-example">
+                    80: HTTP (مواقع الويب)
+                    443: HTTPS (مواقع الويب الآمنة)
+                    22: SSH (الوصول الآمن)
+                    21: FTP (نقل الملفات)
+                    3389: RDP (سطح المكتب البعيد)
+                    </div>
+                </div>
+            `
+        },
+        urlChecker: {
+            title: "فاحص أمان الروابط",
+            icon: "M10 6H5c-1.1 0-2 .9-2 2v3h2V8h5V6zm-4 5H4v3c0 1.1.9 2 2 2h5v-2H6v-3zm14-5h-5v2h5v3h2V8c0-1.1-.9-2-2-2zm0 8h-2v3h-5v2h5c1.1 0 2-.9 2-2v-3z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو فاحص أمان الروابط؟</h4>
+                    <p>أداة تحليل متقدمة تفحص الروابط والمواقع للكشف عن التهديدات الأمنية والمحتوى الضار قبل زيارتها.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أنواع التهديدات المكتشفة</h4>
+                    <ul>
+                        <li><strong>التصيد الاحتيالي:</strong> مواقع تسرق المعلومات الشخصية</li>
+                        <li><strong>البرمجيات الخبيثة:</strong> فيروسات وبرامج ضارة</li>
+                        <li><strong>الاحتيال:</strong> عمليات نصب وخداع</li>
+                        <li><strong>المحتوى المشبوه:</strong> روابط مريبة</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>كيف يعمل الفحص؟</h4>
+                    <ul>
+                        <li>تحليل سمعة النطاق</li>
+                        <li>فحص قوائم المواقع المحظورة</li>
+                        <li>تحليل شهادات SSL</li>
+                        <li>فحص محتوى الصفحة</li>
+                        <li>مقارنة مع قواعد بيانات التهديدات</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>علامات الخطر:</h5>
+                    <div class="code-example">
+                    ⚠️ روابط قصيرة مجهولة
+                    🚨 نطاقات مشبوهة
+                    ❌ شهادات SSL منتهية الصلاحية
+                    🔴 محتوى ضار معروف
+                    </div>
+                </div>
+            `
+        },
+        textCrypto: {
+            title: "تشفير/فك تشفير النصوص",
+            icon: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو تشفير النصوص؟</h4>
+                    <p>عملية تحويل النصوص العادية إلى شكل مشفر غير قابل للقراءة لحماية المعلومات الحساسة من الوصول غير المصرح به.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>خوارزميات التشفير المدعومة</h4>
+                    <ul>
+                        <li><strong>AES:</strong> معيار التشفير المتقدم، عالي الأمان</li>
+                        <li><strong>Caesar Cipher:</strong> إزاحة الأحرف، تعليمي</li>
+                        <li><strong>ROT13:</strong> إزاحة 13 حرف، بسيط</li>
+                        <li><strong>Base64:</strong> ترميز آمن للنقل</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>استخدامات التشفير</h4>
+                    <ul>
+                        <li><strong>حماية البيانات الشخصية:</strong> معلومات حساسة</li>
+                        <li><strong>الاتصالات الآمنة:</strong> رسائل سرية</li>
+                        <li><strong>تخزين كلمات المرور:</strong> حماية الحسابات</li>
+                        <li><strong>النقل الآمن:</strong> حماية البيانات في الشبكة</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>مثال على التشفير:</h5>
+                    <div class="code-example">
+                    النص الأصلي: "رسالة سرية"
+                    المفتاح: "MySecretKey123"
+                    النص المشفر: "8f7e9d2a1b..."
+                    
+                    ملاحظة: احتفظ بالمفتاح في مكان آمن!
+                    </div>
+                </div>
+            `
+        },
+        darkWebScanner: {
+            title: "فاحص الويب المظلم",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو فاحص الويب المظلم؟</h4>
+                    <p>أداة متخصصة للبحث عن البيانات الشخصية والمعلومات الحساسة في أسواق الويب المظلم ومواقع التسريب.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>ما يتم البحث عنه</h4>
+                    <ul>
+                        <li><strong>عناوين البريد الإلكتروني:</strong> حسابات مخترقة</li>
+                        <li><strong>أسماء المستخدمين:</strong> بيانات مسربة</li>
+                        <li><strong>كلمات المرور:</strong> تسريبات أمنية</li>
+                        <li><strong>بيانات بطاقات الائتمان:</strong> معاملات غير قانونية</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>مصادر البيانات</h4>
+                    <ul>
+                        <li>أسواق الويب المظلم</li>
+                        <li>منتديات الهاكرز</li>
+                        <li>قواعد بيانات التسريبات</li>
+                        <li>مواقع التداول غير القانوني</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>إجراءات الحماية:</h5>
+                    <div class="code-example">
+                    🔄 غيّر كلمات المرور فوراً
+                    🔐 فعّل المصادقة الثنائية
+                    📧 راقب الحسابات المالية
+                    🚨 أبلغ الجهات المختصة
+                    🛡️ استخدم خدمات مراقبة الهوية
+                    </div>
+                </div>
+            `
+        },
+        trafficSimulator: {
+            title: "محاكي حركة الشبكة",
+            icon: "M3 3v18h18V3H3zm8 16c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو محاكي حركة الشبكة؟</h4>
+                    <p>أداة تحليل تحاكي وتراقب حركة البيانات في الشبكة لتحليل الأداء واكتشاف الاختناقات والتهديدات الأمنية.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>معايير التحليل</h4>
+                    <ul>
+                        <li><strong>سرعة النقل:</strong> معدل تدفق البيانات</li>
+                        <li><strong>زمن الاستجابة:</strong> التأخير في الشبكة</li>
+                        <li><strong>فقدان الحزم:</strong> نسبة البيانات المفقودة</li>
+                        <li><strong>الازدحام:</strong> كثافة الحركة</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>الاستخدامات العملية</h4>
+                    <ul>
+                        <li><strong>تحسين الأداء:</strong> تحديد نقاط الضعف</li>
+                        <li><strong>التخطيط:</strong> تقدير احتياجات البنية التحتية</li>
+                        <li><strong>اكتشاف الهجمات:</strong> حركة مرور غير طبيعية</li>
+                        <li><strong>مراقبة الجودة:</strong> ضمان مستوى الخدمة</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>مؤشرات المراقبة:</h5>
+                    <div class="code-example">
+                    📊 معدل النقل: 100 Mbps
+                    ⏱️ زمن الاستجابة: 20ms
+                    📈 استخدام النطاق: 75%
+                    📦 حزم مفقودة: 0.1%
+                    </div>
+                </div>
+            `
+        },
+        sqlInjection: {
+            title: "فاحص حقن SQL",
+            icon: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو حقن SQL؟</h4>
+                    <p>نوع من الهجمات السيبرانية حيث يحقن المهاجم أكواد SQL خبيثة في حقول الإدخال للوصول غير المصرح به لقاعدة البيانات.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أنواع هجمات SQL</h4>
+                    <ul>
+                        <li><strong>Union-based:</strong> دمج استعلامات متعددة</li>
+                        <li><strong>Boolean-based:</strong> استعلامات منطقية</li>
+                        <li><strong>Time-based:</strong> استعلامات مؤقتة</li>
+                        <li><strong>Error-based:</strong> استغلال رسائل الخطأ</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أمثلة على الحقن الخبيث</h4>
+                    <ul>
+                        <li><code>' OR '1'='1</code> - تجاوز المصادقة</li>
+                        <li><code>'; DROP TABLE--</code> - حذف الجداول</li>
+                        <li><code>UNION SELECT</code> - الحصول على بيانات إضافية</li>
+                        <li><code>1' AND SLEEP(5)--</code> - اختبار زمني</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>طرق الحماية:</h5>
+                    <div class="code-example">
+                    ✅ استخدم Prepared Statements
+                    ✅ تحقق من صحة الإدخال
+                    ✅ فلترة الأحرف الخاصة
+                    ✅ استخدم أقل صلاحيات ممكنة
+                    ✅ حدث قاعدة البيانات دورياً
+                    </div>
+                </div>
+            `
+        },
+        xssScanner: {
+            title: "فاحص ثغرات XSS",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-5l-1.41-1.41L11.17 11 8.59 8.41 10 7l4 4-4 4z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو XSS؟</h4>
+                    <p>Cross-Site Scripting هو ثغرة أمنية تسمح للمهاجمين بحقن سكريبت خبيث في صفحات الويب التي يزورها المستخدمون الآخرون.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أنواع هجمات XSS</h4>
+                    <ul>
+                        <li><strong>Reflected XSS:</strong> سكريبت ينعكس من الخادم فوراً</li>
+                        <li><strong>Stored XSS:</strong> سكريبت محفوظ في قاعدة البيانات</li>
+                        <li><strong>DOM-based XSS:</strong> سكريبت ينفذ في جانب العميل</li>
+                        <li><strong>Blind XSS:</strong> سكريبت خفي مؤجل التنفيذ</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>المخاطر المحتملة</h4>
+                    <ul>
+                        <li>سرقة كوكيز المصادقة</li>
+                        <li>إعادة توجيه لمواقع خبيثة</li>
+                        <li>سرقة البيانات الحساسة</li>
+                        <li>تنفيذ عمليات غير مصرح بها</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>أمثلة على الأكواد الخبيثة:</h5>
+                    <div class="code-example">
+                    &lt;script&gt;alert('XSS')&lt;/script&gt;
+                    &lt;img src=x onerror=alert(1)&gt;
+                    javascript:alert('XSS')
+                    &lt;svg onload=alert(1)&gt;
+                    </div>
+                </div>
+            `
+        },
+        latencyTester: {
+            title: "فاحص زمن الاستجابة",
+            icon: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو فاحص زمن الاستجابة؟</h4>
+                    <p>أداة شبكة تقيس الوقت المطلوب للاتصال بخادم أو موقع ويب، مما يساعد في تحليل جودة الاتصال وأداء الشبكة.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>معايير القياس</h4>
+                    <ul>
+                        <li><strong>Ping Time:</strong> وقت ذهاب وإياب الحزم</li>
+                        <li><strong>DNS Resolution:</strong> وقت تحليل اسم النطاق</li>
+                        <li><strong>Connection Time:</strong> وقت إنشاء الاتصال</li>
+                        <li><strong>Response Time:</strong> وقت الحصول على الرد</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>تفسير النتائج</h4>
+                    <ul>
+                        <li><strong>أقل من 50ms:</strong> ممتاز</li>
+                        <li><strong>50-100ms:</strong> جيد جداً</li>
+                        <li><strong>100-200ms:</strong> جيد</li>
+                        <li><strong>200-500ms:</strong> متوسط</li>
+                        <li><strong>أكثر من 500ms:</strong> بطيء</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>العوامل المؤثرة:</h5>
+                    <div class="code-example">
+                    🌐 المسافة الجغرافية
+                    🔗 جودة الاتصال
+                    ⚡ سرعة الخادم
+                    🔄 ازدحام الشبكة
+                    🛡️ جدران الحماية
+                    </div>
+                </div>
+            `
+        },
+        complexityVisualizer: {
+            title: "مُصوِر تعقيد كلمات المرور",
+            icon: "M3 3v18h18V3H3zm8 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو مُصوِر التعقيد؟</h4>
+                    <p>أداة بصرية متقدمة تحلل وتعرض تعقيد كلمات المرور من خلال رسوم بيانية تفاعلية وملونة لفهم أفضل لمستوى الأمان.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>العناصر المرئية</h4>
+                    <ul>
+                        <li><strong>مخطط دائري:</strong> توزيع أنواع الأحرف</li>
+                        <li><strong>شريط القوة:</strong> مستوى الأمان العام</li>
+                        <li><strong>الرسم البياني:</strong> تطور القوة مع الطول</li>
+                        <li><strong>مؤشر الإنتروبيا:</strong> العشوائية الرياضية</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>الألوان والدلالات</h4>
+                    <ul>
+                        <li><span style="color: #ff4444;">🔴 أحمر:</span> ضعيف جداً (خطر)</li>
+                        <li><span style="color: #ff8800;">🟠 برتقالي:</span> ضعيف (تحذير)</li>
+                        <li><span style="color: #ffcc00;">🟡 أصفر:</span> متوسط (حذر)</li>
+                        <li><span style="color: #88ff00;">🟢 أخضر فاتح:</span> قوي (جيد)</li>
+                        <li><span style="color: #00ff88;">🟢 أخضر داكن:</span> قوي جداً (ممتاز)</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>كيفية الاستخدام:</h5>
+                    <div class="code-example">
+                    🎯 أدخل كلمة مرور لتحليلها
+                    📊 راقب المؤشرات البصرية
+                    🔍 احرص على التوازن بين الألوان
+                    ✨ استهدف اللون الأخضر الداكن
+                    </div>
+                </div>
+            `
         }
-        // يمكن إضافة باقي الأدوات هنا...
     },
     en: {
         passwordStrength: {
@@ -1035,6 +1444,416 @@ const toolExplanations = {
                     🛡️ Detect suspicious activities
                     📍 Customize content by location
                     ⚖️ Comply with local regulations
+                    </div>
+                </div>
+            `
+        },
+        hashGenerator: {
+            title: "Hash Generator",
+            icon: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is a Hash Generator?</h4>
+                    <p>An advanced tool that converts text into encrypted hash values using various encryption algorithms to ensure security and data protection.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Supported Hash Algorithms</h4>
+                    <ul>
+                        <li><strong>MD5:</strong> 128-bit, fast but less secure</li>
+                        <li><strong>SHA-1:</strong> 160-bit, medium security</li>
+                        <li><strong>SHA-256:</strong> 256-bit, high security</li>
+                        <li><strong>SHA-512:</strong> 512-bit, maximum security</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Hash Uses</h4>
+                    <ul>
+                        <li><strong>Data Integrity Verification:</strong> Detect modifications</li>
+                        <li><strong>Password Storage:</strong> Secure protection</li>
+                        <li><strong>Digital Signatures:</strong> Confirm authenticity</li>
+                        <li><strong>Blockchain:</strong> Cryptocurrency foundation</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Hash Example:</h5>
+                    <div class="code-example">
+                    Text: "CyberGuard"
+                    MD5: a1b2c3d4e5f6...
+                    SHA-256: 9a8b7c6d5e4f...
+                    
+                    Note: Any small change in text produces completely different hash
+                    </div>
+                </div>
+            `
+        },
+        portScanner: {
+            title: "Port Scanner",
+            icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is a Port Scanner?</h4>
+                    <p>A network tool that scans open ports on servers and devices to identify active services and potential security vulnerabilities.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>How does it work?</h4>
+                    <ul>
+                        <li>Sends TCP/UDP requests to specified ports</li>
+                        <li>Analyzes responses to determine port status</li>
+                        <li>Identifies active services</li>
+                        <li>Detects operating system</li>
+                        <li>Assesses security vulnerabilities</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Port States</h4>
+                    <ul>
+                        <li><strong>Open:</strong> Accepts connections</li>
+                        <li><strong>Closed:</strong> Refuses connections</li>
+                        <li><strong>Filtered:</strong> Blocked by firewall</li>
+                        <li><strong>Unfiltered:</strong> Cannot determine state</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Common Port Examples:</h5>
+                    <div class="code-example">
+                    80: HTTP (Websites)
+                    443: HTTPS (Secure websites)
+                    22: SSH (Secure access)
+                    21: FTP (File transfer)
+                    3389: RDP (Remote desktop)
+                    </div>
+                </div>
+            `
+        },
+        urlChecker: {
+            title: "URL Security Checker",
+            icon: "M10 6H5c-1.1 0-2 .9-2 2v3h2V8h5V6zm-4 5H4v3c0 1.1.9 2 2 2h5v-2H6v-3zm14-5h-5v2h5v3h2V8c0-1.1-.9-2-2-2zm0 8h-2v3h-5v2h5c1.1 0 2-.9 2-2v-3z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is URL Security Checker?</h4>
+                    <p>An advanced analysis tool that examines links and websites to detect security threats and malicious content before visiting them.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Types of Detected Threats</h4>
+                    <ul>
+                        <li><strong>Phishing:</strong> Sites that steal personal information</li>
+                        <li><strong>Malware:</strong> Viruses and harmful software</li>
+                        <li><strong>Scams:</strong> Fraud and deception operations</li>
+                        <li><strong>Suspicious Content:</strong> Dubious links</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>How does scanning work?</h4>
+                    <ul>
+                        <li>Analyzes domain reputation</li>
+                        <li>Checks blacklisted sites</li>
+                        <li>Analyzes SSL certificates</li>
+                        <li>Scans page content</li>
+                        <li>Compares with threat databases</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Danger Signs:</h5>
+                    <div class="code-example">
+                    ⚠️ Anonymous short links
+                    🚨 Suspicious domains
+                    ❌ Expired SSL certificates
+                    🔴 Known malicious content
+                    </div>
+                </div>
+            `
+        },
+        textCrypto: {
+            title: "Text Encryption/Decryption",
+            icon: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Text Encryption?</h4>
+                    <p>The process of converting plain text into an encrypted, unreadable form to protect sensitive information from unauthorized access.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Supported Encryption Algorithms</h4>
+                    <ul>
+                        <li><strong>AES:</strong> Advanced Encryption Standard, highly secure</li>
+                        <li><strong>Caesar Cipher:</strong> Character shifting, educational</li>
+                        <li><strong>ROT13:</strong> 13-character shift, simple</li>
+                        <li><strong>Base64:</strong> Safe encoding for transmission</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Encryption Uses</h4>
+                    <ul>
+                        <li><strong>Personal Data Protection:</strong> Sensitive information</li>
+                        <li><strong>Secure Communications:</strong> Secret messages</li>
+                        <li><strong>Password Storage:</strong> Account protection</li>
+                        <li><strong>Secure Transmission:</strong> Network data protection</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Encryption Example:</h5>
+                    <div class="code-example">
+                    Original Text: "Secret Message"
+                    Key: "MySecretKey123"
+                    Encrypted Text: "8f7e9d2a1b..."
+                    
+                    Note: Keep the key in a safe place!
+                    </div>
+                </div>
+            `
+        },
+        darkWebScanner: {
+            title: "Dark Web Scanner",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Dark Web Scanner?</h4>
+                    <p>A specialized tool for searching personal data and sensitive information in dark web markets and leak sites.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>What is searched for</h4>
+                    <ul>
+                        <li><strong>Email Addresses:</strong> Compromised accounts</li>
+                        <li><strong>Usernames:</strong> Leaked data</li>
+                        <li><strong>Passwords:</strong> Security breaches</li>
+                        <li><strong>Credit Card Data:</strong> Illegal transactions</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Data Sources</h4>
+                    <ul>
+                        <li>Dark web markets</li>
+                        <li>Hacker forums</li>
+                        <li>Breach databases</li>
+                        <li>Illegal trading sites</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Protection Measures:</h5>
+                    <div class="code-example">
+                    🔄 Change passwords immediately
+                    🔐 Enable two-factor authentication
+                    📧 Monitor financial accounts
+                    🚨 Report to authorities
+                    🛡️ Use identity monitoring services
+                    </div>
+                </div>
+            `
+        },
+        trafficSimulator: {
+            title: "Network Traffic Simulator",
+            icon: "M3 3v18h18V3H3zm8 16c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Network Traffic Simulator?</h4>
+                    <p>An analysis tool that simulates and monitors data traffic in the network to analyze performance and detect bottlenecks and security threats.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Analysis Metrics</h4>
+                    <ul>
+                        <li><strong>Transfer Speed:</strong> Data flow rate</li>
+                        <li><strong>Response Time:</strong> Network latency</li>
+                        <li><strong>Packet Loss:</strong> Percentage of lost data</li>
+                        <li><strong>Congestion:</strong> Traffic density</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Practical Uses</h4>
+                    <ul>
+                        <li><strong>Performance Optimization:</strong> Identify weak points</li>
+                        <li><strong>Planning:</strong> Estimate infrastructure needs</li>
+                        <li><strong>Attack Detection:</strong> Abnormal traffic patterns</li>
+                        <li><strong>Quality Monitoring:</strong> Ensure service level</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Monitoring Indicators:</h5>
+                    <div class="code-example">
+                    📊 Transfer Rate: 100 Mbps
+                    ⏱️ Response Time: 20ms
+                    📈 Bandwidth Usage: 75%
+                    📦 Lost Packets: 0.1%
+                    </div>
+                </div>
+            `
+        },
+        sqlInjection: {
+            title: "SQL Injection Scanner",
+            icon: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is SQL Injection?</h4>
+                    <p>A type of cyber attack where attackers inject malicious SQL code into input fields to gain unauthorized access to the database.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Types of SQL Attacks</h4>
+                    <ul>
+                        <li><strong>Union-based:</strong> Merging multiple queries</li>
+                        <li><strong>Boolean-based:</strong> Logical queries</li>
+                        <li><strong>Time-based:</strong> Time-delay queries</li>
+                        <li><strong>Error-based:</strong> Exploiting error messages</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Examples of Malicious Injection</h4>
+                    <ul>
+                        <li><code>' OR '1'='1</code> - Authentication bypass</li>
+                        <li><code>'; DROP TABLE--</code> - Delete tables</li>
+                        <li><code>UNION SELECT</code> - Get additional data</li>
+                        <li><code>1' AND SLEEP(5)--</code> - Time-based test</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Protection Methods:</h5>
+                    <div class="code-example">
+                    ✅ Use Prepared Statements
+                    ✅ Validate input
+                    ✅ Filter special characters
+                    ✅ Use minimal privileges
+                    ✅ Update database regularly
+                    </div>
+                </div>
+            `
+        },
+        xssScanner: {
+            title: "XSS Vulnerability Scanner",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-5l-1.41-1.41L11.17 11 8.59 8.41 10 7l4 4-4 4z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is XSS?</h4>
+                    <p>Cross-Site Scripting is a security vulnerability that allows attackers to inject malicious scripts into web pages visited by other users.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Types of XSS Attacks</h4>
+                    <ul>
+                        <li><strong>Reflected XSS:</strong> Script reflected from server immediately</li>
+                        <li><strong>Stored XSS:</strong> Script stored in database</li>
+                        <li><strong>DOM-based XSS:</strong> Script executes on client side</li>
+                        <li><strong>Blind XSS:</strong> Hidden script with delayed execution</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Potential Risks</h4>
+                    <ul>
+                        <li>Stealing authentication cookies</li>
+                        <li>Redirecting to malicious sites</li>
+                        <li>Stealing sensitive data</li>
+                        <li>Performing unauthorized operations</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Examples of malicious code:</h5>
+                    <div class="code-example">
+                    &lt;script&gt;alert('XSS')&lt;/script&gt;
+                    &lt;img src=x onerror=alert(1)&gt;
+                    javascript:alert('XSS')
+                    &lt;svg onload=alert(1)&gt;
+                    </div>
+                </div>
+            `
+        },
+        latencyTester: {
+            title: "Latency Tester",
+            icon: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is a Latency Tester?</h4>
+                    <p>A network tool that measures the time required to connect to a server or website, helping analyze connection quality and network performance.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Measurement Metrics</h4>
+                    <ul>
+                        <li><strong>Ping Time:</strong> Round-trip time for packets</li>
+                        <li><strong>DNS Resolution:</strong> Domain name resolution time</li>
+                        <li><strong>Connection Time:</strong> Connection establishment time</li>
+                        <li><strong>Response Time:</strong> Time to get response</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Result Interpretation</h4>
+                    <ul>
+                        <li><strong>Less than 50ms:</strong> Excellent</li>
+                        <li><strong>50-100ms:</strong> Very Good</li>
+                        <li><strong>100-200ms:</strong> Good</li>
+                        <li><strong>200-500ms:</strong> Average</li>
+                        <li><strong>More than 500ms:</strong> Slow</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Influencing Factors:</h5>
+                    <div class="code-example">
+                    🌐 Geographic distance
+                    🔗 Connection quality
+                    ⚡ Server speed
+                    🔄 Network congestion
+                    🛡️ Firewalls
+                    </div>
+                </div>
+            `
+        },
+        complexityVisualizer: {
+            title: "Password Complexity Visualizer",
+            icon: "M3 3v18h18V3H3zm8 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Complexity Visualizer?</h4>
+                    <p>An advanced visual tool that analyzes and displays password complexity through interactive, colored charts for better understanding of security level.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Visual Elements</h4>
+                    <ul>
+                        <li><strong>Pie Chart:</strong> Distribution of character types</li>
+                        <li><strong>Strength Bar:</strong> Overall security level</li>
+                        <li><strong>Line Graph:</strong> Strength evolution with length</li>
+                        <li><strong>Entropy Indicator:</strong> Mathematical randomness</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Colors and Meanings</h4>
+                    <ul>
+                        <li><span style="color: #ff4444;">🔴 Red:</span> Very Weak (Danger)</li>
+                        <li><span style="color: #ff8800;">🟠 Orange:</span> Weak (Warning)</li>
+                        <li><span style="color: #ffcc00;">🟡 Yellow:</span> Medium (Caution)</li>
+                        <li><span style="color: #88ff00;">🟢 Light Green:</span> Strong (Good)</li>
+                        <li><span style="color: #00ff88;">🟢 Dark Green:</span> Very Strong (Excellent)</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>How to Use:</h5>
+                    <div class="code-example">
+                    🎯 Enter a password to analyze it
+                    📊 Watch the visual indicators
+                    🔍 Ensure balance between colors
+                    ✨ Aim for dark green color
                     </div>
                 </div>
             `
