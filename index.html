@@ -13,24 +13,20 @@
     
     <!-- Network Monitor -->
     <div class="network-monitor" id="networkMonitor">
-        <button class="btn toggle-monitor" onclick="toggleNetworkMonitor()" data-en="Hide/Show Monitor" data-ar="إخفاء/إظهار المراقب">إخفاء/إظهار المراقب</button>
+        <button class="btn toggle-monitor" onclick="toggleNetworkMonitor()">
+            <span class="monitor-icon">
+                <span class="pulse-dot-icon"></span>
+                <svg class="monitor-svg" viewBox="0 0 24 24" width="16" height="16">
+                    <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                </svg>
+            </span>
+            <span class="monitor-text" data-en="Monitor" data-ar="المراقب">المراقب</span>
+        </button>
         <div class="monitor-content">
-            <div>
-                <span><span class="pulse-dot"></span><span data-en="System Status" data-ar="حالة النظام">حالة النظام</span></span>: 
-                <span style="color: #00ff88;" id="systemStatus">Online</span>
-            </div>
-            <div>
-                <span data-en="Threat Level" data-ar="مستوى التهديد">مستوى التهديد</span>: 
-                <span style="color: #ff4500;" id="threatLevel">Medium</span>
-            </div>
-            <div>
-                <span data-en="Active Scans" data-ar="الفحوصات النشطة">الفحوصات النشطة</span>: 
-                <span id="activeScanCount">0</span>
-            </div>
-            <div>
-                <span data-en="Network Traffic" data-ar="حركة الشبكة">حركة الشبكة</span>: 
-                <span id="networkTraffic">0 KB/s</span>
-            </div>
+            <div><span class="pulse-dot"></span><span data-en="System Status" data-ar="حالة النظام">حالة النظام</span>: <span style="color: #00ff88;" id="systemStatus">Online</span></div>
+            <div><span data-en="Threat Level" data-ar="مستوى التهديد">مستوى التهديد</span>: <span style="color: #ff4500;" id="threatLevel">Medium</span></div>
+            <div><span data-en="Active Scans" data-ar="الفحوصات النشطة">الفحوصات النشطة</span>: <span id="activeScanCount">0</span></div>
+            <div><span data-en="Network Traffic" data-ar="حركة الشبكة">حركة الشبكة</span>: <span id="networkTraffic">0 KB/s</span></div>
         </div>
     </div>
     

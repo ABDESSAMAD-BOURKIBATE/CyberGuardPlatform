@@ -226,9 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         startNetworkMonitor();
+        initializeNetworkMonitor();
         loadStoredData();
         initializeTooltips();
-        ensurePulseDotVisible(); // تأكد من ظهور نقطة النبض
     } catch (e) {
         console.error('Error in DOMContentLoaded:', e);
     }
@@ -346,6 +346,17 @@ function switchLanguage(lang) {
                 }
             }
         });
+
+        // Update network monitor text
+        const monitor = document.getElementById('networkMonitor');
+        const monitorText = monitor?.querySelector('.monitor-text');
+        if (monitorText) {
+            if (monitor.classList.contains('compact')) {
+                monitorText.textContent = lang === 'ar' ? 'المراقب' : 'Monitor';
+            } else {
+                monitorText.textContent = lang === 'ar' ? 'إخفاء المراقب' : 'Hide Monitor';
+            }
+        }
 
         // Update placeholders
         document.querySelectorAll('[data-placeholder-en][data-placeholder-ar]').forEach(elem => {
@@ -2001,22 +2012,46 @@ function toggleNetworkMonitor() {
     try {
         const monitor = document.getElementById('networkMonitor');
         const content = monitor.querySelector('.monitor-content');
+        const monitorText = monitor.querySelector('.monitor-text');
         
-        if (content.style.display === 'none') {
-            content.style.display = 'block';
+        if (monitor.classList.contains('compact')) {
+            // إظهار الوضع الكامل
             monitor.classList.remove('compact');
+            content.style.display = 'block';
+            if (monitorText) {
+                monitorText.textContent = currentLang === 'ar' ? 'إخفاء المراقب' : 'Hide Monitor';
+            }
         } else {
-            content.style.display = 'none';
+            // إخفاء إلى الوضع المضغوط
             monitor.classList.add('compact');
+            content.style.display = 'none';
+            if (monitorText) {
+                monitorText.textContent = currentLang === 'ar' ? 'المراقب' : 'Monitor';
+            }
         }
-        
-        // Ensure pulse dot is visible after toggle
-        setTimeout(() => {
-            ensurePulseDotVisible();
-        }, 100);
-        
     } catch (e) {
         console.error('Error toggling network monitor:', e);
+    }
+}
+
+// Initialize Network Monitor
+function initializeNetworkMonitor() {
+    try {
+        const monitor = document.getElementById('networkMonitor');
+        const monitorText = monitor.querySelector('.monitor-text');
+        
+        // بدء في الوضع المضغوط
+        monitor.classList.add('compact');
+        monitor.querySelector('.monitor-content').style.display = 'none';
+        
+        if (monitorText) {
+            monitorText.textContent = currentLang === 'ar' ? 'المراقب' : 'Monitor';
+        }
+        
+        // بدء مراقبة الشبكة
+        startNetworkMonitor();
+    } catch (e) {
+        console.error('Error initializing network monitor:', e);
     }
 }
 
@@ -2031,35 +2066,3 @@ function toggleSpinner(spinnerId, show) {
         console.error('Error toggling spinner:', e);
     }
 }
-
-// Ensure pulse dot exists and is visible
-function ensurePulseDotVisible() {
-    try {
-        const pulseDot = document.querySelector('.pulse-dot');
-        if (!pulseDot) {
-            // Create pulse dot if it doesn't exist
-            const systemStatusDiv = document.querySelector('.monitor-content > div:first-child');
-            if (systemStatusDiv) {
-                const newPulseDot = document.createElement('span');
-                newPulseDot.className = 'pulse-dot';
-                const firstSpan = systemStatusDiv.querySelector('span:first-child');
-                if (firstSpan) {
-                    firstSpan.insertBefore(newPulseDot, firstSpan.firstChild);
-                }
-            }
-        } else {
-            // Ensure existing pulse dot is visible
-            pulseDot.style.display = 'inline-block';
-            pulseDot.style.visibility = 'visible';
-            pulseDot.style.opacity = '1';
-        }
-    } catch (e) {
-        console.error('Error ensuring pulse dot visibility:', e);
-    }
-}
-
-// Call this function on page load and when toggling monitor
-document.addEventListener('DOMContentLoaded', () => {
-    ensurePulseDotVisible();
-    // ...existing code...
-});
