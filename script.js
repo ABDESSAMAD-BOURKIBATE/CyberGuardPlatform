@@ -144,7 +144,7 @@ document.querySelectorAll('.tool-card').forEach(card => {
     });
 });
 
-// Typing Effect with Sound - محسن لتجنب التقطيع
+// Typing Effect with Sound - محسن لتجنب التقطيع خاصة للنص العربي
 function typeText(element, text, speed = 30, callback) {
     if (!element || !text) {
         if (callback) callback();
@@ -155,24 +155,55 @@ function typeText(element, text, speed = 30, callback) {
     element.textContent = '';
     element.classList.add('typing-effect');
     
-    let i = 0;
-    const chars = Array.from(text); // للتعامل مع الأحرف العربية بشكل صحيح
+    // للنص العربي، نستخدم Array.from للتعامل مع الأحرف المركبة بشكل صحيح
+    const isArabic = /[\u0600-\u06FF]/.test(text);
+    let chars;
     
-    function type() {
-        if (i < chars.length) {
-            element.textContent += chars[i];
-            if (typingSound && i % 3 === 0) { // تقليل تكرار الصوت
-                typingSound.currentTime = 0;
-                typingSound.play().catch(e => {/* ignore audio errors */});
+    if (isArabic) {
+        // للنص العربي: نقسم على أساس الكلمات بدلاً من الأحرف لتجنب التقطيع
+        chars = text.split(' ');
+        let i = 0;
+        let currentText = '';
+        
+        function typeWord() {
+            if (i < chars.length) {
+                if (i > 0) currentText += ' ';
+                currentText += chars[i];
+                element.textContent = currentText;
+                
+                if (typingSound && i % 2 === 0) {
+                    typingSound.currentTime = 0;
+                    typingSound.play().catch(e => {/* ignore audio errors */});
+                }
+                i++;
+                setTimeout(typeWord, speed * 3); // أبطأ قليلاً للنص العربي
+            } else {
+                element.classList.remove('typing-effect');
+                if (callback) callback();
             }
-            i++;
-            setTimeout(type, speed);
-        } else {
-            element.classList.remove('typing-effect');
-            if (callback) callback();
         }
+        typeWord();
+    } else {
+        // للنص الإنجليزي: نستخدم الطريقة العادية
+        chars = Array.from(text);
+        let i = 0;
+        
+        function type() {
+            if (i < chars.length) {
+                element.textContent += chars[i];
+                if (typingSound && i % 3 === 0) {
+                    typingSound.currentTime = 0;
+                    typingSound.play().catch(e => {/* ignore audio errors */});
+                }
+                i++;
+                setTimeout(type, speed);
+            } else {
+                element.classList.remove('typing-effect');
+                if (callback) callback();
+            }
+        }
+        type();
     }
-    type();
 }
 
 // Initialize Typing Effect for Header - محسن
@@ -279,7 +310,13 @@ function switchLanguage(lang) {
         if (headerTitle) {
             const titleText = headerTitle.getAttribute(`data-${lang}`);
             if (titleText) {
-                typeText(headerTitle, titleText, 25);
+                // إضافة class خاص للنص العربي
+                if (lang === 'ar') {
+                    headerTitle.classList.add('arabic-text');
+                } else {
+                    headerTitle.classList.remove('arabic-text');
+                }
+                typeText(headerTitle, titleText, lang === 'ar' ? 40 : 25);
             }
         }
         
@@ -287,7 +324,12 @@ function switchLanguage(lang) {
             const subtitleText = headerSubtitle.getAttribute(`data-${lang}`);
             if (subtitleText) {
                 setTimeout(() => {
-                    typeText(headerSubtitle, subtitleText, 25);
+                    if (lang === 'ar') {
+                        headerSubtitle.classList.add('arabic-text');
+                    } else {
+                        headerSubtitle.classList.remove('arabic-text');
+                    }
+                    typeText(headerSubtitle, subtitleText, lang === 'ar' ? 40 : 25);
                 }, 800);
             }
         }
@@ -999,25 +1041,41 @@ function explainTool(toolId) {
         const iconPath = document.querySelector('#explanationIcon path');
         const body = document.getElementById('explanationBody');
         
+        if (!modal || !titleText || !iconPath || !body) {
+            console.error('Modal elements not found');
+            return;
+        }
+        
         titleText.textContent = explanation.title;
         iconPath.setAttribute('d', explanation.icon);
         body.innerHTML = explanation.content;
         
-        // Show modal
-        modal.classList.add('show');
+        // Show modal with proper animation
+        modal.style.display = 'flex';
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
         
-        // Add event listeners
-        modal.addEventListener('click', function(e) {
+        // Add event listeners for closing
+        const closeHandler = function(e) {
             if (e.target === modal) {
                 closeToolExplanation();
             }
-        });
+        };
         
-        document.addEventListener('keydown', function(e) {
+        const keyHandler = function(e) {
             if (e.key === 'Escape') {
                 closeToolExplanation();
+                document.removeEventListener('keydown', keyHandler);
             }
-        });
+        };
+        
+        modal.addEventListener('click', closeHandler);
+        document.addEventListener('keydown', keyHandler);
+        
+        // Store handlers for cleanup
+        modal._closeHandler = closeHandler;
+        modal._keyHandler = keyHandler;
         
     } catch (e) {
         console.error('Error showing tool explanation:', e);
@@ -1027,14 +1085,25 @@ function explainTool(toolId) {
 function closeToolExplanation() {
     try {
         const modal = document.getElementById('toolExplanationModal');
+        
+        // Remove show class first for animation
         modal.classList.remove('show');
         
-        // Remove event listeners
-        document.removeEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeToolExplanation();
-            }
-        });
+        // Hide modal after animation
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+        
+        // Clean up event listeners
+        if (modal._closeHandler) {
+            modal.removeEventListener('click', modal._closeHandler);
+            modal._closeHandler = null;
+        }
+        
+        if (modal._keyHandler) {
+            document.removeEventListener('keydown', modal._keyHandler);
+            modal._keyHandler = null;
+        }
         
     } catch (e) {
         console.error('Error closing tool explanation:', e);
