@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard Pro - منصة الأمان السيبراني المتقدمة | Advanced Cybersecurity Platform</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+    
+    <!-- Network Monitor -->
+    <div class="network-monitor" id="networkMonitor">
+        <button class="btn toggle-monitor" onclick="toggleNetworkMonitor()" data-en="Hide/Show Monitor" data-ar="إخفاء/إظهار المراقب">إخفاء/إظهار المراقب</button>
+        <div class="monitor-content">
+            <div><span class="pulse-dot"></span><span data-en="System Status" data-ar="حالة النظام">حالة النظام</span>: <span style="color: #00ff88;" id="systemStatus">Online</span></div>
+            <div><span data-en="Threat Level" data-ar="مستوى التهديد">مستوى التهديد</span>: <span style="color: #ff4500;" id="threatLevel">Medium</span></div>
+            <div><span data-en="Active Scans" data-ar="الفحوصات النشطة">الفحوصات النشطة</span>: <span id="activeScanCount">0</span></div>
+            <div><span data-en="Network Traffic" data-ar="حركة الشبكة">حركة الشبكة</span>: <span id="networkTraffic">0 KB/s</span></div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+                </svg>
+                <span class="typing-effect" data-en="CyberGuard Pro - Elite Security Suite" data-ar="سايبر جارد برو - مجموعة الحماية النخبة">سايبر جارد برو - مجموعة الحماية النخبة</span>
+                <div class="info-icon-container">
+                    <svg class="info-icon" viewBox="0 0 24 24" onclick="showPlatformInfo()">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                    </svg>
+                </div>
+            </h1>
+            <p class="typing-effect" data-en="Advanced cybersecurity platform engineered for comprehensive digital defense and professional penetration testing" data-ar="منصة أمان سيبراني متطورة مصممة للدفاع الرقمي الشامل واختبار الاختراق الاحترافي">منصة أمان سيبراني متطورة مصممة للدفاع الرقمي الشامل واختبار الاختراق الاحترافي</p>
+        </div>
+        
+        <div class="controls-bar">
+            <div class="language-switcher">
+                <span data-en="Language" data-ar="اللغة">اللغة:</span>
+                <button class="lang-btn active" onclick="switchLanguage('ar')">العربية</button>
+                <button class="lang-btn" onclick="switchLanguage('en')">English</button>
+            </div>
+        </div>
+        
+        <div class="tools-grid">
+            <!-- Password Strength Analyzer -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                    </svg>
+                    <span data-en="Password Strength Analyzer" data-ar="محلل قوة كلمة المرور">محلل قوة كلمة المرور</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('passwordStrength')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="password" data-en="Password:" data-ar="كلمة المرور:">كلمة المرور:</label>
+                    <input type="password" id="password" class="input-field" data-placeholder-en="Enter password" data-placeholder-ar="أدخل كلمة المرور" placeholder="أدخل كلمة المرور">
+                </div>
+                <button class="btn" onclick="analyzePassword()" data-en="Analyze Strength" data-ar="تحليل القوة">تحليل القوة</button>
+                <div class="strength-indicator" id="strengthIndicator">
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                </div>
+                <div class="result-box" id="passwordResult"><div class="loading-spinner" id="passwordSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('passwordResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Password Entropy Calculator -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="Password Entropy Calculator" data-ar="حاسبة إنتروبيا كلمة المرور">حاسبة إنتروبيا كلمة المرور</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('entropyCalculator')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="entropyPassword" data-en="Password:" data-ar="كلمة المرور:">كلمة المرور:</label>
+                    <input type="password" id="entropyPassword" class="input-field" data-placeholder-en="Enter password" data-placeholder-ar="أدخل كلمة المرور" placeholder="أدخل كلمة المرور">
+                </div>
+                <button class="btn" onclick="calculateEntropy()" data-en="Calculate Entropy" data-ar="حساب الإنتروبيا">حساب الإنتروبيا</button>
+                <div class="result-box" id="entropyResult"><div class="loading-spinner" id="entropySpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('entropyResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Password Generator -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6l5.2 3.2 1-1.73-4.2-2.47V7z"/>
+                    </svg>
+                    <span data-en="Password Generator" data-ar="مولد كلمات المرور">مولد كلمات المرور</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('passwordGenerator')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="passwordLength" data-en="Length:" data-ar="الطول:">الطول:</label>
+                    <input type="number" id="passwordLength" class="input-field" value="16" min="8" max="64">
+                </div>
+                <div class="input-group">
+                    <label>
+                        <input type="checkbox" id="includeSymbols" checked>
+                        <span data-en="Include Symbols" data-ar="تضمين الرموز">تضمين الرموز</span>
+                    </label>
+                </div>
+                <button class="btn" onclick="generateSecurePassword()" data-en="Generate Password" data-ar="توليد كلمة مرور">توليد كلمة مرور</button>
+                <div class="result-box" id="generatedPasswordResult"><div class="loading-spinner" id="passwordGenSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('generatedPasswordResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Password Leak Checker -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="Password Leak Checker" data-ar="فاحص تسريب كلمة المرور">فاحص تسريب كلمة المرور</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('leakChecker')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="leakPassword" data-en="Password:" data-ar="كلمة المرور:">كلمة المرور:</label>
+                    <input type="password" id="leakPassword" class="input-field" data-placeholder-en="Enter password" data-placeholder-ar="أدخل كلمة المرور" placeholder="أدخل كلمة المرور">
+                </div>
+                <button class="btn" onclick="checkPasswordLeak()" data-en="Check for Leaks" data-ar="فحص التسريبات">فحص التسريبات</button>
+                <div class="result-box" id="leakResult"><div class="loading-spinner" id="leakSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('leakResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Hash Generator -->
+            <div class="tool-card hash-tool">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                    </svg>
+                    <span data-en="Hash Generator" data-ar="مولد الهاش">مولد الهاش</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('hashGenerator')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="hashInput" data-en="Text to hash:" data-ar="النص المراد تشفيره:">النص المراد تشفيره:</label>
+                    <input type="text" id="hashInput" class="input-field" data-placeholder-en="Enter text" data-placeholder-ar="أدخل النص" placeholder="أدخل النص">
+                </div>
+                <div class="input-group">
+                    <label for="hashType" data-en="Hash Type:" data-ar="نوع الهاش:">نوع الهاش:</label>
+                    <select id="hashType" class="input-field hash-select">
+                        <option value="md5">MD5</option>
+                        <option value="sha1">SHA-1</option>
+                        <option value="sha256">SHA-256</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="generateHash()" data-en="Generate Hash" data-ar="توليد الهاش">توليد الهاش</button>
+                <div class="result-box" id="hashResult"><div class="loading-spinner" id="hashSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('hashResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- File Hash Checker -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                    </svg>
+                    <span data-en="File Hash Checker" data-ar="فاحص هاش الملفات">فاحص هاش الملفات</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('fileHashChecker')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="fileInput" data-en="Select File:" data-ar="اختر ملفًا:">اختر ملفًا:</label>
+                    <input type="file" id="fileInput" class="input-field">
+                </div>
+                <div class="input-group">
+                    <label for="fileHashType" data-en="Hash Type:" data-ar="نوع الهاش:">نوع الهاش:</label>
+                    <select id="fileHashType" class="input-field hash-select">
+                        <option value="md5">MD5</option>
+                        <option value="sha1">SHA-1</option>
+                        <option value="sha256">SHA-256</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="checkFileHash()" data-en="Check File Hash" data-ar="فحص هاش الملف">فحص هاش الملف</button>
+                <div class="result-box" id="fileHashResult"><div class="loading-spinner" id="fileHashSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('fileHashResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Base64 Encoder/Decoder -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="Base64 Encoder/Decoder" data-ar="مشفر/فك تشفير Base64">مشفر/فك تشفير Base64</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('base64')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="base64Input" data-en="Text:" data-ar="النص:">النص:</label>
+                    <textarea id="base64Input" class="textarea-field" rows="3" data-placeholder-en="Enter text" data-placeholder-ar="أدخل النص" placeholder="أدخل النص"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn" onclick="encodeBase64()" data-en="Encode" data-ar="تشفير">تشفير</button>
+                    <button class="btn" onclick="decodeBase64()" data-en="Decode" data-ar="فك التشفير">فك التشفير</button>
+                </div>
+                <div class="result-box" id="base64Result"><div class="loading-spinner" id="base64Spinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('base64Result')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- IP Geolocation -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span data-en="IP Geolocation" data-ar="تحديد موقع IP">تحديد موقع IP</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('ipGeolocation')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="ipAddress" data-en="IP Address:" data-ar="عنوان IP:">عنوان IP:</label>
+                    <input type="text" id="ipAddress" class="input-field" data-placeholder-en="Enter IP address" data-placeholder-ar="أدخل عنوان IP" placeholder="أدخل عنوان IP">
+                </div>
+                <div class="btn-group">
+                    <button class="btn" onclick="getMyIP()" data-en="Get My IP" data-ar="احصل على IP الخاص بي">احصل على IP الخاص بي</button>
+                    <button class="btn" onclick="geolocateIP()" data-en="Locate IP" data-ar="تحديد الموقع">تحديد الموقع</button>
+                </div>
+                <div class="result-box" id="ipResult"><div class="loading-spinner" id="ipSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('ipResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Port Scanner Simulator -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M7 2v11h3v9l7-12h-4l4-8H7z"/>
+                    </svg>
+                    <span data-en="Port Scanner Simulator" data-ar="محاكي فحص المنافذ">محاكي فحص المنافذ</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('portScanner')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="targetIP" data-en="Target IP:" data-ar="عنوان IP الهدف:">عنوان IP الهدف:</label>
+                    <input type="text" id="targetIP" class="input-field" data-placeholder-en="192.168.1.1" data-placeholder-ar="192.168.1.1" placeholder="192.168.1.1" value="192.168.1.1">
+                </div>
+                <div class="input-group">
+                    <label for="portRange" data-en="Port Range:" data-ar="نطاق المنافذ:">نطاق المنافذ:</label>
+                    <input type="text" id="portRange" class="input-field" data-placeholder-en="1-100" data-placeholder-ar="1-100" placeholder="1-100" value="1-100">
+                </div>
+                <button class="btn" onclick="simulatePortScan()" data-en="Start Scan" data-ar="بدء الفحص">بدء الفحص</button>
+                <div class="result-box" id="portScanResult"><div class="loading-spinner" id="portScanSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('portScanResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- URL Security Checker -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.22-1.79L9 14v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 3.08-1.99 5.71-4.9 6.69z"/>
+                    </svg>
+                    <span data-en="URL Security Checker" data-ar="فاحص أمان الروابط">فاحص أمان الروابط</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('urlChecker')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="urlInput" data-en="URL:" data-ar="الرابط:">الرابط:</label>
+                    <input type="url" id="urlInput" class="input-field" data-placeholder-en="https://example.com" data-placeholder-ar="https://example.com" placeholder="https://example.com">
+                </div>
+                <button class="btn" onclick="checkURLSecurity()" data-en="Check URL" data-ar="فحص الرابط">فحص الرابط</button>
+                <div class="result-box" id="urlResult"><div class="loading-spinner" id="urlSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('urlResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Text Encryption/Decryption -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                    </svg>
+                    <span data-en="Text Encryption/Decryption" data-ar="تشفير/فك تشفير النص">تشفير/فك تشفير النص</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('textCrypto')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="cryptoInput" data-en="Text:" data-ar="النص:">النص:</label>
+                    <textarea id="cryptoInput" class="textarea-field" rows="3" data-placeholder-en="Enter text" data-placeholder-ar="أدخل النص" placeholder="أدخل النص"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="cryptoKey" data-en="Key:" data-ar="المفتاح:">المفتاح:</label>
+                    <input type="text" id="cryptoKey" class="input-field" data-placeholder-en="Enter encryption key" data-placeholder-ar="أدخل مفتاح التشفير" placeholder="أدخل مفتاح التشفير">
+                </div>
+                <div class="input-group">
+                    <label for="cryptoType" data-en="Encryption Type:" data-ar="نوع التشفير:">نوع التشفير:</label>
+                    <select id="cryptoType" class="input-field hash-select">
+                        <option value="aes">AES</option>
+                        <option value="tripledes">Triple DES</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button class="btn" onclick="encryptText()" data-en="Encrypt" data-ar="تشفير">تشفير</button>
+                    <button class="btn" onclick="decryptText()" data-en="Decrypt" data-ar="فك التشفير">فك التشفير</button>
+                </div>
+                <div class="result-box" id="cryptoResult"><div class="loading-spinner" id="cryptoSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('cryptoResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Dark Web Scanner -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="Dark Web Scanner" data-ar="ماسح الويب المظلم">ماسح الويب المظلم</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('darkWebScanner')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="darkWebInput" data-en="Email/Username:" data-ar="البريد الإلكتروني/اسم المستخدم:">البريد الإلكتروني/اسم المستخدم:</label>
+                    <input type="text" id="darkWebInput" class="input-field" data-placeholder-en="Enter email or username" data-placeholder-ar="أدخل البريد الإلكتروني أو اسم المستخدم" placeholder="أدخل البريد الإلكتروني أو اسم المستخدم">
+                </div>
+                <button class="btn" onclick="scanDarkWeb()" data-en="Scan Dark Web" data-ar="فحص الويب المظلم">فحص الويب المظلم</button>
+                <div class="result-box" id="darkWebResult"><div class="loading-spinner" id="darkWebSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('darkWebResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Network Traffic Simulator -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="Network Traffic Simulator" data-ar="محاكي حركة الشبكة">محاكي حركة الشبكة</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('trafficSimulator')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <button class="btn" onclick="simulateNetworkTraffic()" data-en="Start Simulation" data-ar="بدء المحاكاة">بدء المحاكاة</button>
+                <div class="result-box" id="trafficResult"><div class="loading-spinner" id="trafficSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('trafficResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- SQL Injection Tester -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="SQL Injection Tester" data-ar="اختبار حقن SQL">اختبار حقن SQL</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('sqlInjection')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="sqlInput" data-en="SQL Query:" data-ar="استعلام SQL:">استعلام SQL:</label>
+                    <textarea id="sqlInput" class="textarea-field" rows="3" data-placeholder-en="Enter SQL query" data-placeholder-ar="أدخل استعلام SQL" placeholder="أدخل استعلام SQL"></textarea>
+                </div>
+                <button class="btn" onclick="testSQLInjection()" data-en="Test Query" data-ar="اختبار الاستعلام">اختبار الاستعلام</button>
+                <div class="result-box" id="sqlResult"><div class="loading-spinner" id="sqlSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('sqlResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- XSS Scanner -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="XSS Scanner" data-ar="ماسح XSS">ماسح XSS</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('xssScanner')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="xssInput" data-en="Script Input:" data-ar="إدخال السكربت:">إدخال السكربت:</label>
+                    <textarea id="xssInput" class="textarea-field" rows="3" data-placeholder-en="Enter script or HTML" data-placeholder-ar="أدخل سكربت أو HTML" placeholder="أدخل سكربت أو HTML"></textarea>
+                </div>
+                <button class="btn" onclick="scanXSS()" data-en="Scan for XSS" data-ar="فحص XSS">فحص XSS</button>
+                <div class="result-box" id="xssResult"><div class="loading-spinner" id="xssSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('xssResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Network Latency Tester -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="Network Latency Tester" data-ar="اختبار زمن تأخير الشبكة">اختبار زمن تأخير الشبكة</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('latencyTester')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="latencyTarget" data-en="Target URL/IP:" data-ar="الهدف (URL/IP):">الهدف (URL/IP):</label>
+                    <input type="text" id="latencyTarget" class="input-field" data-placeholder-en="Enter URL or IP" data-placeholder-ar="أدخل URL أو IP" placeholder="أدخل URL أو IP">
+                </div>
+                <button class="btn" onclick="testNetworkLatency()" data-en="Test Latency" data-ar="اختبار زمن التأخير">اختبار زمن التأخير</button>
+                <div class="result-box" id="latencyResult"><div class="loading-spinner" id="latencySpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('latencyResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Password Complexity Visualizer -->
+            <div class="tool-card">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="Password Complexity Visualizer" data-ar="متصور تعقيد كلمة المرور">متصور تعقيد كلمة المرور</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('complexityVisualizer')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <div class="input-group">
+                    <label for="complexityPassword" data-en="Password:" data-ar="كلمة المرور:">كلمة المرور:</label>
+                    <input type="password" id="complexityPassword" class="input-field" data-placeholder-en="Enter password" data-placeholder-ar="أدخل كلمة المرور" placeholder="أدخل كلمة المرور">
+                </div>
+                <button class="btn" onclick="visualizeComplexity()" data-en="Visualize Complexity" data-ar="تصور التعقيد">تصور التعقيد</button>
+                <div class="complexity-visualizer" id="complexityVisualizer"></div>
+                <div class="result-box" id="complexityResult"><div class="loading-spinner" id="complexitySpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('complexityResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p data-en="Copyright © Abdessamad Bourkibate - 2025" data-ar="حقوق النشر © عبد الصمد بوركيبات - 2025">حقوق النشر © عبد الصمد بوركيبات - 2025</p>
+        </div>
+    </div>
+    
+    <!-- Platform Info Modal -->
+    <div class="platform-info-modal" id="platformInfoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-en="Platform Information" data-ar="معلومات المنصة">معلومات المنصة</h3>
+                <span class="close-modal" onclick="closePlatformInfo()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="info-section">
+                    <h4 data-en="🛡️ Security Features" data-ar="🛡️ ميزات الأمان">🛡️ ميزات الأمان</h4>
+                    <p data-en="• Password analysis and entropy calculation<br>• Hash generation and file integrity checking<br>• Network security testing and monitoring<br>• Vulnerability scanning and assessment" data-ar="• تحليل كلمات المرور وحساب الإنتروبيا<br>• توليد الهاش وفحص سلامة الملفات<br>• اختبار ومراقبة أمان الشبكة<br>• فحص وتقييم الثغرات الأمنية">• تحليل كلمات المرور وحساب الإنتروبيا<br>• توليد الهاش وفحص سلامة الملفات<br>• اختبار ومراقبة أمان الشبكة<br>• فحص وتقييم الثغرات الأمنية</p>
+                </div>
+                <div class="info-section">
+                    <h4 data-en="⚡ Advanced Tools" data-ar="⚡ الأدوات المتقدمة">⚡ الأدوات المتقدمة</h4>
+                    <p data-en="• Real-time network traffic simulation<br>• SQL injection and XSS testing<br>• Encryption/Decryption capabilities<br>• Dark web monitoring simulation" data-ar="• محاكاة حركة الشبكة في الوقت الفعلي<br>• اختبار حقن SQL و XSS<br>• قدرات التشفير وفك التشفير<br>• محاكاة مراقبة الويب المظلم">• محاكاة حركة الشبكة في الوقت الفعلي<br>• اختبار حقن SQL و XSS<br>• قدرات التشفير وفك التشفير<br>• محاكاة مراقبة الويب المظلم</p>
+                </div>
+                <div class="info-section">
+                    <h4 data-en="🎯 Professional Usage" data-ar="🎯 الاستخدام الاحترافي">🎯 الاستخدام الاحترافي</h4>
+                    <p data-en="Designed for ethical hackers, security researchers, and cybersecurity professionals conducting authorized penetration testing and security assessments." data-ar="مصممة للهاكرز الأخلاقيين وباحثي الأمان ومحترفي الأمان السيبراني الذين يقومون باختبارات الاختراق المعتمدة وتقييمات الأمان.">مصممة للهاكرز الأخلاقيين وباحثي الأمان ومحترفي الأمان السيبراني الذين يقومون باختبارات الاختراق المعتمدة وتقييمات الأمان.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tool Explanation Modal -->
+    <div class="tool-explanation-modal" id="toolExplanationModal">
+        <div class="explanation-content">
+            <div class="explanation-header">
+                <h3 id="explanationTitle">
+                    <svg class="tool-icon" id="explanationIcon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d=""/>
+                    </svg>
+                    <span id="explanationTitleText"></span>
+                </h3>
+                <span class="close-explanation" onclick="closeToolExplanation()">&times;</span>
+            </div>
+            <div class="explanation-body" id="explanationBody">
+                <!-- Content will be dynamically populated -->
+            </div>
+        </div>
+    </div>
+    
+    <audio id="typingSound" src="https://www.soundjay.com/buttons/sounds/keyboard-01.mp3" preload="auto"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
