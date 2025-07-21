@@ -726,42 +726,42 @@ select.input-field.hash-select {
     position: relative;
 }
 
-.monitor-content > div .pulse-dot {
-    position: absolute;
-    left: 0;
-    flex-shrink: 0;
-}
-
-.monitor-content > div > span:first-child {
-    padding-left: 20px; /* مساحة للنقطة النابضة */
-}
-
 .pulse-dot {
     display: inline-block !important;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #00ff88;
-    margin-left: 8px;
-    margin-right: 5px;
-    animation: pulse 2s infinite;
-    box-shadow: 0 0 10px #00ff88;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 10;
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    background-color: #00ff88 !important;
+    background: #00ff88 !important;
+    margin-right: 8px !important;
+    animation: pulse 2s infinite !important;
+    box-shadow: 0 0 10px #00ff88 !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 100 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
+/* Ensure the pulse animation always works */
 @keyframes pulse {
     0%, 100% { 
-        opacity: 1; 
-        transform: scale(1);
-        box-shadow: 0 0 10px #00ff88;
+        opacity: 1 !important; 
+        transform: scale(1) !important;
+        box-shadow: 0 0 10px #00ff88 !important;
     }
     50% { 
-        opacity: 0.4; 
-        transform: scale(1.3);
-        box-shadow: 0 0 20px #00ff88;
+        opacity: 0.4 !important; 
+        transform: scale(1.3) !important;
+        box-shadow: 0 0 20px #00ff88 !important;
     }
+}
+
+/* Monitor content structure fixes */
+.monitor-content > div > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
 }
 
 .copyright {
@@ -1492,4 +1492,22 @@ select.input-field.hash-select {
         height: 35px;
         font-size: 1.8rem;
     }
+}
+
+/* Special handling for compact mode */
+.network-monitor.compact .pulse-dot {
+    display: none !important;
+}
+
+.network-monitor:not(.compact) .pulse-dot {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Force pulse dot visibility in expanded mode */
+.monitor-content:not([style*="display: none"]) .pulse-dot {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }

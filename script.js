@@ -228,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         startNetworkMonitor();
         loadStoredData();
         initializeTooltips();
+        ensurePulseDotVisible(); // تأكد من ظهور نقطة النبض
     } catch (e) {
         console.error('Error in DOMContentLoaded:', e);
     }
@@ -2008,6 +2009,12 @@ function toggleNetworkMonitor() {
             content.style.display = 'none';
             monitor.classList.add('compact');
         }
+        
+        // Ensure pulse dot is visible after toggle
+        setTimeout(() => {
+            ensurePulseDotVisible();
+        }, 100);
+        
     } catch (e) {
         console.error('Error toggling network monitor:', e);
     }
@@ -2024,3 +2031,35 @@ function toggleSpinner(spinnerId, show) {
         console.error('Error toggling spinner:', e);
     }
 }
+
+// Ensure pulse dot exists and is visible
+function ensurePulseDotVisible() {
+    try {
+        const pulseDot = document.querySelector('.pulse-dot');
+        if (!pulseDot) {
+            // Create pulse dot if it doesn't exist
+            const systemStatusDiv = document.querySelector('.monitor-content > div:first-child');
+            if (systemStatusDiv) {
+                const newPulseDot = document.createElement('span');
+                newPulseDot.className = 'pulse-dot';
+                const firstSpan = systemStatusDiv.querySelector('span:first-child');
+                if (firstSpan) {
+                    firstSpan.insertBefore(newPulseDot, firstSpan.firstChild);
+                }
+            }
+        } else {
+            // Ensure existing pulse dot is visible
+            pulseDot.style.display = 'inline-block';
+            pulseDot.style.visibility = 'visible';
+            pulseDot.style.opacity = '1';
+        }
+    } catch (e) {
+        console.error('Error ensuring pulse dot visibility:', e);
+    }
+}
+
+// Call this function on page load and when toggling monitor
+document.addEventListener('DOMContentLoaded', () => {
+    ensurePulseDotVisible();
+    // ...existing code...
+});
