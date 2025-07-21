@@ -122,27 +122,33 @@ let activeScans = 0;
 let networkTraffic = 0;
 let monitorInterval = null;
 
-// Custom Cursor
+// Custom Cursor - يعمل فقط على الشاشات الكبيرة
 const cursor = document.getElementById('customCursor');
-document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-});
-document.addEventListener('mousedown', () => cursor.classList.add('click'));
-document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
 
-// Mouse Movement Animation for Tool Cards
-document.querySelectorAll('.tool-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-        const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
-        card.style.transform = `translateY(-8px) scale(1.02) rotateX(${y * 10}deg) rotateY(${x * 10}deg)`;
+if (!isMobile && cursor) {
+    document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
     });
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
+    document.addEventListener('mousedown', () => cursor.classList.add('click'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+}
+
+// Mouse Movement Animation for Tool Cards - يعمل فقط على الشاشات الكبيرة
+if (!isMobile) {
+    document.querySelectorAll('.tool-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+            const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+            card.style.transform = `translateY(-8px) scale(1.02) rotateX(${y * 10}deg) rotateY(${x * 10}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
+        });
     });
-});
+}
 
 // Typing Effect with Sound - محسن لتجنب التقطيع خاصة للنص العربي
 function typeText(element, text, speed = 30, callback) {
@@ -2040,9 +2046,18 @@ function initializeNetworkMonitor() {
         const monitor = document.getElementById('networkMonitor');
         const monitorText = monitor.querySelector('.monitor-text');
         
-        // بدء في الوضع المضغوط
-        monitor.classList.add('compact');
-        monitor.querySelector('.monitor-content').style.display = 'none';
+        // تحديد الوضع الافتراضي حسب حجم الشاشة
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            // على الهواتف: بدء في الوضع المضغوط دائماً
+            monitor.classList.add('compact');
+            monitor.querySelector('.monitor-content').style.display = 'none';
+        } else {
+            // على الشاشات الكبيرة: بدء في الوضع المضغوط
+            monitor.classList.add('compact');
+            monitor.querySelector('.monitor-content').style.display = 'none';
+        }
         
         if (monitorText) {
             monitorText.textContent = currentLang === 'ar' ? 'المراقب' : 'Monitor';

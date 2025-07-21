@@ -22,7 +22,17 @@ body {
     transition: all 0.3s ease;
     position: relative;
     overflow-x: hidden;
-    cursor: none;
+}
+
+/* Custom Cursor - يظهر فقط على الشاشات الكبيرة */
+@media (min-width: 769px) {
+    body {
+        cursor: none;
+    }
+    
+    .custom-cursor {
+        display: block;
+    }
 }
 
 .custom-cursor {
@@ -39,6 +49,7 @@ body {
         0 0 30px #00ff88,
         0 0 45px rgba(0, 255, 136, 0.3);
     backdrop-filter: blur(2px);
+    display: none; /* مخفي افتراضياً */
 }
 
 .custom-cursor.click {
@@ -897,25 +908,65 @@ select.input-field.hash-select {
         padding: 0 10px;
     }
     
+    /* تحسين مراقب الشبكة للهواتف */
     .network-monitor {
-        position: relative;
-        top: 0;
-        right: 0;
-        margin-bottom: 30px;
-        width: 100%;
+        position: fixed !important;
+        top: 15px;
+        right: 15px;
+        margin-bottom: 0;
+        width: auto;
         max-width: none;
+        min-width: auto;
+        z-index: 1001;
     }
     
     .network-monitor.compact {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
+        padding: 12px;
+        border-radius: 50%;
+        box-shadow: 
+            0 0 20px rgba(0, 255, 136, 0.6),
+            0 4px 15px rgba(0, 0, 0, 0.3),
+            inset 0 0 15px rgba(0, 255, 136, 0.1);
+        border: 3px solid rgba(0, 255, 136, 0.8);
+        background: linear-gradient(135deg, 
+            rgba(0, 20, 20, 0.95), 
+            rgba(0, 40, 40, 0.95));
     }
     
-    .custom-cursor {
-        display: none;
+    .network-monitor.compact .pulse-dot-icon {
+        width: 12px;
+        height: 12px;
+        animation: mobilePulse 1.5s infinite;
+    }
+    
+    .network-monitor.compact .monitor-svg {
+        width: 20px;
+        height: 20px;
+        animation: mobileIconRotate 3s ease-in-out infinite;
+    }
+    
+    .network-monitor.compact:hover {
+        transform: scale(1.15);
+        box-shadow: 
+            0 0 30px rgba(0, 255, 136, 0.8),
+            0 6px 20px rgba(0, 0, 0, 0.4),
+            inset 0 0 20px rgba(0, 255, 136, 0.2);
+    }
+    
+    /* عندما يكون في الوضع الكامل على الهاتف */
+    .network-monitor:not(.compact) {
+        width: 280px;
+        max-width: calc(100vw - 30px);
+        top: 15px;
+        right: 15px;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 
+            0 0 25px rgba(0, 255, 136, 0.5),
+            0 8px 25px rgba(0, 0, 0, 0.3),
+            inset 0 0 20px rgba(0, 255, 136, 0.1);
     }
     
     .tool-card {
@@ -947,6 +998,34 @@ select.input-field.hash-select {
     
     .tool-card {
         padding: 20px;
+    }
+    
+    /* تحسينات إضافية لمراقب الشبكة على الشاشات الصغيرة جداً */
+    .network-monitor.compact {
+        width: 55px;
+        height: 55px;
+        top: 10px;
+        right: 10px;
+        border-width: 2px;
+    }
+    
+    .network-monitor.compact .pulse-dot-icon {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .network-monitor.compact .monitor-svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .network-monitor:not(.compact) {
+        width: 260px;
+        max-width: calc(100vw - 20px);
+        top: 10px;
+        right: 10px;
+        padding: 15px;
+        font-size: 0.9rem;
     }
 }
 
@@ -1521,54 +1600,33 @@ select.input-field.hash-select {
     }
 }
 
-/* Enhanced Modal Responsiveness */
-@media (max-width: 768px) {
-    .explanation-content {
-        max-width: 95%;
-        padding: 0;
-        margin: 10px;
+/* أنيميشن خاص للهواتف المحمولة */
+@keyframes mobilePulse {
+    0%, 100% { 
+        opacity: 1; 
+        transform: scale(1);
+        box-shadow: 0 0 15px #00ff88;
     }
-    
-    .explanation-header {
-        padding: 20px 25px;
-    }
-    
-    .explanation-body {
-        padding: 20px 25px;
-    }
-    
-    .explanation-section {
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-    
-    .usage-examples {
-        padding: 15px;
-    }
-    
-    .code-example {
-        padding: 12px;
-        font-size: 0.85rem;
+    50% { 
+        opacity: 0.3; 
+        transform: scale(1.4);
+        box-shadow: 0 0 25px #00ff88;
     }
 }
 
-@media (max-width: 480px) {
-    .explanation-content {
-        max-width: 98%;
-        margin: 5px;
+@keyframes mobileIconRotate {
+    0%, 100% { 
+        transform: rotate(0deg) scale(1);
+        filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.6));
     }
-    
-    .explanation-header h3 {
-        font-size: 1.5rem;
+    25% { 
+        transform: rotate(10deg) scale(1.1);
+        filter: drop-shadow(0 0 12px rgba(0, 255, 136, 0.8));
     }
-    
-    .explanation-section h4 {
-        font-size: 1.2rem;
-    }
-    
-    .close-explanation {
-        width: 35px;
-        height: 35px;
-        font-size: 1.8rem;
+    75% { 
+        transform: rotate(-10deg) scale(1.1);
+        filter: drop-shadow(0 0 12px rgba(0, 255, 136, 0.8));
     }
 }
+
+/* تحسينات خاصة للشاشات الصغيرة جداً - تم دمجها في media query أعلاه */
