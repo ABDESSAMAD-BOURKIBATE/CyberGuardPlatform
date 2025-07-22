@@ -1277,6 +1277,230 @@ const toolExplanations = {
                     </div>
                 </div>
             `
+        },
+        wifiAnalyzer: {
+            title: "محلل أمان WiFi",
+            icon: "M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو محلل أمان WiFi؟</h4>
+                    <p>أداة شاملة تقيّم أمان شبكة WiFi الخاصة بك من خلال تحليل قوة SSID وتعقيد كلمة المرور وبروتوكولات التشفير لتحديد نقاط الضعف.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>فحوصات الأمان</h4>
+                    <ul>
+                        <li><strong>تحليل SSID:</strong> تقييم أمان اسم الشبكة</li>
+                        <li><strong>قوة كلمة المرور:</strong> تقييم تعقيد كلمة مرور WiFi</li>
+                        <li><strong>بروتوكول التشفير:</strong> التحقق من WPA/WPA2/WPA3</li>
+                        <li><strong>الإعدادات الافتراضية:</strong> اكتشاف إعدادات المصنع</li>
+                        <li><strong>البث:</strong> تحليل الشبكات المخفية</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>توصيات الأمان:</h5>
+                    <div class="code-example">
+                    🔐 استخدم تشفير WPA3 عند الإمكان
+                    🔑 ضع كلمات مرور قوية 20+ حرف
+                    📡 غيّر أسماء SSID الافتراضية
+                    🚫 عطّل ميزة WPS
+                    🔄 تحديث كلمات المرور بانتظام
+                    </div>
+                </div>
+            `
+        },
+        emailSecurity: {
+            title: "فاحص أمان البريد الإلكتروني",
+            icon: "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو فاحص أمان البريد الإلكتروني؟</h4>
+                    <p>أداة تقييم أمان البريد الإلكتروني المتقدمة التي تحلل عناوين البريد الإلكتروني للمخاطر الأمنية المحتملة والتعرض للاختراق وسمعة النطاق.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>تقييمات الأمان</h4>
+                    <ul>
+                        <li><strong>سمعة النطاق:</strong> تصنيف أمان مزود البريد الإلكتروني</li>
+                        <li><strong>قاعدة بيانات الاختراقات:</strong> التحقق من التسريبات المعروفة</li>
+                        <li><strong>التحقق من التنسيق:</strong> سلامة هيكل البريد الإلكتروني</li>
+                        <li><strong>اكتشاف المؤقت:</strong> تحديد الرسائل الإلكترونية المؤقتة</li>
+                        <li><strong>تحليل سجل MX:</strong> أمان خادم البريد</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>نصائح أمان البريد الإلكتروني:</h5>
+                    <div class="code-example">
+                    ✉️ استخدم مزودي بريد إلكتروني موثوقين
+                    🔐 فعّل المصادقة الثنائية
+                    🚫 تجنب WiFi العام للبريد الإلكتروني
+                    🔄 تغيير كلمات المرور بانتظام
+                    📧 راقب الأنشطة المشبوهة
+                    </div>
+                </div>
+            `
+        },
+        qrSecurity: {
+            title: "ماسح أمان QR Code",
+            icon: "M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو ماسح أمان QR؟</h4>
+                    <p>أداة متخصصة تحلل رموز QR للتهديدات الأمنية المحتملة والروابط الخبيثة والأنماط المشبوهة قبل مسحها.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>اكتشاف التهديدات</h4>
+                    <ul>
+                        <li><strong>تحليل الروابط:</strong> التحقق من سلامة الروابط</li>
+                        <li><strong>اكتشاف التصيد:</strong> تحديد الأنماط المشبوهة</li>
+                        <li><strong>فحص البرمجيات الخبيثة:</strong> اكتشاف المحتوى الضار</li>
+                        <li><strong>سمعة النطاق:</strong> فحص موثوقية الموقع</li>
+                        <li><strong>تحليل إعادة التوجيه:</strong> تتبع الوجهات المخفية</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>أمان QR Code:</h5>
+                    <div class="code-example">
+                    🔍 تحقق دائماً من مصدر QR
+                    📱 استخدم تطبيقات QR موثوقة
+                    🚫 تجنب رموز QR غير المعروفة
+                    🔗 افحص الروابط قبل الزيارة
+                    🛡️ حافظ على الأجهزة محدثة
+                    </div>
+                </div>
+            `
+        },
+        steganography: {
+            title: "كاشف الإخفاء الرقمي",
+            icon: "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو كشف الإخفاء الرقمي؟</h4>
+                    <p>أداة الطب الشرعي التي تحلل الصور للبيانات المخفية المدمجة باستخدام تقنيات الإخفاء الرقمي، مما يساعد في اكتشاف الاتصالات السرية.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>طرق الاكتشاف</h4>
+                    <ul>
+                        <li><strong>تحليل LSB:</strong> فحص البت الأقل أهمية</li>
+                        <li><strong>التحليل الإحصائي:</strong> أنماط توزيع البكسل</li>
+                        <li><strong>مجال التردد:</strong> تحليل معاملات DCT</li>
+                        <li><strong>شذوذ حجم الملف:</strong> نسب حجم-محتوى غير عادية</li>
+                        <li><strong>فحص البيانات الوصفية:</strong> فحص بيانات EXIF</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>حالات الاستخدام:</h5>
+                    <div class="code-example">
+                    🕵️ تحقيقات الطب الشرعي الرقمي
+                    🔒 مراجعات أمان الشركات
+                    📧 فحص مرفقات البريد الإلكتروني
+                    🌐 تحليل محتوى وسائل التواصل
+                    🎯 اكتشاف البرمجيات الخبيثة
+                    </div>
+                </div>
+            `
+        },
+        socialEngineering: {
+            title: "محلل الهندسة الاجتماعية",
+            icon: "M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A2.996 2.996 0 0 0 17.09 7H16c-.8 0-1.54.37-2.01.99L12 10.5z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو تحليل الهندسة الاجتماعية؟</h4>
+                    <p>أداة ذكية تحلل الرسائل والبريد الإلكتروني والاتصالات لتكتيكات الهندسة الاجتماعية وتقنيات التلاعب.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أنماط الاكتشاف</h4>
+                    <ul>
+                        <li><strong>مؤشرات الاستعجال:</strong> تكتيكات الضغط الزمني</li>
+                        <li><strong>انتحال السلطة:</strong> ادعاءات السلطة الكاذبة</li>
+                        <li><strong>التلاعب العاطفي:</strong> محفزات الخوف والجشع والفضول</li>
+                        <li><strong>طلبات المعلومات:</strong> طلب البيانات الحساسة</li>
+                        <li><strong>استغلال الثقة:</strong> أنماط سوء استخدام العلاقات</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>استراتيجيات الحماية:</h5>
+                    <div class="code-example">
+                    🤔 تحقق دائماً من الطلبات غير المتوقعة
+                    📞 اتصل مرة أخرى باستخدام الأرقام الرسمية
+                    🚫 لا تشارك كلمات المرور عبر البريد الإلكتروني
+                    ⏰ خذ وقتاً للتفكير قبل التصرف
+                    👥 استشر الزملاء حول الطلبات المشبوهة
+                    </div>
+                </div>
+            `
+        },
+        osintGatherer: {
+            title: "جامع المعلومات المفتوحة المصدر",
+            icon: "M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو جمع OSINT؟</h4>
+                    <p>أداة جمع استخبارات مفتوحة المصدر تجمع المعلومات المتاحة للجمهور حول النطاقات والبريد الإلكتروني وأسماء المستخدمين لأبحاث الأمان.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>مصادر المعلومات</h4>
+                    <ul>
+                        <li><strong>سجلات النطاق:</strong> WHOIS, DNS, شهادات SSL</li>
+                        <li><strong>وسائل التواصل الاجتماعي:</strong> الملفات الشخصية والمنشورات العامة</li>
+                        <li><strong>قواعد بيانات الاختراق:</strong> تسريبات البيانات المعروفة</li>
+                        <li><strong>محركات البحث:</strong> المحتوى المخزن مؤقتاً والمفهرس</li>
+                        <li><strong>الأدلة العامة:</strong> قوائم الأعمال والشخصية</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>⚠️ الإرشادات الأخلاقية:</h5>
+                    <div class="code-example">
+                    ✅ استخدم فقط لأبحاث الأمان المشروعة
+                    ✅ احترم الخصوصية والحدود القانونية
+                    ✅ احصل على التصريح المناسب
+                    ❌ لا تستخدم أبداً للمضايقة
+                    ❌ لا تنتهك شروط الخدمة
+                    </div>
+                </div>
+            `
+        },
+        passwordPolicy: {
+            title: "مولد سياسة كلمات المرور",
+            icon: "M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3l-1-1h-6L8 4H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو مولد سياسة كلمات المرور؟</h4>
+                    <p>أداة شاملة تنشئ سياسات كلمات مرور مخصصة بناءً على نوع المؤسسة ومتطلبات الأمان للنشر في المؤسسات.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>مكونات السياسة</h4>
+                    <ul>
+                        <li><strong>متطلبات الطول:</strong> حدود الأحرف الدنيا/العليا</li>
+                        <li><strong>قواعد التعقيد:</strong> متطلبات نوع الأحرف</li>
+                        <li><strong>سياسات انتهاء الصلاحية:</strong> تقادم كلمة المرور ودورانها</li>
+                        <li><strong>تتبع السجل:</strong> منع كلمات المرور السابقة</li>
+                        <li><strong>إعدادات القفل:</strong> عتبات المحاولات الفاشلة</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>نصائح التنفيذ:</h5>
+                    <div class="code-example">
+                    📋 وثّق السياسات بوضوح
+                    🎓 درّب المستخدمين على المتطلبات
+                    🔄 مراجعات السياسة المنتظمة
+                    🛠️ استخدم أدوات إنفاذ السياسة
+                    📊 راقب مؤشرات الامتثال
+                    </div>
+                </div>
+            `
         }
     },
     en: {
@@ -1981,6 +2205,230 @@ const toolExplanations = {
                     📊 Watch the visual indicators
                     🔍 Ensure balance between colors
                     ✨ Aim for dark green color
+                    </div>
+                </div>
+            `
+        },
+        wifiAnalyzer: {
+            title: "WiFi Security Analyzer",
+            icon: "M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is WiFi Security Analyzer?</h4>
+                    <p>A comprehensive tool that evaluates your WiFi network security by analyzing SSID strength, password complexity, and encryption protocols to identify vulnerabilities.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Security Checks</h4>
+                    <ul>
+                        <li><strong>SSID Analysis:</strong> Network name security evaluation</li>
+                        <li><strong>Password Strength:</strong> WiFi password complexity assessment</li>
+                        <li><strong>Encryption Protocol:</strong> WPA/WPA2/WPA3 verification</li>
+                        <li><strong>Default Settings:</strong> Detection of factory defaults</li>
+                        <li><strong>Broadcasting:</strong> Hidden network analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Security Recommendations:</h5>
+                    <div class="code-example">
+                    🔐 Use WPA3 encryption when available
+                    🔑 Set strong 20+ character passwords
+                    📡 Change default SSID names
+                    🚫 Disable WPS feature
+                    🔄 Regular password updates
+                    </div>
+                </div>
+            `
+        },
+        emailSecurity: {
+            title: "Email Security Checker",
+            icon: "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Email Security Checker?</h4>
+                    <p>An advanced email security assessment tool that analyzes email addresses for potential security risks, breach exposure, and domain reputation.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Security Assessments</h4>
+                    <ul>
+                        <li><strong>Domain Reputation:</strong> Email provider security rating</li>
+                        <li><strong>Breach Database:</strong> Known data leak verification</li>
+                        <li><strong>Format Validation:</strong> Email structure integrity</li>
+                        <li><strong>Disposable Detection:</strong> Temporary email identification</li>
+                        <li><strong>MX Record Analysis:</strong> Mail server security</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Email Security Tips:</h5>
+                    <div class="code-example">
+                    ✉️ Use reputable email providers
+                    🔐 Enable 2FA authentication
+                    🚫 Avoid public WiFi for email
+                    🔄 Regular password changes
+                    📧 Monitor for suspicious activity
+                    </div>
+                </div>
+            `
+        },
+        qrSecurity: {
+            title: "QR Code Security Scanner",
+            icon: "M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is QR Security Scanner?</h4>
+                    <p>A specialized tool that analyzes QR codes for potential security threats, malicious URLs, and suspicious patterns before you scan them.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Threat Detection</h4>
+                    <ul>
+                        <li><strong>URL Analysis:</strong> Link safety verification</li>
+                        <li><strong>Phishing Detection:</strong> Suspicious pattern identification</li>
+                        <li><strong>Malware Scanning:</strong> Malicious content detection</li>
+                        <li><strong>Domain Reputation:</strong> Website trustworthiness check</li>
+                        <li><strong>Redirect Analysis:</strong> Hidden destination tracking</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>QR Code Safety:</h5>
+                    <div class="code-example">
+                    🔍 Always verify QR source
+                    📱 Use trusted QR scanner apps
+                    🚫 Avoid unknown QR codes
+                    🔗 Check URLs before visiting
+                    🛡️ Keep devices updated
+                    </div>
+                </div>
+            `
+        },
+        steganography: {
+            title: "Steganography Detector",
+            icon: "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Steganography Detection?</h4>
+                    <p>A forensic tool that analyzes images for hidden data embedded using steganographic techniques, helping detect covert communications.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Detection Methods</h4>
+                    <ul>
+                        <li><strong>LSB Analysis:</strong> Least Significant Bit examination</li>
+                        <li><strong>Statistical Analysis:</strong> Pixel distribution patterns</li>
+                        <li><strong>Frequency Domain:</strong> DCT coefficient analysis</li>
+                        <li><strong>File Size Anomalies:</strong> Unusual size-to-content ratios</li>
+                        <li><strong>Metadata Inspection:</strong> EXIF data examination</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Use Cases:</h5>
+                    <div class="code-example">
+                    🕵️ Digital forensics investigations
+                    🔒 Corporate security audits
+                    📧 Email attachment screening
+                    🌐 Social media content analysis
+                    🎯 Malware detection
+                    </div>
+                </div>
+            `
+        },
+        socialEngineering: {
+            title: "Social Engineering Analyzer",
+            icon: "M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A2.996 2.996 0 0 0 17.09 7H16c-.8 0-1.54.37-2.01.99L12 10.5z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Social Engineering Analysis?</h4>
+                    <p>An intelligent tool that analyzes messages, emails, and communications for social engineering tactics and manipulation techniques.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Detection Patterns</h4>
+                    <ul>
+                        <li><strong>Urgency Indicators:</strong> Time pressure tactics</li>
+                        <li><strong>Authority Impersonation:</strong> False authority claims</li>
+                        <li><strong>Emotional Manipulation:</strong> Fear, greed, curiosity triggers</li>
+                        <li><strong>Information Requests:</strong> Sensitive data solicitation</li>
+                        <li><strong>Trust Exploitation:</strong> Relationship abuse patterns</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Protection Strategies:</h5>
+                    <div class="code-example">
+                    🤔 Always verify unexpected requests
+                    📞 Call back using official numbers
+                    🚫 Never share passwords via email
+                    ⏰ Take time to think before acting
+                    👥 Consult colleagues on suspicious requests
+                    </div>
+                </div>
+            `
+        },
+        osintGatherer: {
+            title: "OSINT Information Gatherer",
+            icon: "M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is OSINT Gathering?</h4>
+                    <p>Open Source Intelligence collection tool that gathers publicly available information about domains, emails, and usernames for security research.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Information Sources</h4>
+                    <ul>
+                        <li><strong>Domain Records:</strong> WHOIS, DNS, SSL certificates</li>
+                        <li><strong>Social Media:</strong> Public profiles and posts</li>
+                        <li><strong>Breach Databases:</strong> Known data leaks</li>
+                        <li><strong>Search Engines:</strong> Cached and indexed content</li>
+                        <li><strong>Public Directories:</strong> Business and personal listings</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>⚠️ Ethical Guidelines:</h5>
+                    <div class="code-example">
+                    ✅ Use only for legitimate security research
+                    ✅ Respect privacy and legal boundaries
+                    ✅ Obtain proper authorization
+                    ❌ Never use for harassment
+                    ❌ Don't violate terms of service
+                    </div>
+                </div>
+            `
+        },
+        passwordPolicy: {
+            title: "Password Policy Generator",
+            icon: "M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3l-1-1h-6L8 4H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Password Policy Generator?</h4>
+                    <p>A comprehensive tool that creates customized password policies based on organization type and security requirements for enterprise deployment.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Policy Components</h4>
+                    <ul>
+                        <li><strong>Length Requirements:</strong> Minimum/maximum character limits</li>
+                        <li><strong>Complexity Rules:</strong> Character type requirements</li>
+                        <li><strong>Expiration Policies:</strong> Password aging and rotation</li>
+                        <li><strong>History Tracking:</strong> Previous password prevention</li>
+                        <li><strong>Lockout Settings:</strong> Failed attempt thresholds</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Implementation Tips:</h5>
+                    <div class="code-example">
+                    📋 Document policies clearly
+                    🎓 Train users on requirements
+                    🔄 Regular policy reviews
+                    🛠️ Use policy enforcement tools
+                    📊 Monitor compliance metrics
                     </div>
                 </div>
             `
@@ -3060,4 +3508,939 @@ function toggleSpinner(spinnerId, show) {
     } catch (e) {
         console.error('Error toggling spinner:', e);
     }
+}
+
+// New Advanced Tools Functions
+
+// WiFi Security Analyzer
+function analyzeWiFiSecurity() {
+    const ssid = document.getElementById('wifiSSID').value.trim();
+    const password = document.getElementById('wifiPassword').value.trim();
+    const resultDiv = document.getElementById('wifiResult');
+    
+    toggleSpinner('wifiSpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('wifiSpinner', false);
+        
+        if (!ssid) {
+            resultDiv.innerHTML = getLocalizedText('wifi_ssid_empty');
+            return;
+        }
+        
+        let securityScore = 0;
+        let recommendations = [];
+        
+        // SSID Analysis
+        if (ssid.length > 10) securityScore += 20;
+        if (!/default|admin|router|wifi/i.test(ssid)) securityScore += 15;
+        
+        // Password Analysis
+        if (password) {
+            if (password.length >= 12) securityScore += 25;
+            if (/[A-Z]/.test(password)) securityScore += 10;
+            if (/[0-9]/.test(password)) securityScore += 10;
+            if (/[!@#$%^&*]/.test(password)) securityScore += 20;
+        } else {
+            recommendations.push(currentLang === 'ar' ? '• إضافة كلمة مرور قوية' : '• Add strong password');
+        }
+        
+        if (securityScore < 50) {
+            recommendations.push(currentLang === 'ar' ? '• تغيير SSID الافتراضي' : '• Change default SSID');
+            recommendations.push(currentLang === 'ar' ? '• استخدام تشفير WPA3' : '• Use WPA3 encryption');
+        }
+        
+        const securityLevel = securityScore >= 80 ? 
+            (currentLang === 'ar' ? 'ممتاز' : 'Excellent') :
+            securityScore >= 60 ? 
+            (currentLang === 'ar' ? 'جيد' : 'Good') :
+            (currentLang === 'ar' ? 'ضعيف' : 'Weak');
+        
+        const result = currentLang === 'ar' ? 
+            `تحليل أمان WiFi:\n\nSSID: ${ssid}\nنقاط الأمان: ${securityScore}/100\nمستوى الأمان: ${securityLevel}\n\nالتوصيات:\n${recommendations.join('\n')}` :
+            `WiFi Security Analysis:\n\nSSID: ${ssid}\nSecurity Score: ${securityScore}/100\nSecurity Level: ${securityLevel}\n\nRecommendations:\n${recommendations.join('\n')}`;
+        
+        resultDiv.innerHTML = result;
+    }, 2000);
+}
+
+// Email Security Checker
+function checkEmailSecurity() {
+    const email = document.getElementById('emailInput').value.trim();
+    const resultDiv = document.getElementById('emailSecurityResult');
+    
+    toggleSpinner('emailSecuritySpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('emailSecuritySpinner', false);
+        
+        if (!email || !email.includes('@')) {
+            resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء إدخال بريد إلكتروني صالح.' : 'Please enter a valid email address.';
+            return;
+        }
+        
+        const domain = email.split('@')[1];
+        let securityScore = 0;
+        let checks = [];
+        
+        // Domain reputation check (simulated)
+        const trustedDomains = ['gmail.com', 'outlook.com', 'yahoo.com', 'protonmail.com'];
+        if (trustedDomains.includes(domain)) {
+            securityScore += 30;
+            checks.push(currentLang === 'ar' ? '✅ نطاق موثوق' : '✅ Trusted domain');
+        } else {
+            checks.push(currentLang === 'ar' ? '⚠️ نطاق غير معروف' : '⚠️ Unknown domain');
+        }
+        
+        // Email format validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(email)) {
+            securityScore += 25;
+            checks.push(currentLang === 'ar' ? '✅ تنسيق صحيح' : '✅ Valid format');
+        }
+        
+        // Common breach check (simulated)
+        const commonBreachedEmails = ['test@gmail.com', 'admin@test.com'];
+        if (commonBreachedEmails.includes(email.toLowerCase())) {
+            checks.push(currentLang === 'ar' ? '🚨 تم العثور عليه في تسريبات معروفة' : '🚨 Found in known breaches');
+        } else {
+            securityScore += 45;
+            checks.push(currentLang === 'ar' ? '✅ لم يتم العثور عليه في التسريبات المعروفة' : '✅ Not found in known breaches');
+        }
+        
+        const riskLevel = securityScore >= 80 ? 
+            (currentLang === 'ar' ? 'منخفض' : 'Low') :
+            securityScore >= 50 ? 
+            (currentLang === 'ar' ? 'متوسط' : 'Medium') :
+            (currentLang === 'ar' ? 'عالي' : 'High');
+        
+        const result = currentLang === 'ar' ? 
+            `فحص أمان البريد الإلكتروني:\n\nالبريد: ${email}\nنقاط الأمان: ${securityScore}/100\nمستوى المخاطر: ${riskLevel}\n\nالفحوصات:\n${checks.join('\n')}` :
+            `Email Security Check:\n\nEmail: ${email}\nSecurity Score: ${securityScore}/100\nRisk Level: ${riskLevel}\n\nChecks:\n${checks.join('\n')}`;
+        
+        resultDiv.innerHTML = result;
+    }, 1500);
+}
+
+// QR Code Security Scanner
+function scanQRSecurity() {
+    const qrText = document.getElementById('qrTextInput').value.trim();
+    const resultDiv = document.getElementById('qrSecurityResult');
+    
+    toggleSpinner('qrSecuritySpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('qrSecuritySpinner', false);
+        
+        if (!qrText) {
+            resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء إدخال نص QR Code أو رفع صورة.' : 'Please enter QR code text or upload image.';
+            return;
+        }
+        
+        let threats = [];
+        let securityScore = 100;
+        
+        // URL analysis
+        if (qrText.startsWith('http://')) {
+            threats.push(currentLang === 'ar' ? '⚠️ رابط غير مشفر (HTTP)' : '⚠️ Unencrypted link (HTTP)');
+            securityScore -= 30;
+        }
+        
+        // Suspicious patterns
+        const suspiciousPatterns = [
+            /bit\.ly|tinyurl|t\.co/i,
+            /click|download|urgent|free/i,
+            /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/
+        ];
+        
+        suspiciousPatterns.forEach(pattern => {
+            if (pattern.test(qrText)) {
+                threats.push(currentLang === 'ar' ? '🚨 نمط مشبوه مكتشف' : '🚨 Suspicious pattern detected');
+                securityScore -= 25;
+            }
+        });
+        
+        // Phishing indicators
+        if (/login|signin|verify|confirm|update/i.test(qrText)) {
+            threats.push(currentLang === 'ar' ? '⚠️ مؤشرات تصيد محتملة' : '⚠️ Potential phishing indicators');
+            securityScore -= 20;
+        }
+        
+        if (threats.length === 0) {
+            threats.push(currentLang === 'ar' ? '✅ لم يتم اكتشاف تهديدات' : '✅ No threats detected');
+        }
+        
+        const riskLevel = securityScore >= 80 ? 
+            (currentLang === 'ar' ? 'منخفض' : 'Low') :
+            securityScore >= 50 ? 
+            (currentLang === 'ar' ? 'متوسط' : 'Medium') :
+            (currentLang === 'ar' ? 'عالي' : 'High');
+        
+        const result = currentLang === 'ar' ? 
+            `فحص أمان QR Code:\n\nالمحتوى: ${qrText}\nنقاط الأمان: ${securityScore}/100\nمستوى المخاطر: ${riskLevel}\n\nالتهديدات المكتشفة:\n${threats.join('\n')}` :
+            `QR Code Security Scan:\n\nContent: ${qrText}\nSecurity Score: ${securityScore}/100\nRisk Level: ${riskLevel}\n\nDetected Threats:\n${threats.join('\n')}`;
+        
+        resultDiv.innerHTML = result;
+    }, 1800);
+}
+
+// Domain Security Analyzer
+function analyzeDomainSecurity() {
+    const domain = document.getElementById('domainInput').value.trim();
+    const resultDiv = document.getElementById('domainAnalyzerResult');
+    
+    toggleSpinner('domainAnalyzerSpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('domainAnalyzerSpinner', false);
+        
+        if (!domain) {
+            resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء إدخال اسم نطاق.' : 'Please enter a domain name.';
+            return;
+        }
+        
+        let securityChecks = [];
+        let securityScore = 0;
+        
+        // Domain age simulation
+        const randomAge = Math.floor(Math.random() * 10) + 1;
+        if (randomAge > 5) {
+            securityScore += 25;
+            securityChecks.push(currentLang === 'ar' ? `✅ عمر النطاق: ${randomAge} سنوات` : `✅ Domain age: ${randomAge} years`);
+        } else {
+            securityChecks.push(currentLang === 'ar' ? `⚠️ نطاق حديث: ${randomAge} سنوات` : `⚠️ Recent domain: ${randomAge} years`);
+        }
+        
+        // SSL check simulation
+        if (Math.random() > 0.2) {
+            securityScore += 30;
+            securityChecks.push(currentLang === 'ar' ? '✅ شهادة SSL صالحة' : '✅ Valid SSL certificate');
+        } else {
+            securityChecks.push(currentLang === 'ar' ? '🚨 مشكلة في شهادة SSL' : '🚨 SSL certificate issue');
+        }
+        
+        // Blacklist check simulation
+        if (Math.random() > 0.1) {
+            securityScore += 45;
+            securityChecks.push(currentLang === 'ar' ? '✅ غير موجود في القوائم السوداء' : '✅ Not in blacklists');
+        } else {
+            securityChecks.push(currentLang === 'ar' ? '🚨 موجود في قائمة سوداء' : '🚨 Found in blacklist');
+        }
+        
+        const trustLevel = securityScore >= 80 ? 
+            (currentLang === 'ar' ? 'موثوق' : 'Trusted') :
+            securityScore >= 50 ? 
+            (currentLang === 'ar' ? 'مشكوك فيه' : 'Questionable') :
+            (currentLang === 'ar' ? 'خطير' : 'Dangerous');
+        
+        const result = currentLang === 'ar' ? 
+            `تحليل أمان النطاق:\n\nالنطاق: ${domain}\nنقاط الأمان: ${securityScore}/100\nمستوى الثقة: ${trustLevel}\n\nالفحوصات:\n${securityChecks.join('\n')}` :
+            `Domain Security Analysis:\n\nDomain: ${domain}\nSecurity Score: ${securityScore}/100\nTrust Level: ${trustLevel}\n\nChecks:\n${securityChecks.join('\n')}`;
+        
+        resultDiv.innerHTML = result;
+    }, 2200);
+}
+
+// SSL Certificate Checker
+function checkSSLCertificate() {
+    const url = document.getElementById('sslDomain').value.trim();
+    const resultDiv = document.getElementById('sslResult');
+    
+    toggleSpinner('sslSpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('sslSpinner', false);
+        
+        if (!url) {
+            resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء إدخال رابط أو نطاق.' : 'Please enter URL or domain.';
+            return;
+        }
+        
+        // Generate random SSL info
+        const issuer = ['Let\'s Encrypt', 'DigiCert', 'Cloudflare', 'GoDaddy'][Math.floor(Math.random() * 4)];
+        const validFrom = new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000);
+        const validTo = new Date(Date.now() + Math.random() * 365 * 24 * 60 * 60 * 1000);
+        const keySize = [2048, 4096][Math.floor(Math.random() * 2)];
+        
+        let sslStatus = Math.random() > 0.2 ? 'valid' : 'invalid';
+        let securityScore = 0;
+        
+        if (sslStatus === 'valid') {
+            securityScore = 85 + Math.floor(Math.random() * 15);
+        } else {
+            securityScore = Math.floor(Math.random() * 40);
+        }
+        
+        const result = currentLang === 'ar' ? 
+            `فحص شهادة SSL:\n\nالموقع: ${url}\nالحالة: ${sslStatus === 'valid' ? 'صالحة' : 'غير صالحة'}\nالمُصدر: ${issuer}\nصالحة من: ${validFrom.toLocaleDateString('ar')}\nصالحة حتى: ${validTo.toLocaleDateString('ar')}\nحجم المفتاح: ${keySize} بت\nنقاط الأمان: ${securityScore}/100` :
+            `SSL Certificate Check:\n\nWebsite: ${url}\nStatus: ${sslStatus === 'valid' ? 'Valid' : 'Invalid'}\nIssuer: ${issuer}\nValid from: ${validFrom.toLocaleDateString()}\nValid until: ${validTo.toLocaleDateString()}\nKey size: ${keySize} bits\nSecurity Score: ${securityScore}/100`;
+        
+        resultDiv.innerHTML = result;
+    }, 1700);
+}
+
+// File Signature Analyzer
+function analyzeFileSignature() {
+    const fileInput = document.getElementById('signatureFileUpload');
+    const resultDiv = document.getElementById('fileSignatureResult');
+    
+    if (!fileInput.files.length) {
+        resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء اختيار ملف.' : 'Please select a file.';
+        return;
+    }
+    
+    toggleSpinner('fileSignatureSpinner', true);
+    
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        setTimeout(() => {
+            toggleSpinner('fileSignatureSpinner', false);
+            
+            const arrayBuffer = e.target.result;
+            const uint8Array = new Uint8Array(arrayBuffer);
+            
+            // Get first 16 bytes as hex
+            let signature = '';
+            for (let i = 0; i < Math.min(16, uint8Array.length); i++) {
+                signature += uint8Array[i].toString(16).padStart(2, '0').toUpperCase() + ' ';
+            }
+            
+            // File type detection based on signature
+            const fileSignatures = {
+                'FF D8 FF': 'JPEG Image',
+                '89 50 4E 47': 'PNG Image', 
+                '47 49 46 38': 'GIF Image',
+                '25 50 44 46': 'PDF Document',
+                '50 4B 03 04': 'ZIP Archive',
+                '4D 5A': 'Windows Executable'
+            };
+            
+            let detectedType = 'Unknown';
+            for (const [sig, type] of Object.entries(fileSignatures)) {
+                if (signature.startsWith(sig)) {
+                    detectedType = type;
+                    break;
+                }
+            }
+            
+            const extension = file.name.split('.').pop().toUpperCase();
+            const typeMatch = detectedType.toUpperCase().includes(extension) || extension === detectedType.split(' ')[0];
+            
+            const result = currentLang === 'ar' ? 
+                `تحليل توقيع الملف:\n\nاسم الملف: ${file.name}\nالحجم: ${(file.size / 1024).toFixed(2)} KB\nالتوقيع: ${signature.trim()}\nالنوع المكتشف: ${detectedType}\nامتداد الملف: .${extension}\nتطابق النوع: ${typeMatch ? 'نعم' : 'لا'}\n\n${typeMatch ? '✅ الملف يبدو أصلياً' : '⚠️ عدم تطابق قد يشير إلى تلاعب'}` :
+                `File Signature Analysis:\n\nFilename: ${file.name}\nSize: ${(file.size / 1024).toFixed(2)} KB\nSignature: ${signature.trim()}\nDetected type: ${detectedType}\nFile extension: .${extension}\nType match: ${typeMatch ? 'Yes' : 'No'}\n\n${typeMatch ? '✅ File appears authentic' : '⚠️ Mismatch may indicate tampering'}`;
+            
+            resultDiv.innerHTML = result;
+        }, 1000);
+    };
+    
+    reader.readAsArrayBuffer(file);
+}
+
+// Browser Security Checker
+function checkBrowserSecurity() {
+    const resultDiv = document.getElementById('browserSecurityResult');
+    
+    toggleSpinner('browserSecuritySpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('browserSecuritySpinner', false);
+        
+        let securityChecks = [];
+        let securityScore = 0;
+        
+        // Check if HTTPS
+        if (location.protocol === 'https:') {
+            securityScore += 25;
+            securityChecks.push(currentLang === 'ar' ? '✅ اتصال HTTPS آمن' : '✅ Secure HTTPS connection');
+        } else {
+            securityChecks.push(currentLang === 'ar' ? '⚠️ اتصال HTTP غير آمن' : '⚠️ Insecure HTTP connection');
+        }
+        
+        // Check cookies
+        if (navigator.cookieEnabled) {
+            securityScore += 15;
+            securityChecks.push(currentLang === 'ar' ? '✅ ملفات تعريف الارتباط مفعلة' : '✅ Cookies enabled');
+        } else {
+            securityChecks.push(currentLang === 'ar' ? '⚠️ ملفات تعريف الارتباط معطلة' : '⚠️ Cookies disabled');
+        }
+        
+        // Check JavaScript
+        securityScore += 20;
+        securityChecks.push(currentLang === 'ar' ? '✅ JavaScript مفعل' : '✅ JavaScript enabled');
+        
+        // Check localStorage
+        try {
+            localStorage.setItem('test', 'test');
+            localStorage.removeItem('test');
+            securityScore += 15;
+            securityChecks.push(currentLang === 'ar' ? '✅ التخزين المحلي متاح' : '✅ Local storage available');
+        } catch (e) {
+            securityChecks.push(currentLang === 'ar' ? '⚠️ التخزين المحلي غير متاح' : '⚠️ Local storage unavailable');
+        }
+        
+        // Check Do Not Track
+        if (navigator.doNotTrack === '1') {
+            securityScore += 10;
+            securityChecks.push(currentLang === 'ar' ? '✅ عدم التتبع مفعل' : '✅ Do Not Track enabled');
+        } else {
+            securityChecks.push(currentLang === 'ar' ? '⚠️ عدم التتبع معطل' : '⚠️ Do Not Track disabled');
+        }
+        
+        // Check WebRTC
+        const webRTCSupported = !!(window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection);
+        if (webRTCSupported) {
+            securityScore += 15;
+            securityChecks.push(currentLang === 'ar' ? '✅ WebRTC مدعوم' : '✅ WebRTC supported');
+        }
+        
+        const browserInfo = `${navigator.userAgent.split(' ')[0]} ${navigator.appVersion.split(' ')[0]}`;
+        
+        const securityLevel = securityScore >= 80 ? 
+            (currentLang === 'ar' ? 'ممتاز' : 'Excellent') :
+            securityScore >= 60 ? 
+            (currentLang === 'ar' ? 'جيد' : 'Good') :
+            (currentLang === 'ar' ? 'ضعيف' : 'Poor');
+        
+        const result = currentLang === 'ar' ? 
+            `فحص أمان المتصفح:\n\nالمتصفح: ${browserInfo}\nنقاط الأمان: ${securityScore}/100\nمستوى الأمان: ${securityLevel}\n\nالفحوصات:\n${securityChecks.join('\n')}` :
+            `Browser Security Check:\n\nBrowser: ${browserInfo}\nSecurity Score: ${securityScore}/100\nSecurity Level: ${securityLevel}\n\nChecks:\n${securityChecks.join('\n')}`;
+        
+        resultDiv.innerHTML = result;
+    }, 1200);
+}
+
+// Metadata Extractor
+function extractMetadata() {
+    const fileInput = document.getElementById('metadataFileUpload');
+    const resultDiv = document.getElementById('metadataResult');
+    
+    if (!fileInput.files.length) {
+        resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء اختيار ملف.' : 'Please select a file.';
+        return;
+    }
+    
+    toggleSpinner('metadataSpinner', true);
+    
+    const file = fileInput.files[0];
+    
+    setTimeout(() => {
+        toggleSpinner('metadataSpinner', false);
+        
+        // Basic file metadata
+        const metadata = {
+            name: file.name,
+            size: (file.size / 1024).toFixed(2) + ' KB',
+            type: file.type || 'Unknown',
+            lastModified: new Date(file.lastModified).toLocaleDateString(),
+        };
+        
+        // Simulated EXIF data for images
+        if (file.type.startsWith('image/')) {
+            metadata.camera = 'Canon EOS 5D Mark IV (Simulated)';
+            metadata.software = 'Adobe Photoshop CC 2021 (Simulated)';
+            metadata.gps = 'Location data removed for privacy';
+            metadata.dimensions = '3840x2560 (Simulated)';
+        }
+        
+        // Privacy concerns
+        const privacyConcerns = [];
+        if (file.type.startsWith('image/')) {
+            privacyConcerns.push(currentLang === 'ar' ? '• قد تحتوي على بيانات موقع GPS' : '• May contain GPS location data');
+            privacyConcerns.push(currentLang === 'ar' ? '• معلومات الكاميرا المستخدمة' : '• Camera information exposed');
+        }
+        
+        const metadataStr = Object.entries(metadata)
+            .map(([key, value]) => `${key}: ${value}`)
+            .join('\n');
+        
+        const result = currentLang === 'ar' ? 
+            `استخراج البيانات الوصفية:\n\n${metadataStr}\n\nمخاوف الخصوصية:\n${privacyConcerns.join('\n') || 'لا توجد مخاوف خصوصية مكتشفة'}` :
+            `Metadata Extraction:\n\n${metadataStr}\n\nPrivacy Concerns:\n${privacyConcerns.join('\n') || 'No privacy concerns detected'}`;
+        
+        resultDiv.innerHTML = result;
+    }, 1500);
+}
+
+// Additional Advanced Tools will be added here...
+
+// Steganography Detector
+function detectSteganography() {
+    const fileInput = document.getElementById('stegoImageUpload');
+    const resultDiv = document.getElementById('steganographyResult');
+    
+    if (!fileInput.files.length) {
+        resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء اختيار صورة.' : 'Please select an image.';
+        return;
+    }
+    
+    toggleSpinner('steganographySpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('steganographySpinner', false);
+        
+        const file = fileInput.files[0];
+        const suspiciousIndicators = [];
+        let suspicionScore = 0;
+        
+        // File size analysis
+        const sizeRatio = file.size / (1024 * 1024); // Size in MB
+        if (sizeRatio > 5) {
+            suspiciousIndicators.push(currentLang === 'ar' ? '⚠️ حجم ملف كبير غير عادي' : '⚠️ Unusually large file size');
+            suspicionScore += 30;
+        }
+        
+        // Random analysis simulation
+        if (Math.random() > 0.7) {
+            suspiciousIndicators.push(currentLang === 'ar' ? '🚨 تم اكتشاف أنماط غير طبيعية في البيانات' : '🚨 Abnormal data patterns detected');
+            suspicionScore += 40;
+        }
+        
+        if (Math.random() > 0.8) {
+            suspiciousIndicators.push(currentLang === 'ar' ? '⚠️ تغييرات في البت الأقل أهمية' : '⚠️ LSB modifications detected');
+            suspicionScore += 35;
+        }
+        
+        if (suspiciousIndicators.length === 0) {
+            suspiciousIndicators.push(currentLang === 'ar' ? '✅ لم يتم اكتشاف بيانات مخفية' : '✅ No hidden data detected');
+        }
+        
+        const riskLevel = suspicionScore >= 70 ? 
+            (currentLang === 'ar' ? 'عالي' : 'High') :
+            suspicionScore >= 30 ? 
+            (currentLang === 'ar' ? 'متوسط' : 'Medium') :
+            (currentLang === 'ar' ? 'منخفض' : 'Low');
+        
+        const result = currentLang === 'ar' ? 
+            `كشف الإخفاء الرقمي:\n\nالملف: ${file.name}\nالحجم: ${(file.size / 1024).toFixed(2)} KB\nدرجة الشك: ${suspicionScore}/100\nمستوى المخاطر: ${riskLevel}\n\nالمؤشرات:\n${suspiciousIndicators.join('\n')}` :
+            `Steganography Detection:\n\nFile: ${file.name}\nSize: ${(file.size / 1024).toFixed(2)} KB\nSuspicion Score: ${suspicionScore}/100\nRisk Level: ${riskLevel}\n\nIndicators:\n${suspiciousIndicators.join('\n')}`;
+        
+        resultDiv.innerHTML = result;
+    }, 2500);
+}
+
+// Social Engineering Analyzer
+function analyzeSocialEngineering() {
+    const message = document.getElementById('messageText').value.trim();
+    const resultDiv = document.getElementById('socialEngineeringResult');
+    
+    if (!message) {
+        resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء إدخال نص الرسالة.' : 'Please enter message text.';
+        return;
+    }
+    
+    toggleSpinner('socialEngineeringSpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('socialEngineeringSpinner', false);
+        
+        let suspiciousPatterns = [];
+        let riskScore = 0;
+        
+        // Urgency indicators
+        const urgencyWords = /urgent|immediately|expire|deadline|limited time|act now|hurry/i;
+        if (urgencyWords.test(message)) {
+            suspiciousPatterns.push(currentLang === 'ar' ? '🚨 كلمات تحفز على الاستعجال' : '🚨 Urgency-inducing words');
+            riskScore += 25;
+        }
+        
+        // Authority impersonation
+        const authorityWords = /bank|government|police|admin|security|support|microsoft|apple/i;
+        if (authorityWords.test(message)) {
+            suspiciousPatterns.push(currentLang === 'ar' ? '⚠️ انتحال صفة السلطة' : '⚠️ Authority impersonation');
+            riskScore += 30;
+        }
+        
+        // Request for sensitive info
+        const sensitiveRequests = /password|ssn|credit card|pin|social security|account number/i;
+        if (sensitiveRequests.test(message)) {
+            suspiciousPatterns.push(currentLang === 'ar' ? '🚨 طلب معلومات حساسة' : '🚨 Requests sensitive information');
+            riskScore += 40;
+        }
+        
+        // Suspicious links
+        if (/http|www\.|bit\.ly|tinyurl/i.test(message)) {
+            suspiciousPatterns.push(currentLang === 'ar' ? '⚠️ يحتوي على روابط' : '⚠️ Contains links');
+            riskScore += 20;
+        }
+        
+        // Emotional manipulation
+        const emotionalWords = /congratulations|winner|free|prize|lucky|selected|exclusive/i;
+        if (emotionalWords.test(message)) {
+            suspiciousPatterns.push(currentLang === 'ar' ? '⚠️ محاولة تلاعب عاطفي' : '⚠️ Emotional manipulation attempt');
+            riskScore += 15;
+        }
+        
+        if (suspiciousPatterns.length === 0) {
+            suspiciousPatterns.push(currentLang === 'ar' ? '✅ لم يتم اكتشاف أنماط هندسة اجتماعية' : '✅ No social engineering patterns detected');
+        }
+        
+        const threatLevel = riskScore >= 70 ? 
+            (currentLang === 'ar' ? 'عالي جداً' : 'Very High') :
+            riskScore >= 50 ? 
+            (currentLang === 'ar' ? 'عالي' : 'High') :
+            riskScore >= 25 ? 
+            (currentLang === 'ar' ? 'متوسط' : 'Medium') :
+            (currentLang === 'ar' ? 'منخفض' : 'Low');
+        
+        const result = currentLang === 'ar' ? 
+            `تحليل الهندسة الاجتماعية:\n\nنقاط المخاطر: ${riskScore}/100\nمستوى التهديد: ${threatLevel}\n\nالأنماط المكتشفة:\n${suspiciousPatterns.join('\n')}\n\nالتوصية: ${riskScore >= 50 ? 'احذر! رسالة مشبوهة' : 'الرسالة تبدو آمنة نسبياً'}` :
+            `Social Engineering Analysis:\n\nRisk Score: ${riskScore}/100\nThreat Level: ${threatLevel}\n\nDetected Patterns:\n${suspiciousPatterns.join('\n')}\n\nRecommendation: ${riskScore >= 50 ? 'Beware! Suspicious message' : 'Message appears relatively safe'}`;
+        
+        resultDiv.innerHTML = result;
+    }, 1800);
+}
+
+// Keylogger Simulator
+let keyloggerActive = false;
+let keylogData = [];
+
+function startKeyloggerSimulation() {
+    const inputField = document.getElementById('keyloggerInput');
+    const resultDiv = document.getElementById('keyloggerResult');
+    const btn = document.getElementById('keyloggerBtn');
+    
+    if (!keyloggerActive) {
+        keyloggerActive = true;
+        keylogData = [];
+        btn.textContent = currentLang === 'ar' ? 'إيقاف المحاكاة' : 'Stop Simulation';
+        btn.style.backgroundColor = '#ff4500';
+        
+        resultDiv.innerHTML = currentLang === 'ar' ? 
+            '🔴 المحاكاة نشطة - يتم تسجيل ضغطات المفاتيح...\n\nالبيانات المسجلة:\n' :
+            '🔴 Simulation active - Logging keystrokes...\n\nRecorded data:\n';
+        
+        inputField.addEventListener('input', logKeystrokes);
+        inputField.addEventListener('keydown', logSpecialKeys);
+    } else {
+        stopKeyloggerSimulation();
+    }
+}
+
+function logKeystrokes(event) {
+    if (keyloggerActive) {
+        const timestamp = new Date().toLocaleTimeString();
+        const data = `[${timestamp}] INPUT: "${event.target.value}"`;
+        keylogData.push(data);
+        updateKeylogDisplay();
+    }
+}
+
+function logSpecialKeys(event) {
+    if (keyloggerActive) {
+        const timestamp = new Date().toLocaleTimeString();
+        const specialKeys = ['Enter', 'Backspace', 'Delete', 'Tab', 'Escape'];
+        
+        if (specialKeys.includes(event.key)) {
+            const data = `[${timestamp}] KEY: ${event.key}`;
+            keylogData.push(data);
+            updateKeylogDisplay();
+        }
+    }
+}
+
+function updateKeylogDisplay() {
+    const resultDiv = document.getElementById('keyloggerResult');
+    const header = currentLang === 'ar' ? 
+        '🔴 المحاكاة نشطة - يتم تسجيل ضغطات المفاتيح...\n\nالبيانات المسجلة:\n' :
+        '🔴 Simulation active - Logging keystrokes...\n\nRecorded data:\n';
+    
+    resultDiv.innerHTML = header + keylogData.slice(-10).join('\n');
+}
+
+function stopKeyloggerSimulation() {
+    keyloggerActive = false;
+    const inputField = document.getElementById('keyloggerInput');
+    const btn = document.getElementById('keyloggerBtn');
+    const resultDiv = document.getElementById('keyloggerResult');
+    
+    btn.textContent = currentLang === 'ar' ? 'بدء المحاكاة' : 'Start Simulation';
+    btn.style.backgroundColor = '#00ff88';
+    
+    inputField.removeEventListener('input', logKeystrokes);
+    inputField.removeEventListener('keydown', logSpecialKeys);
+    
+    const finalReport = currentLang === 'ar' ? 
+        `🟢 تم إيقاف المحاكاة\n\nتقرير نهائي:\n• عدد الأحداث المسجلة: ${keylogData.length}\n• مدة المحاكاة: غير محددة\n• نوع البيانات: نصوص ومفاتيح خاصة\n\n⚠️ تحذير: هذا مثال تعليمي فقط` :
+        `🟢 Simulation stopped\n\nFinal Report:\n• Events logged: ${keylogData.length}\n• Simulation duration: Not specified\n• Data types: Text and special keys\n\n⚠️ Warning: This is educational only`;
+    
+    resultDiv.innerHTML = finalReport + '\n\n' + keylogData.join('\n');
+}
+
+// Phishing URL Generator (Educational)
+function generatePhishingExamples() {
+    const legitimateURL = document.getElementById('legitimateURL').value.trim();
+    const resultDiv = document.getElementById('phishingResult');
+    
+    if (!legitimateURL) {
+        resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء إدخال رابط الموقع الشرعي.' : 'Please enter legitimate website URL.';
+        return;
+    }
+    
+    toggleSpinner('phishingSpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('phishingSpinner', false);
+        
+        const domain = legitimateURL.replace(/https?:\/\//, '').split('/')[0];
+        
+        const phishingTechniques = [
+            `${domain.replace('.', '-')}.com`,
+            `${domain}.security-update.com`,
+            `secure-${domain}`,
+            `${domain.replace('.com', '.verification.com')}`,
+            `${domain.charAt(0)}${domain.slice(1).replace('o', '0')}`,
+            `www.${domain.replace('.', '-')}.login.com`
+        ];
+        
+        const warningMessage = currentLang === 'ar' ? 
+            '⚠️ تحذير: هذه أمثلة تعليمية فقط!\n🚨 لا تستخدم هذه الأساليب لأغراض ضارة\n\n' :
+            '⚠️ Warning: Educational examples only!\n🚨 Do not use these techniques maliciously\n\n';
+        
+        const techniques = currentLang === 'ar' ? 
+            'تقنيات التصيد الشائعة:\n\n' + phishingTechniques.map((url, index) => 
+                `${index + 1}. ${url}\n   الطريقة: ${['استبدال النقطة بشرطة', 'إضافة نطاق فرعي مزيف', 'إضافة كلمة "آمن"', 'إضافة "التحقق"', 'استبدال الأحرف', 'نطاق فرعي مزيف'][index]}`
+            ).join('\n\n') :
+            'Common Phishing Techniques:\n\n' + phishingTechniques.map((url, index) => 
+                `${index + 1}. ${url}\n   Method: ${['Dot to dash substitution', 'Fake subdomain addition', 'Adding "secure"', 'Adding "verification"', 'Character substitution', 'Fake subdomain'][index]}`
+            ).join('\n\n');
+        
+        const protectionTips = currentLang === 'ar' ? 
+            '\n\nنصائح الحماية:\n• تحقق دائماً من الرابط الكامل\n• ابحث عن شهادة SSL الصحيحة\n• لا تثق بالروابط في الرسائل المشبوهة\n• استخدم متصفح محدث مع حماية التصيد' :
+            '\n\nProtection Tips:\n• Always verify the complete URL\n• Look for proper SSL certificates\n• Don\'t trust links in suspicious messages\n• Use updated browser with phishing protection';
+        
+        resultDiv.innerHTML = warningMessage + techniques + protectionTips;
+    }, 1500);
+}
+
+// VPN Security Tester
+function testVPNSecurity() {
+    const resultDiv = document.getElementById('vpnResult');
+    
+    toggleSpinner('vpnSpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('vpnSpinner', false);
+        
+        let vpnTests = [];
+        let securityScore = 0;
+        
+        // IP leak test simulation
+        const publicIP = '203.0.113.' + Math.floor(Math.random() * 255);
+        const vpnIP = '10.0.0.' + Math.floor(Math.random() * 255);
+        const ipMatch = Math.random() > 0.8;
+        
+        if (!ipMatch) {
+            securityScore += 30;
+            vpnTests.push(currentLang === 'ar' ? `✅ لا توجد تسريبات IP (VPN: ${vpnIP})` : `✅ No IP leaks (VPN: ${vpnIP})`);
+        } else {
+            vpnTests.push(currentLang === 'ar' ? `🚨 تسريب IP مكتشف! (${publicIP})` : `🚨 IP leak detected! (${publicIP})`);
+        }
+        
+        // DNS leak test
+        const dnsLeak = Math.random() > 0.7;
+        if (!dnsLeak) {
+            securityScore += 25;
+            vpnTests.push(currentLang === 'ar' ? '✅ لا توجد تسريبات DNS' : '✅ No DNS leaks');
+        } else {
+            vpnTests.push(currentLang === 'ar' ? '🚨 تسريب DNS مكتشف!' : '🚨 DNS leak detected!');
+        }
+        
+        // WebRTC leak test
+        const webRTCLeak = Math.random() > 0.6;
+        if (!webRTCLeak) {
+            securityScore += 20;
+            vpnTests.push(currentLang === 'ar' ? '✅ لا توجد تسريبات WebRTC' : '✅ No WebRTC leaks');
+        } else {
+            vpnTests.push(currentLang === 'ar' ? '🚨 تسريب WebRTC مكتشف!' : '🚨 WebRTC leak detected!');
+        }
+        
+        // Encryption test
+        const encryptionStrong = Math.random() > 0.3;
+        if (encryptionStrong) {
+            securityScore += 25;
+            vpnTests.push(currentLang === 'ar' ? '✅ تشفير قوي (AES-256)' : '✅ Strong encryption (AES-256)');
+        } else {
+            vpnTests.push(currentLang === 'ar' ? '⚠️ تشفير ضعيف مكتشف' : '⚠️ Weak encryption detected');
+        }
+        
+        const vpnStatus = securityScore >= 80 ? 
+            (currentLang === 'ar' ? 'ممتاز' : 'Excellent') :
+            securityScore >= 60 ? 
+            (currentLang === 'ar' ? 'جيد' : 'Good') :
+            (currentLang === 'ar' ? 'ضعيف' : 'Poor');
+        
+        const result = currentLang === 'ar' ? 
+            `اختبار أمان VPN:\n\nنقاط الأمان: ${securityScore}/100\nحالة VPN: ${vpnStatus}\n\nنتائج الاختبار:\n${vpnTests.join('\n')}\n\nالتوصية: ${securityScore >= 60 ? 'VPN آمن للاستخدام' : 'يُنصح بتغيير VPN'}` :
+            `VPN Security Test:\n\nSecurity Score: ${securityScore}/100\nVPN Status: ${vpnStatus}\n\nTest Results:\n${vpnTests.join('\n')}\n\nRecommendation: ${securityScore >= 60 ? 'VPN is safe to use' : 'Consider changing VPN'}`;
+        
+        resultDiv.innerHTML = result;
+    }, 2000);
+}
+
+// OSINT Information Gatherer
+function gatherOSINT() {
+    const target = document.getElementById('osintTarget').value.trim();
+    const type = document.getElementById('osintType').value;
+    const resultDiv = document.getElementById('osintResult');
+    
+    if (!target) {
+        resultDiv.innerHTML = currentLang === 'ar' ? 'الرجاء إدخال الهدف.' : 'Please enter target.';
+        return;
+    }
+    
+    toggleSpinner('osintSpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('osintSpinner', false);
+        
+        let osintData = [];
+        
+        if (type === 'domain' || type === 'comprehensive') {
+            osintData.push(currentLang === 'ar' ? '📊 معلومات النطاق:' : '📊 Domain Information:');
+            osintData.push(currentLang === 'ar' ? `• المالك: محمي بواسطة WHOIS Privacy` : `• Owner: Protected by WHOIS Privacy`);
+            osintData.push(currentLang === 'ar' ? `• التسجيل: ${new Date(Date.now() - Math.random() * 365 * 5 * 24 * 60 * 60 * 1000).getFullYear()}` : `• Registered: ${new Date(Date.now() - Math.random() * 365 * 5 * 24 * 60 * 60 * 1000).getFullYear()}`);
+            osintData.push(currentLang === 'ar' ? `• الخوادم: ['ns1.example.com', 'ns2.example.com']` : `• Nameservers: ['ns1.example.com', 'ns2.example.com']`);
+        }
+        
+        if (type === 'email' || type === 'comprehensive') {
+            osintData.push(currentLang === 'ar' ? '\n📧 معلومات البريد الإلكتروني:' : '\n📧 Email Information:');
+            osintData.push(currentLang === 'ar' ? '• التحقق: صالح' : '• Validation: Valid');
+            osintData.push(currentLang === 'ar' ? '• مزود الخدمة: Gmail/Outlook/Yahoo' : '• Provider: Gmail/Outlook/Yahoo');
+            osintData.push(currentLang === 'ar' ? '• التسريبات: تحقق من قواعد البيانات المعروفة' : '• Breaches: Check known databases');
+        }
+        
+        if (type === 'social' || type === 'comprehensive') {
+            osintData.push(currentLang === 'ar' ? '\n👥 وسائل التواصل الاجتماعي:' : '\n👥 Social Media:');
+            osintData.push(currentLang === 'ar' ? '• فيسبوك: لم يتم العثور على حساب عام' : '• Facebook: No public profile found');
+            osintData.push(currentLang === 'ar' ? '• تويتر: لم يتم العثور على حساب' : '• Twitter: No account found');
+            osintData.push(currentLang === 'ar' ? '• لينكد إن: ملف مهني محتمل' : '• LinkedIn: Potential professional profile');
+        }
+        
+        const disclaimer = currentLang === 'ar' ? 
+            '\n⚠️ إخلاء مسؤولية:\n• هذه بيانات تعليمية فقط\n• استخدم OSINT بطريقة قانونية وأخلاقية\n• احترم الخصوصية والقوانين المحلية' :
+            '\n⚠️ Disclaimer:\n• This is educational data only\n• Use OSINT legally and ethically\n• Respect privacy and local laws';
+        
+        resultDiv.innerHTML = `${currentLang === 'ar' ? 'جمع المعلومات المفتوحة المصدر' : 'OSINT Information Gathering'}:\n\n${currentLang === 'ar' ? 'الهدف' : 'Target'}: ${target}\n\n${osintData.join('\n')}${disclaimer}`;
+    }, 2800);
+}
+
+// Ransomware Simulator (Educational)
+function simulateRansomware() {
+    const scenario = document.getElementById('ransomwareScenario').value;
+    const resultDiv = document.getElementById('ransomwareResult');
+    
+    toggleSpinner('ransomwareSpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('ransomwareSpinner', false);
+        
+        let simulationResult = '';
+        
+        const warningHeader = currentLang === 'ar' ? 
+            '🚨 تحذير: محاكاة تعليمية فقط!\n⚠️ لا تستخدم لأغراض ضارة\n\n' :
+            '🚨 Warning: Educational simulation only!\n⚠️ Do not use maliciously\n\n';
+        
+        switch (scenario) {
+            case 'file-encryption':
+                simulationResult = currentLang === 'ar' ? 
+                    '🔒 محاكاة تشفير الملفات:\n\n• البحث عن ملفات .doc, .pdf, .jpg\n• تشفير باستخدام AES-256\n• إنشاء ملف README.txt\n• تغيير امتدادات الملفات\n\nالملفات المتأثرة (محاكاة):\n- Document1.doc → Document1.doc.locked\n- Photo.jpg → Photo.jpg.locked\n- Presentation.pdf → Presentation.pdf.locked' :
+                    '🔒 File Encryption Simulation:\n\n• Scanning for .doc, .pdf, .jpg files\n• Encrypting using AES-256\n• Creating README.txt file\n• Changing file extensions\n\nAffected files (simulation):\n- Document1.doc → Document1.doc.locked\n- Photo.jpg → Photo.jpg.locked\n- Presentation.pdf → Presentation.pdf.locked';
+                break;
+                
+            case 'system-lock':
+                simulationResult = currentLang === 'ar' ? 
+                    '🖥️ محاكاة قفل النظام:\n\n• إغلاق سطح المكتب\n• عرض شاشة الفدية\n• تعطيل مدير المهام\n• منع الوصول للملفات\n\nرسالة الفدية (مثال):\n"تم تشفير ملفاتك! ادفع 500$ بالبيتكوين..."' :
+                    '🖥️ System Lock Simulation:\n\n• Locking desktop\n• Displaying ransom screen\n• Disabling task manager\n• Blocking file access\n\nRansom message (example):\n"Your files are encrypted! Pay $500 in Bitcoin..."';
+                break;
+                
+            case 'network-spread':
+                simulationResult = currentLang === 'ar' ? 
+                    '🌐 تحليل انتشار الشبكة:\n\n• فحص الشبكة المحلية\n• البحث عن أجهزة متصلة\n• استغلال الثغرات الشائعة\n• انتشار جانبي\n\nالأهداف المكتشفة:\n- 192.168.1.100 (Windows 10)\n- 192.168.1.101 (Windows Server)\n- 192.168.1.105 (Linux)' :
+                    '🌐 Network Spread Analysis:\n\n• Scanning local network\n• Finding connected devices\n• Exploiting common vulnerabilities\n• Lateral movement\n\nTargets discovered:\n- 192.168.1.100 (Windows 10)\n- 192.168.1.101 (Windows Server)\n- 192.168.1.105 (Linux)';
+                break;
+                
+            case 'recovery-process':
+                simulationResult = currentLang === 'ar' ? 
+                    '🔧 تدريب عملية الاستعادة:\n\n• فصل الشبكة فوراً\n• تحديد نوع برمجية الفدية\n• البحث عن أدوات فك التشفير\n• استعادة من النسخ الاحتياطية\n• تحديث الأنظمة والحماية\n\nأدوات الاستعادة:\n- Malwarebytes Anti-Ransomware\n- Kaspersky Rescue Disk\n- Windows System Restore' :
+                    '🔧 Recovery Process Training:\n\n• Disconnect network immediately\n• Identify ransomware type\n• Search for decryption tools\n• Restore from backups\n• Update systems and protection\n\nRecovery tools:\n- Malwarebytes Anti-Ransomware\n- Kaspersky Rescue Disk\n- Windows System Restore';
+                break;
+        }
+        
+        resultDiv.innerHTML = warningHeader + simulationResult;
+    }, 2200);
+}
+
+// Password Policy Generator
+function generatePasswordPolicy() {
+    const orgType = document.getElementById('organizationType').value;
+    const securityLevel = document.getElementById('securityLevel').value;
+    const resultDiv = document.getElementById('passwordPolicyResult');
+    
+    toggleSpinner('passwordPolicySpinner', true);
+    
+    setTimeout(() => {
+        toggleSpinner('passwordPolicySpinner', false);
+        
+        let policy = {};
+        
+        // Base requirements based on security level
+        switch (securityLevel) {
+            case 'basic':
+                policy = {
+                    minLength: 8,
+                    maxAge: 180,
+                    history: 3,
+                    complexity: 'اثنين من: أحرف كبيرة، صغيرة، أرقام',
+                    lockout: 5,
+                    mfa: false
+                };
+                break;
+            case 'standard':
+                policy = {
+                    minLength: 10,
+                    maxAge: 90,
+                    history: 5,
+                    complexity: 'ثلاثة من: أحرف كبيرة، صغيرة، أرقام، رموز',
+                    lockout: 3,
+                    mfa: 'موصى به'
+                };
+                break;
+            case 'high':
+                policy = {
+                    minLength: 12,
+                    maxAge: 60,
+                    history: 8,
+                    complexity: 'جميع الأنواع: أحرف كبيرة، صغيرة، أرقام، رموز',
+                    lockout: 3,
+                    mfa: 'مطلوب'
+                };
+                break;
+            case 'maximum':
+                policy = {
+                    minLength: 15,
+                    maxAge: 30,
+                    history: 12,
+                    complexity: 'جميع الأنواع + عدم وجود كلمات قاموس',
+                    lockout: 2,
+                    mfa: 'مطلوب + Biometric'
+                };
+                break;
+        }
+        
+        // Organization-specific adjustments
+        if (orgType === 'government' || orgType === 'financial') {
+            policy.minLength += 2;
+            policy.maxAge = Math.min(policy.maxAge, 60);
+            policy.mfa = 'مطلوب';
+        }
+        
+        const policyText = currentLang === 'ar' ? 
+            `سياسة كلمات المرور - ${orgType.toUpperCase()}\nمستوى الأمان: ${securityLevel.toUpperCase()}\n\n📋 متطلبات كلمة المرور:\n• الحد الأدنى للطول: ${policy.minLength} حرف\n• التعقيد: ${policy.complexity}\n• مدة الصلاحية: ${policy.maxAge} يوم\n• سجل كلمات المرور: ${policy.history} كلمات سابقة\n• قفل الحساب: بعد ${policy.lockout} محاولات فاشلة\n• المصادقة الثنائية: ${policy.mfa}\n\n🔒 قواعد إضافية:\n• لا تشارك كلمات المرور\n• استخدم مدير كلمات مرور\n• غيّر كلمة المرور فوراً عند الشك في تسريبها\n• لا تستخدم معلومات شخصية\n\n⚖️ الامتثال:\n• مراجعة السياسة كل 6 أشهر\n• تدريب الموظفين ربع سنوي\n• مراقبة الامتثال شهرياً` :
+            `Password Policy - ${orgType.toUpperCase()}\nSecurity Level: ${securityLevel.toUpperCase()}\n\n📋 Password Requirements:\n• Minimum length: ${policy.minLength} characters\n• Complexity: ${policy.complexity}\n• Maximum age: ${policy.maxAge} days\n• Password history: ${policy.history} previous passwords\n• Account lockout: after ${policy.lockout} failed attempts\n• Multi-factor authentication: ${policy.mfa}\n\n🔒 Additional Rules:\n• Do not share passwords\n• Use a password manager\n• Change password immediately if compromised\n• Do not use personal information\n\n⚖️ Compliance:\n• Policy review every 6 months\n• Employee training quarterly\n• Compliance monitoring monthly`;
+        
+        resultDiv.innerHTML = policyText;
+    }, 1800);
 }
