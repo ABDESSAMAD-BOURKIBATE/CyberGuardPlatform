@@ -47,6 +47,33 @@
         </div>
         
         <div class="controls-bar">
+            <!-- Dashboard Toggle -->
+            <div class="dashboard-toggle">
+                <button class="btn dashboard-btn" onclick="toggleDashboard()" data-en="Dashboard" data-ar="لوحة القيادة">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="#00ff88" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    </svg>
+                    لوحة القيادة
+                </button>
+            </div>
+            
+            <!-- Security Level Indicator -->
+            <div class="security-level">
+                <span class="security-label" data-en="Security Level" data-ar="مستوى الأمان">مستوى الأمان:</span>
+                <div class="security-indicator" id="securityIndicator">
+                    <div class="security-bar">
+                        <div class="security-progress" id="securityProgress"></div>
+                    </div>
+                    <span class="security-text" id="securityText">85%</span>
+                </div>
+            </div>
+            
+            <!-- Active Tools Counter -->
+            <div class="active-tools-counter">
+                <span class="counter-label" data-en="Active Tools" data-ar="الأدوات النشطة">الأدوات النشطة:</span>
+                <span class="counter-value" id="activeToolsCounter">0</span>
+            </div>
+            
             <div class="language-switcher">
                 <span data-en="Language" data-ar="اللغة">اللغة:</span>
                 <button class="lang-btn active" onclick="switchLanguage('ar')">العربية</button>
@@ -64,6 +91,88 @@
             </div>
         </div>
         
+        <!-- Advanced Dashboard -->
+        <div class="dashboard-overlay" id="dashboardOverlay">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h2 data-en="Security Dashboard" data-ar="لوحة قيادة الأمان">لوحة قيادة الأمان</h2>
+                    <button class="close-dashboard" onclick="toggleDashboard()">×</button>
+                </div>
+                
+                <div class="dashboard-content">
+                    <!-- Real-time Statistics -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">🛡️</div>
+                            <div class="stat-info">
+                                <h3 data-en="Tools Used" data-ar="الأدوات المستخدمة">الأدوات المستخدمة</h3>
+                                <span class="stat-value" id="toolsUsedCount">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">🔍</div>
+                            <div class="stat-info">
+                                <h3 data-en="Scans Performed" data-ar="عمليات الفحص">عمليات الفحص</h3>
+                                <span class="stat-value" id="scansPerformed">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">⚠️</div>
+                            <div class="stat-info">
+                                <h3 data-en="Threats Detected" data-ar="التهديدات المكتشفة">التهديدات المكتشفة</h3>
+                                <span class="stat-value" id="threatsDetected">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">⏱️</div>
+                            <div class="stat-info">
+                                <h3 data-en="Session Time" data-ar="وقت الجلسة">وقت الجلسة</h3>
+                                <span class="stat-value" id="sessionTime">00:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Analysis Chart -->
+                    <div class="chart-container">
+                        <h3 data-en="Security Analysis Overview" data-ar="نظرة عامة على تحليل الأمان">نظرة عامة على تحليل الأمان</h3>
+                        <div class="security-chart" id="securityChart">
+                            <div class="chart-segment" style="--percentage: 25%; --color: #ff4757;" data-label="High Risk"></div>
+                            <div class="chart-segment" style="--percentage: 35%; --color: #ffa502;" data-label="Medium Risk"></div>
+                            <div class="chart-segment" style="--percentage: 40%; --color: #2ed573;" data-label="Low Risk"></div>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #ff4757;"></span>
+                                <span data-en="High Risk" data-ar="مخاطر عالية">مخاطر عالية</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #ffa502;"></span>
+                                <span data-en="Medium Risk" data-ar="مخاطر متوسطة">مخاطر متوسطة</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #2ed573;"></span>
+                                <span data-en="Low Risk" data-ar="مخاطر منخفضة">مخاطر منخفضة</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activity -->
+                    <div class="activity-log">
+                        <h3 data-en="Recent Activity" data-ar="النشاط الأخير">النشاط الأخير</h3>
+                        <div class="activity-list" id="activityList">
+                            <div class="activity-item">
+                                <div class="activity-time">--:--</div>
+                                <div class="activity-text" data-en="Dashboard initialized" data-ar="تم تفعيل لوحة القيادة">تم تفعيل لوحة القيادة</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="tools-grid">
             <!-- Password Strength Analyzer -->
             <div class="tool-card">
@@ -737,6 +846,175 @@
                 <button class="btn" onclick="generatePasswordPolicy()" data-en="Generate Policy" data-ar="توليد السياسة">توليد السياسة</button>
                 <div class="result-box" id="passwordPolicyResult"><div class="loading-spinner" id="passwordPolicySpinner"></div></div>
                 <button class="btn copy-btn" onclick="copyResult('passwordPolicyResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Advanced AI Security Analyzer -->
+            <div class="tool-card" data-category="advanced">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+                    </svg>
+                    <span data-en="AI Security Analyzer" data-ar="محلل الأمان بالذكاء الاصطناعي">محلل الأمان بالذكاء الاصطناعي</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('aiSecurityAnalyzer')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <p data-en="AI-powered comprehensive security analysis using machine learning" data-ar="تحليل أمني شامل مدعوم بالذكاء الاصطناعي والتعلم الآلي">تحليل أمني شامل مدعوم بالذكاء الاصطناعي والتعلم الآلي</p>
+                <div class="input-group">
+                    <label for="aiAnalysisInput" data-en="Analysis Data:" data-ar="بيانات التحليل:">بيانات التحليل:</label>
+                    <input type="text" id="aiAnalysisInput" class="input-field" placeholder="أدخل البيانات للتحليل..." data-en-placeholder="Enter data for analysis..." data-ar-placeholder="أدخل البيانات للتحليل...">
+                </div>
+                <button class="btn" onclick="runAISecurityAnalysis()" data-en="Analyze with AI" data-ar="تحليل بالذكاء الاصطناعي">تحليل بالذكاء الاصطناعي</button>
+                <div class="result-box" id="aiAnalysisResult"><div class="loading-spinner" id="aiAnalysisSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('aiAnalysisResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Blockchain Security Validator -->
+            <div class="tool-card" data-category="blockchain">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2L1 7V17L12 22L23 17V7L12 2M12 4.84L19.85 8.5L12 12.16L4.15 8.5L12 4.84M3 9.48L11 13.3V20.04L3 16.22V9.48M13 20.04V13.3L21 9.48V16.22L13 20.04Z"/>
+                    </svg>
+                    <span data-en="Blockchain Security Validator" data-ar="مُتحقق أمان البلوك تشين">مُتحقق أمان البلوك تشين</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('blockchainValidator')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <p data-en="Validate blockchain transactions and smart contract security" data-ar="التحقق من معاملات البلوك تشين وأمان العقود الذكية">التحقق من معاملات البلوك تشين وأمان العقود الذكية</p>
+                <div class="input-group">
+                    <label for="blockchainInput" data-en="Wallet/Transaction:" data-ar="المحفظة/المعاملة:">المحفظة/المعاملة:</label>
+                    <input type="text" id="blockchainInput" class="input-field" placeholder="عنوان المحفظة أو hash المعاملة..." data-en-placeholder="Wallet address or transaction hash..." data-ar-placeholder="عنوان المحفظة أو hash المعاملة...">
+                </div>
+                <button class="btn" onclick="validateBlockchainSecurity()" data-en="Validate Security" data-ar="التحقق من الأمان">التحقق من الأمان</button>
+                <div class="result-box" id="blockchainResult"><div class="loading-spinner" id="blockchainSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('blockchainResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- IoT Device Scanner -->
+            <div class="tool-card" data-category="iot">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="IoT Device Security Scanner" data-ar="فاحص أمان أجهزة إنترنت الأشياء">فاحص أمان أجهزة إنترنت الأشياء</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('iotScanner')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <p data-en="Scan and assess security of IoT devices on your network" data-ar="فحص وتقييم أمان أجهزة إنترنت الأشياء في شبكتك">فحص وتقييم أمان أجهزة إنترنت الأشياء في شبكتك</p>
+                <div class="input-group">
+                    <label for="iotScanInput" data-en="Network Range:" data-ar="نطاق الشبكة:">نطاق الشبكة:</label>
+                    <input type="text" id="iotScanInput" class="input-field" placeholder="192.168.1.0/24" data-en-placeholder="Network range (e.g., 192.168.1.0/24)" data-ar-placeholder="نطاق الشبكة (مثال: 192.168.1.0/24)">
+                </div>
+                <button class="btn" onclick="scanIoTDevices()" data-en="Scan IoT Devices" data-ar="فحص أجهزة IoT">فحص أجهزة IoT</button>
+                <div class="result-box" id="iotScanResult"><div class="loading-spinner" id="iotScanSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('iotScanResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Cloud Security Auditor -->
+            <div class="tool-card" data-category="cloud">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12.65 10C11.83 7.67 9.61 6 7 6C3.69 6 1 8.69 1 12S3.69 18 7 18C7.34 18 7.68 17.97 8 17.92V16.85C7.68 16.94 7.34 17 7 17C4.24 17 2 14.76 2 12S4.24 7 7 7C9.76 7 12 9.24 12 12H13C13.55 12 14 12.45 14 13V14H12V16H14V18H15V19H21V13C21 11.35 19.65 10 18 10H12.65M15 14V13H18C19.1 13 20 13.9 20 15V18H16V15H15V14Z"/>
+                    </svg>
+                    <span data-en="Cloud Security Auditor" data-ar="مُدقق أمان الحوسبة السحابية">مُدقق أمان الحوسبة السحابية</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('cloudAuditor')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <p data-en="Audit cloud infrastructure security configurations" data-ar="تدقيق تكوينات أمان البنية التحتية السحابية">تدقيق تكوينات أمان البنية التحتية السحابية</p>
+                <div class="input-group">
+                    <label for="cloudProvider" data-en="Cloud Provider:" data-ar="مزود الخدمة:">مزود الخدمة:</label>
+                    <select id="cloudProvider" class="input-field">
+                        <option value="aws" data-en="Amazon AWS" data-ar="أمازون AWS">أمازون AWS</option>
+                        <option value="azure" data-en="Microsoft Azure" data-ar="مايكروسوفت Azure">مايكروسوفت Azure</option>
+                        <option value="gcp" data-en="Google Cloud Platform" data-ar="منصة جوجل السحابية">منصة جوجل السحابية</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="cloudResourceInput" data-en="Resource ID:" data-ar="معرف المورد:">معرف المورد:</label>
+                    <input type="text" id="cloudResourceInput" class="input-field" placeholder="معرف المورد السحابي..." data-en-placeholder="Cloud resource identifier..." data-ar-placeholder="معرف المورد السحابي...">
+                </div>
+                <button class="btn" onclick="auditCloudSecurity()" data-en="Audit Security" data-ar="تدقيق الأمان">تدقيق الأمان</button>
+                <div class="result-box" id="cloudAuditResult"><div class="loading-spinner" id="cloudAuditSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('cloudAuditResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Advanced Threat Intelligence -->
+            <div class="tool-card" data-category="intelligence">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h3l-4 4-4-4h3V7z"/>
+                    </svg>
+                    <span data-en="Threat Intelligence Analyzer" data-ar="محلل استخبارات التهديدات">محلل استخبارات التهديدات</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('threatIntelligence')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <p data-en="Real-time threat intelligence analysis and correlation" data-ar="تحليل استخبارات التهديدات في الوقت الفعلي والربط بينها">تحليل استخبارات التهديدات في الوقت الفعلي والربط بينها</p>
+                <div class="input-group">
+                    <label for="threatInput" data-en="Threat Indicator:" data-ar="مؤشر التهديد:">مؤشر التهديد:</label>
+                    <input type="text" id="threatInput" class="input-field" placeholder="IP, Hash, أو مؤشر تهديد..." data-en-placeholder="IP, Hash, or threat indicator..." data-ar-placeholder="IP, Hash, أو مؤشر تهديد...">
+                </div>
+                <button class="btn" onclick="analyzeThreatIntelligence()" data-en="Analyze Threat" data-ar="تحليل التهديد">تحليل التهديد</button>
+                <div class="result-box" id="threatAnalysisResult"><div class="loading-spinner" id="threatAnalysisSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('threatAnalysisResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Zero-Day Vulnerability Scanner -->
+            <div class="tool-card" data-category="vulnerability">
+                <div class="tool-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path fill="#00ff88" d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2M18 20H6V4H13V9H18V20Z"/>
+                    </svg>
+                    <span data-en="Zero-Day Vulnerability Scanner" data-ar="فاحص ثغرات اليوم صفر">فاحص ثغرات اليوم صفر</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('zeroDayScanner')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <p data-en="Advanced scanner for detecting zero-day vulnerabilities" data-ar="فاحص متقدم لاكتشاف ثغرات اليوم صفر">فاحص متقدم لاكتشاف ثغرات اليوم صفر</p>
+                <div class="input-group">
+                    <label for="zeroDateTarget" data-en="Scan Target:" data-ar="هدف الفحص:">هدف الفحص:</label>
+                    <input type="text" id="zeroDateTarget" class="input-field" placeholder="هدف الفحص (IP أو نطاق)..." data-en-placeholder="Scan target (IP or domain)..." data-ar-placeholder="هدف الفحص (IP أو نطاق)...">
+                </div>
+                <div class="scan-options">
+                    <label><input type="checkbox" id="deepScan" checked> <span data-en="Deep Scan" data-ar="فحص عميق">فحص عميق</span></label>
+                    <label><input type="checkbox" id="stealthMode"> <span data-en="Stealth Mode" data-ar="وضع التخفي">وضع التخفي</span></label>
+                </div>
+                <button class="btn" onclick="scanZeroDayVulns()" data-en="Start Scan" data-ar="بدء الفحص">بدء الفحص</button>
+                <div class="result-box" id="zeroDayScanResult"><div class="loading-spinner" id="zeroDayScanSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('zeroDayScanResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Advanced Cryptographic Analyzer -->
+            <div class="tool-card" data-category="crypto">
+                <div class="tool-title">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="#00ff88" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"/>
+                    </svg>
+                    <span data-en="Quantum-Resistant Crypto Analyzer" data-ar="محلل التشفير المقاوم للكمي">محلل التشفير المقاوم للكمي</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('quantumCrypto')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <p data-en="Analyze cryptographic implementations for quantum resistance" data-ar="تحليل تطبيقات التشفير لمقاومة الحوسبة الكمية">تحليل تطبيقات التشفير لمقاومة الحوسبة الكمية</p>
+                <div class="input-group">
+                    <label for="cryptoImplementation" data-en="Crypto Code/Key:" data-ar="الكود المشفر/المفتاح:">الكود المشفر/المفتاح:</label>
+                    <textarea id="cryptoImplementation" class="input-field" placeholder="أدخل الكود المشفر أو المفتاح للتحليل..." data-en-placeholder="Enter encrypted code or key for analysis..." data-ar-placeholder="أدخل الكود المشفر أو المفتاح للتحليل..."></textarea>
+                </div>
+                <button class="btn" onclick="analyzeQuantumResistance()" data-en="Analyze Quantum Resistance" data-ar="تحليل المقاومة الكمية">تحليل المقاومة الكمية</button>
+                <div class="result-box" id="quantumCryptoResult"><div class="loading-spinner" id="quantumCryptoSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('quantumCryptoResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
+            </div>
+            
+            <!-- Incident Response Simulator -->
+            <div class="tool-card" data-category="incident">
+                <div class="tool-title">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="#00ff88" d="M10,2H14A2,2 0 0,1 16,4V6H20A2,2 0 0,1 22,8V19A2,2 0 0,1 20,21H4A2,2 0 0,1 2,19V8A2,2 0 0,1 4,6H8V4A2,2 0 0,1 10,2M14,6V4H10V6H14M4,8V19H20V8H4M7,12H9V17H7V12M11,10H13V17H11V10M15,14H17V17H15V14Z"/>
+                    </svg>
+                    <span data-en="Incident Response Simulator" data-ar="محاكي الاستجابة للحوادث">محاكي الاستجابة للحوادث</span>
+                </div>
+                <button class="btn explain-btn" onclick="explainTool('incidentResponse')" data-en="Explain Tool" data-ar="شرح الأداة">شرح الأداة</button>
+                <p data-en="Simulate cybersecurity incidents and response procedures" data-ar="محاكاة حوادث الأمن السيبراني وإجراءات الاستجابة">محاكاة حوادث الأمن السيبراني وإجراءات الاستجابة</p>
+                <div class="input-group">
+                    <label for="incidentType" data-en="Incident Type:" data-ar="نوع الحادث:">نوع الحادث:</label>
+                    <select id="incidentType" class="input-field">
+                        <option value="malware" data-en="Malware Attack" data-ar="هجوم برمجية خبيثة">هجوم برمجية خبيثة</option>
+                        <option value="breach" data-en="Data Breach" data-ar="خرق البيانات">خرق البيانات</option>
+                        <option value="ddos" data-en="DDoS Attack" data-ar="هجوم DDoS">هجوم DDoS</option>
+                        <option value="insider" data-en="Insider Threat" data-ar="تهديد داخلي">تهديد داخلي</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="startIncidentSimulation()" data-en="Start Simulation" data-ar="بدء المحاكاة">بدء المحاكاة</button>
+                <div class="result-box" id="incidentSimResult"><div class="loading-spinner" id="incidentSimSpinner"></div></div>
+                <button class="btn copy-btn" onclick="copyResult('incidentSimResult')" data-en="Copy Result" data-ar="نسخ النتيجة">نسخ النتيجة</button>
             </div>
         </div>
         

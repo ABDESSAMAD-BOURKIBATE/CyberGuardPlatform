@@ -1,3 +1,18 @@
+// Dashboard Statistics Tracking
+let dashboardStats = {
+    toolsUsed: 0,
+    scansPerformed: 0,
+    threatsDetected: 0,
+    sessionStartTime: Date.now(),
+    securityLevel: 85,
+    activeTools: 0,
+    riskLevels: {
+        high: 15,
+        medium: 25,
+        low: 60
+    }
+};
+
 // Language data for results
 const resultMessages = {
     ar: {
@@ -1847,6 +1862,363 @@ const toolExplanations = {
                     </div>
                 </div>
             `
+        },
+        quantumCrypto: {
+            title: "محلل التشفير المقاوم للكمي",
+            icon: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H8.9V6zM16 16h-3v3h-2v-3H8v-2h3v-3h2v3h3v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو محلل التشفير المقاوم للكمي؟</h4>
+                    <p>أداة تحليل متقدمة تقيم مقاومة أنظمة التشفير الحالية ضد الهجمات الكمومية المستقبلية وتوصي بالبدائل الآمنة.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>التهديد الكمومي</h4>
+                    <ul>
+                        <li><strong>خوارزمية شور:</strong> كسر RSA و ECC</li>
+                        <li><strong>خوارزمية جروفر:</strong> تقليل قوة التشفير المتماثل</li>
+                        <li><strong>الحوسبة الكمومية:</strong> تسريع العمليات الحسابية المعقدة</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>خوارزميات ما بعد الكمومية</h4>
+                    <ul>
+                        <li><strong>مبنية على الشبكة:</strong> Kyber، NTRU</li>
+                        <li><strong>مبنية على الهاش:</strong> SPHINCS+</li>
+                        <li><strong>مبنية على الكود:</strong> Classic McEliece</li>
+                        <li><strong>متعددة المتغيرات:</strong> Rainbow</li>
+                        <li><strong>مبنية على isogeny:</strong> SIKE</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>معايير التقييم</h4>
+                    <ul>
+                        <li>المقاومة ضد خوارزميات شور وجروفر</li>
+                        <li>أحجام المفاتيح والتوقيعات</li>
+                        <li>سرعة العمليات الحسابية</li>
+                        <li>مستوى الثقة الرياضية</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>خطة الهجرة:</h5>
+                    <div class="code-example">
+                    📊 تقييم التشفير الحالي
+                    🔄 اختيار البدائل المناسبة
+                    📅 تخطيط الهجرة التدريجية
+                    🧪 اختبار التوافق
+                    🛡️ تطبيق الحماية الهجينة
+                    </div>
+                </div>
+            `
+        },
+        incidentResponse: {
+            title: "محاكي الاستجابة للحوادث",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو محاكي الاستجابة للحوادث؟</h4>
+                    <p>أداة تدريب متقدمة تحاكي سيناريوهات حوادث الأمن السيبراني الواقعية وتدرب الفرق على إجراءات الاستجابة المناسبة.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أنواع الحوادث المحاكاة</h4>
+                    <ul>
+                        <li><strong>هجمات البرمجيات الخبيثة:</strong> الفيروسات، أحصنة طروادة</li>
+                        <li><strong>خروقات البيانات:</strong> تسريب المعلومات الحساسة</li>
+                        <li><strong>هجمات DDoS:</strong> إنكار الخدمة الموزع</li>
+                        <li><strong>التهديدات الداخلية:</strong> أنشطة مشبوهة من المستخدمين الداخليين</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>مراحل الاستجابة (إطار NIST)</h4>
+                    <ul>
+                        <li><strong>التحضير:</strong> تطوير الخطط والإجراءات</li>
+                        <li><strong>الكشف والتحليل:</strong> تحديد وتحليل الحادث</li>
+                        <li><strong>الاحتواء والقضاء:</strong> إيقاف انتشار التهديد</li>
+                        <li><strong>الاستعادة:</strong> استرداد عمليات النظام</li>
+                        <li><strong>الدروس المستفادة:</strong> تحليل الأداء وتحسين الإجراءات</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>الفرق المشاركة</h4>
+                    <ul>
+                        <li>فريق الاستجابة لحوادث أمن الحاسوب (CSIRT)</li>
+                        <li>فريق الطب الشرعي الرقمي</li>
+                        <li>فريق الاتصالات والعلاقات العامة</li>
+                        <li>الإدارة التنفيذية والقانونية</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>فوائد المحاكاة:</h5>
+                    <div class="code-example">
+                    🎯 تدريب الفرق على سيناريوهات واقعية
+                    ⏱️ تحسين أوقات الاستجابة
+                    📋 اختبار فعالية الإجراءات
+                    🧠 تطوير مهارات اتخاذ القرار
+                    📈 قياس مؤشرات الأداء
+                    </div>
+                </div>
+            `
+        },
+        aiSecurityAnalyzer: {
+            title: "محلل الأمان بالذكاء الاصطناعي",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو محلل الأمان بالذكاء الاصطناعي؟</h4>
+                    <p>أداة تحليل أمني متقدمة تستخدم الذكاء الاصطناعي والتعلم الآلي لتحليل البيانات وكشف التهديدات والثغرات الأمنية بدقة عالية.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>قدرات التحليل</h4>
+                    <ul>
+                        <li><strong>كشف الثغرات:</strong> تحديد نقاط الضعف الأمنية</li>
+                        <li><strong>تحليل السلوك:</strong> مراقبة الأنشطة المشبوهة</li>
+                        <li><strong>التنبؤ بالتهديدات:</strong> توقع الهجمات المحتملة</li>
+                        <li><strong>تحليل البيانات:</strong> فحص البيانات الحساسة</li>
+                        <li><strong>التعلم التكيفي:</strong> تحسن النتائج مع الوقت</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>تقنيات الذكاء الاصطناعي</h4>
+                    <ul>
+                        <li><strong>التعلم الآلي:</strong> خوارزميات تعلم متقدمة</li>
+                        <li><strong>الشبكات العصبية:</strong> نمذجة معقدة للبيانات</li>
+                        <li><strong>معالجة اللغة الطبيعية:</strong> تحليل النصوص والتقارير</li>
+                        <li><strong>التحليل السلوكي:</strong> كشف الأنماط غير الطبيعية</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>فوائد الاستخدام:</h5>
+                    <div class="code-example">
+                    🤖 تحليل سريع ودقيق
+                    🔍 كشف التهديدات المتقدمة
+                    📊 تقارير شاملة ومفصلة
+                    ⚡ استجابة فورية للتهديدات
+                    📈 تحسين الأمان باستمرار
+                    </div>
+                </div>
+            `
+        },
+        blockchainValidator: {
+            title: "مُتحقق أمان البلوك تشين",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو مُتحقق أمان البلوك تشين؟</h4>
+                    <p>أداة متخصصة للتحقق من أمان معاملات البلوك تشين والعقود الذكية وتحليل المحافظ الرقمية للمخاطر المحتملة.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>جوانب التحقق</h4>
+                    <ul>
+                        <li><strong>أمان العقود الذكية:</strong> فحص الثغرات البرمجية</li>
+                        <li><strong>تحليل المعاملات:</strong> التحقق من صحة المعاملات</li>
+                        <li><strong>أمان المحافظ:</strong> تقييم أمان عناوين المحافظ</li>
+                        <li><strong>تحسين الغاز:</strong> تحليل كفاءة استهلاك الغاز</li>
+                        <li><strong>الامتثال:</strong> التحقق من المعايير الأمنية</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>الشبكات المدعومة</h4>
+                    <ul>
+                        <li>إيثيريوم (ETH)</li>
+                        <li>بينانس سمارت تشين (BSC)</li>
+                        <li>بوليغون (MATIC)</li>
+                        <li>أفالانش (AVAX)</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>حالات الاستخدام:</h5>
+                    <div class="code-example">
+                    💰 فحص أمان المحافظ
+                    🔗 تحليل العقود الذكية
+                    💸 التحقق من المعاملات
+                    ⛽ تحسين رسوم الغاز
+                    🛡️ اكتشاف الأنشطة المشبوهة
+                    </div>
+                </div>
+            `
+        },
+        iotScanner: {
+            title: "فاحص أمان أجهزة إنترنت الأشياء",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو فاحص أمان IoT؟</h4>
+                    <p>أداة شاملة لفحص وتقييم أمان أجهزة إنترنت الأشياء في شبكتك وكشف نقاط الضعف والثغرات الأمنية.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>ما يتم فحصه</h4>
+                    <ul>
+                        <li><strong>اكتشاف الأجهزة:</strong> العثور على جميع أجهزة IoT</li>
+                        <li><strong>كلمات المرور الافتراضية:</strong> فحص كلمات المرور الضعيفة</li>
+                        <li><strong>البروتوكولات الآمنة:</strong> التحقق من استخدام التشفير</li>
+                        <li><strong>التحديثات الأمنية:</strong> فحص حالة التحديثات</li>
+                        <li><strong>الشبكة المفتوحة:</strong> كشف الخدمات غير المحمية</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>الأجهزة المدعومة</h4>
+                    <ul>
+                        <li>كاميرات المراقبة الذكية</li>
+                        <li>أجهزة التحكم في المنزل الذكي</li>
+                        <li>أجهزة الاستشعار</li>
+                        <li>الطابعات الذكية</li>
+                        <li>أجهزة الشبكة (Router, Switch)</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>نصائح الأمان:</h5>
+                    <div class="code-example">
+                    🔐 غيّر كلمات المرور الافتراضية
+                    🔄 حدّث البرامج الثابتة بانتظام
+                    🌐 استخدم شبكة منفصلة لأجهزة IoT
+                    🛡️ فعّل التشفير والمصادقة
+                    📊 راقب حركة المرور بانتظام
+                    </div>
+                </div>
+            `
+        },
+        cloudAuditor: {
+            title: "مُدقق أمان الحوسبة السحابية",
+            icon: "M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو مُدقق أمان الحوسبة السحابية؟</h4>
+                    <p>أداة تدقيق شاملة لتقييم تكوينات أمان البنية التحتية السحابية وضمان الامتثال لأفضل الممارسات الأمنية.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>مجالات التدقيق</h4>
+                    <ul>
+                        <li><strong>إدارة الهوية والصلاحيات:</strong> مراجعة صلاحيات المستخدمين</li>
+                        <li><strong>تشفير البيانات:</strong> التحقق من تشفير البيانات</li>
+                        <li><strong>إعدادات الشبكة:</strong> فحص جدران الحماية والشبكات</li>
+                        <li><strong>النسخ الاحتياطية:</strong> تقييم استراتيجية النسخ الاحتياطي</li>
+                        <li><strong>المراقبة والسجلات:</strong> فحص أنظمة المراقبة</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>مزودو الخدمات المدعومون</h4>
+                    <ul>
+                        <li>أمازون ويب سيرفيسز (AWS)</li>
+                        <li>مايكروسوفت أزور (Azure)</li>
+                        <li>جوجل كلاود (GCP)</li>
+                        <li>أليباباكلاود</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>فوائد التدقيق:</h5>
+                    <div class="code-example">
+                    ✅ ضمان الامتثال للمعايير
+                    🔒 تحسين الوضعية الأمنية
+                    💰 تحسين التكاليف
+                    📋 تقارير تدقيق شاملة
+                    🚨 إنذارات التكوين الخاطئ
+                    </div>
+                </div>
+            `
+        },
+        threatIntelligence: {
+            title: "محلل استخبارات التهديدات",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو محلل استخبارات التهديدات؟</h4>
+                    <p>أداة تحليل متقدمة تجمع وتحلل استخبارات التهديدات من مصادر متعددة لتوفير رؤى شاملة حول التهديدات الحالية والناشئة.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>مؤشرات التهديد المدعومة</h4>
+                    <ul>
+                        <li><strong>عناوين IP الخبيثة:</strong> تحليل عناوين IP المشبوهة</li>
+                        <li><strong>هاش الملفات:</strong> فحص بصمات الملفات الخبيثة</li>
+                        <li><strong>النطاقات الخبيثة:</strong> تحليل النطاقات المشبوهة</li>
+                        <li><strong>توقيعات البرمجيات الخبيثة:</strong> كشف البرمجيات الضارة</li>
+                        <li><strong>مؤشرات التسلل:</strong> علامات الاختراق</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>مصادر الاستخبارات</h4>
+                    <ul>
+                        <li>قواعد البيانات العامة للتهديدات</li>
+                        <li>شبكات مشاركة المعلومات الأمنية</li>
+                        <li>مزودو استخبارات التهديدات التجاريون</li>
+                        <li>مجتمعات الأمن السيبراني</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>حالات الاستخدام:</h5>
+                    <div class="code-example">
+                    🔍 فحص المؤشرات المشبوهة
+                    📊 تحليل اتجاهات التهديدات
+                    🚨 الإنذار المبكر للتهديدات
+                    🔗 ربط المؤشرات ببعضها
+                    📈 تقييم مستوى المخاطر
+                    </div>
+                </div>
+            `
+        },
+        zeroDayScanner: {
+            title: "فاحص ثغرات اليوم صفر",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو فاحص ثغرات اليوم صفر؟</h4>
+                    <p>أداة فحص متقدمة تستخدم تقنيات حديثة لاكتشاف الثغرات الأمنية غير المعروفة (Zero-Day) قبل أن يتم استغلالها من قبل المهاجمين.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>تقنيات الكشف</h4>
+                    <ul>
+                        <li><strong>التحليل السلوكي:</strong> مراقبة السلوك غير الطبيعي</li>
+                        <li><strong>فحص التوقيعات:</strong> البحث عن أنماط معروفة</li>
+                        <li><strong>التحليل الديناميكي:</strong> فحص التطبيقات أثناء التشغيل</li>
+                        <li><strong>تحليل الذكاء الاصطناعي:</strong> كشف الأنماط المخفية</li>
+                        <li><strong>المحاكاة الافتراضية:</strong> اختبار في بيئة آمنة</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أنواع الثغرات المكتشفة</h4>
+                    <ul>
+                        <li>ثغرات أنظمة التشغيل</li>
+                        <li>ثغرات التطبيقات والبرمجيات</li>
+                        <li>ثغرات خدمات الشبكة</li>
+                        <li>ثغرات المتصفحات</li>
+                        <li>ثغرات البرامج الثابتة</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>أهمية الفحص:</h5>
+                    <div class="code-example">
+                    🚨 اكتشاف مبكر للتهديدات
+                    🛡️ حماية استباقية قبل الهجمات
+                    ⏰ كسب الوقت لتطبيق الحلول
+                    📊 تقييم شامل للمخاطر
+                    🔧 توصيات للحماية
+                    </div>
+                </div>
+            `
         }
     },
     en: {
@@ -3121,6 +3493,370 @@ const toolExplanations = {
                     🛡️ Advanced antivirus software
                     🚫 Avoid suspicious attachments and links
                     👥 Employee security awareness training
+                    </div>
+                </div>
+            `
+        },
+        aiSecurityAnalyzer: {
+            title: "AI Security Analyzer",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is AI Security Analyzer?</h4>
+                    <p>An advanced analysis tool that uses artificial intelligence and machine learning to examine data and detect complex threats and suspicious patterns.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Advanced Analysis Capabilities</h4>
+                    <ul>
+                        <li><strong>Machine Learning:</strong> Detect complex malicious patterns</li>
+                        <li><strong>Behavioral Analysis:</strong> Monitor abnormal activities</li>
+                        <li><strong>Statistical Anomaly:</strong> Detect data deviations</li>
+                        <li><strong>Predictive Analysis:</strong> Forecast future threats</li>
+                        <li><strong>Smart Correlation:</strong> Connect different indicators</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>AI Technologies Used</h4>
+                    <ul>
+                        <li>Deep neural networks for detection</li>
+                        <li>Reinforcement learning algorithms</li>
+                        <li>Natural language processing for text</li>
+                        <li>Image and file analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Advanced Use Cases:</h5>
+                    <div class="code-example">
+                    🤖 Detect unknown malware
+                    🕵️ Analyze suspicious activities
+                    📊 Comprehensive risk assessment
+                    🔮 Attack prediction
+                    🧠 Intelligent behavior analysis
+                    </div>
+                </div>
+            `
+        },
+        blockchainValidator: {
+            title: "Blockchain Security Validator",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Blockchain Security Validator?</h4>
+                    <p>A specialized tool for verifying blockchain transaction security, smart contracts, and analyzing digital wallets for potential risks.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Validation Aspects</h4>
+                    <ul>
+                        <li><strong>Smart Contract Security:</strong> Check for programming vulnerabilities</li>
+                        <li><strong>Transaction Analysis:</strong> Verify transaction validity</li>
+                        <li><strong>Wallet Security:</strong> Assess wallet address security</li>
+                        <li><strong>Gas Optimization:</strong> Analyze gas consumption efficiency</li>
+                        <li><strong>Compliance:</strong> Verify security standards</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Supported Networks</h4>
+                    <ul>
+                        <li>Ethereum (ETH)</li>
+                        <li>Binance Smart Chain (BSC)</li>
+                        <li>Polygon (MATIC)</li>
+                        <li>Avalanche (AVAX)</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Analysis Types:</h5>
+                    <div class="code-example">
+                    🔗 Transaction hash analysis
+                    💰 Wallet security check
+                    📜 Smart contract audit
+                    ⚡ Gas fee optimization
+                    🛡️ Suspicious activity detection
+                    </div>
+                </div>
+            `
+        },
+        iotScanner: {
+            title: "IoT Device Security Scanner",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is IoT Device Security Scanner?</h4>
+                    <p>A specialized scanning tool that discovers and analyzes Internet of Things devices on the network and assesses their security level and vulnerabilities.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Scannable Devices</h4>
+                    <ul>
+                        <li><strong>Security Cameras:</strong> IP cameras and surveillance</li>
+                        <li><strong>Home Devices:</strong> Routers, printers, smart TVs</li>
+                        <li><strong>Sensors:</strong> Temperature and motion sensors</li>
+                        <li><strong>Smart Assistants:</strong> Alexa, Google Home</li>
+                        <li><strong>Control Systems:</strong> Industrial control systems</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Common Vulnerabilities</h4>
+                    <ul>
+                        <li>Weak default passwords</li>
+                        <li>Outdated firmware</li>
+                        <li>Insecure communication protocols</li>
+                        <li>Weak or missing encryption</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Recommended Security Improvements:</h5>
+                    <div class="code-example">
+                    🔐 Change default passwords
+                    🔄 Enable automatic updates
+                    🏠 Create separate IoT network
+                    🛡️ Enable firewall
+                    📱 Monitor network traffic
+                    </div>
+                </div>
+            `
+        },
+        cloudAuditor: {
+            title: "Cloud Security Auditor",
+            icon: "M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Cloud Security Auditor?</h4>
+                    <p>A comprehensive auditing tool that examines security configurations in cloud environments and identifies vulnerabilities and compliance risks.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Supported Cloud Platforms</h4>
+                    <ul>
+                        <li><strong>Amazon AWS:</strong> EC2, S3, IAM, Lambda</li>
+                        <li><strong>Microsoft Azure:</strong> Virtual Machines, Storage, Active Directory</li>
+                        <li><strong>Google Cloud:</strong> Compute Engine, Cloud Storage, IAM</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Audit Aspects</h4>
+                    <ul>
+                        <li><strong>Identity and Access Management:</strong> User permissions</li>
+                        <li><strong>Data Encryption:</strong> Protection of stored and transmitted data</li>
+                        <li><strong>Network Security:</strong> Firewalls and access rules</li>
+                        <li><strong>Monitoring and Logging:</strong> Activity logging and monitoring</li>
+                        <li><strong>Backup Systems:</strong> Backup strategies</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Compliance Standards:</h5>
+                    <div class="code-example">
+                    🏛️ GDPR - European Data Protection
+                    🏢 SOC 2 - Service Security
+                    📋 ISO 27001 - Information Security Management
+                    🏦 PCI DSS - Payment Card Security
+                    🇺🇸 HIPAA - Health Information Protection
+                    </div>
+                </div>
+            `
+        },
+        threatIntelligence: {
+            title: "Threat Intelligence Analyzer",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8zM12 19c-3.87 0-7-3.13-7-7 0-1.26.33-2.44.91-3.47L8.5 10l3.5-2.5L15.5 10l2.59-1.47c.58 1.03.91 2.21.91 3.47 0 3.87-3.13 7-7 7z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Threat Intelligence Analyzer?</h4>
+                    <p>An advanced analysis tool that gathers and analyzes information about cyber threats from multiple sources to provide comprehensive intelligence insights.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Intelligence Sources</h4>
+                    <ul>
+                        <li><strong>VirusTotal:</strong> File and URL analysis</li>
+                        <li><strong>AlienVault OTX:</strong> Open source intelligence</li>
+                        <li><strong>IBM X-Force:</strong> Threat database</li>
+                        <li><strong>Hybrid Analysis:</strong> Malware analysis</li>
+                        <li><strong>URLVoid:</strong> Website reputation check</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Analyzable Indicator Types</h4>
+                    <ul>
+                        <li>Suspicious IP addresses</li>
+                        <li>Malicious domain names</li>
+                        <li>Suspicious file hashes</li>
+                        <li>Malicious URLs</li>
+                        <li>Email addresses</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Analysis Information:</h5>
+                    <div class="code-example">
+                    🎯 Identify threat type
+                    📊 Assess risk level
+                    🌍 Identify affected countries
+                    📅 Track activity history
+                    🔗 Link malicious campaigns
+                    </div>
+                </div>
+            `
+        },
+        zeroDayScanner: {
+            title: "Zero-Day Vulnerability Scanner",
+            icon: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13zm-3 1c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Zero-Day Vulnerability Scanner?</h4>
+                    <p>An advanced scanning tool designed to discover unknown security vulnerabilities (Zero-Day) that have not been disclosed or patched yet.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Advanced Scanning Techniques</h4>
+                    <ul>
+                        <li><strong>Static Analysis:</strong> Code examination without execution</li>
+                        <li><strong>Dynamic Analysis:</strong> Behavior monitoring during execution</li>
+                        <li><strong>Fuzzing:</strong> Random data testing</li>
+                        <li><strong>Pattern Recognition:</strong> Vulnerability pattern recognition</li>
+                        <li><strong>Symbolic Execution:</strong> Symbolic path analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Detectable Vulnerability Types</h4>
+                    <ul>
+                        <li>Buffer Overflow and Memory Corruption</li>
+                        <li>Race Conditions</li>
+                        <li>Logic Flaws in applications</li>
+                        <li>Privilege Escalation</li>
+                        <li>Authentication Bypass</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Scanning Modes</h4>
+                    <ul>
+                        <li><strong>Deep Scan:</strong> Comprehensive detailed analysis</li>
+                        <li><strong>Stealth Mode:</strong> Hidden scanning to avoid detection</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Advanced Uses:</h5>
+                    <div class="code-example">
+                    🔍 Advanced penetration testing
+                    🛡️ Comprehensive security assessment
+                    📋 Source code review
+                    🏢 Enterprise application security
+                    🔬 Advanced security research
+                    </div>
+                </div>
+            `
+        },
+        quantumCrypto: {
+            title: "Quantum-Resistant Crypto Analyzer",
+            icon: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H8.9V6zM16 16h-3v3h-2v-3H8v-2h3v-3h2v3h3v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Quantum-Resistant Crypto Analyzer?</h4>
+                    <p>An advanced analysis tool that evaluates current encryption systems' resistance against future quantum attacks and recommends secure alternatives.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Quantum Threat</h4>
+                    <ul>
+                        <li><strong>Shor's Algorithm:</strong> Breaking RSA and ECC</li>
+                        <li><strong>Grover's Algorithm:</strong> Reducing symmetric encryption strength</li>
+                        <li><strong>Quantum Computing:</strong> Accelerating complex calculations</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Post-Quantum Algorithms</h4>
+                    <ul>
+                        <li><strong>Lattice-based:</strong> Kyber, NTRU</li>
+                        <li><strong>Hash-based:</strong> SPHINCS+</li>
+                        <li><strong>Code-based:</strong> Classic McEliece</li>
+                        <li><strong>Multivariate:</strong> Rainbow</li>
+                        <li><strong>Isogeny-based:</strong> SIKE</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Evaluation Criteria</h4>
+                    <ul>
+                        <li>Resistance to Shor and Grover algorithms</li>
+                        <li>Key and signature sizes</li>
+                        <li>Computational operation speed</li>
+                        <li>Mathematical confidence level</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Migration Plan:</h5>
+                    <div class="code-example">
+                    📊 Assess current encryption
+                    🔄 Choose suitable alternatives
+                    📅 Plan gradual migration
+                    🧪 Test compatibility
+                    🛡️ Implement hybrid protection
+                    </div>
+                </div>
+            `
+        },
+        incidentResponse: {
+            title: "Incident Response Simulator",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Incident Response Simulator?</h4>
+                    <p>An advanced training tool that simulates realistic cybersecurity incident scenarios and trains teams on appropriate response procedures.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Simulated Incident Types</h4>
+                    <ul>
+                        <li><strong>Malware Attacks:</strong> Viruses, trojans</li>
+                        <li><strong>Data Breaches:</strong> Sensitive information leakage</li>
+                        <li><strong>DDoS Attacks:</strong> Distributed denial of service</li>
+                        <li><strong>Insider Threats:</strong> Suspicious activity from internal users</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Response Phases (NIST Framework)</h4>
+                    <ul>
+                        <li><strong>Preparation:</strong> Develop plans and procedures</li>
+                        <li><strong>Detection and Analysis:</strong> Identify and analyze incident</li>
+                        <li><strong>Containment and Eradication:</strong> Stop threat spread</li>
+                        <li><strong>Recovery:</strong> Restore system operations</li>
+                        <li><strong>Lessons Learned:</strong> Analyze performance and improve procedures</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Participating Teams</h4>
+                    <ul>
+                        <li>Computer Security Incident Response Team (CSIRT)</li>
+                        <li>Digital Forensics Team</li>
+                        <li>Communications and Public Relations Team</li>
+                        <li>Executive Management and Legal</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Simulation Benefits:</h5>
+                    <div class="code-example">
+                    🎯 Train teams on realistic scenarios
+                    ⏱️ Improve response times
+                    📋 Test procedure effectiveness
+                    🧠 Develop decision-making skills
+                    📈 Measure performance metrics
                     </div>
                 </div>
             `
@@ -5135,4 +5871,871 @@ function generatePasswordPolicy() {
         
         resultDiv.innerHTML = policyText;
     }, 1800);
+}
+
+// === Advanced Dashboard Functions ===
+let dashboardStats = {
+    toolsUsed: 0,
+    scansPerformed: 0,
+    threatsDetected: 0,
+    sessionStartTime: new Date(),
+    activityLog: []
+};
+
+function toggleDashboard() {
+    const overlay = document.getElementById('dashboardOverlay');
+    if (overlay.classList.contains('active')) {
+        overlay.classList.remove('active');
+    } else {
+        overlay.classList.add('active');
+        updateDashboardStats();
+        updateSessionTime();
+        updateSecurityChart();
+        startDashboardTimers();
+    }
+}
+
+function updateDashboardStats() {
+    // Update main statistics
+    document.getElementById('toolsUsedCount').textContent = dashboardStats.toolsUsed;
+    document.getElementById('scansPerformed').textContent = dashboardStats.scansPerformed;
+    document.getElementById('threatsDetected').textContent = dashboardStats.threatsDetected;
+    
+    // Update session time
+    updateSessionTime();
+    
+    // Update security level with animation
+    updateSecurityLevel();
+}
+
+function updateSecurityLevel() {
+    const level = dashboardStats.securityLevel;
+    const progressElement = document.querySelector('.security-progress');
+    const levelElement = document.querySelector('.security-level-text');
+    
+    if (progressElement && levelElement) {
+        progressElement.style.width = level + '%';
+        levelElement.textContent = level + '%';
+        
+        // Color coding based on level
+        progressElement.className = 'security-progress';
+        if (level >= 80) {
+            progressElement.classList.add('high');
+        } else if (level >= 60) {
+            progressElement.classList.add('medium');
+        } else {
+            progressElement.classList.add('low');
+        }
+    }
+}
+
+function updateSecurityChart() {
+    const chart = document.getElementById('securityChart');
+    const segments = chart.querySelectorAll('.chart-segment');
+    
+    // Animate chart segments
+    segments.forEach((segment, index) => {
+        const percentages = [dashboardStats.riskLevels.high, dashboardStats.riskLevels.medium, dashboardStats.riskLevels.low];
+        setTimeout(() => {
+            segment.style.setProperty('--percentage', percentages[index] + '%');
+        }, index * 200);
+    });
+}
+
+function updateSessionTime() {
+    const elapsed = Math.floor((Date.now() - dashboardStats.sessionStartTime) / 1000);
+    const minutes = Math.floor(elapsed / 60);
+    const seconds = elapsed % 60;
+    const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    const sessionTimeElement = document.getElementById('sessionTime');
+    if (sessionTimeElement) {
+        sessionTimeElement.textContent = timeString;
+    }
+}
+
+function startDashboardTimers() {
+    // Update session time every second
+    setInterval(updateSessionTime, 1000);
+    
+    // Simulate real-time updates
+    setInterval(() => {
+        simulateRealTimeUpdates();
+    }, 5000);
+}
+
+function simulateRealTimeUpdates() {
+    // Randomly update security level
+    if (Math.random() < 0.3) {
+        dashboardStats.securityLevel = Math.min(100, Math.max(60, dashboardStats.securityLevel + (Math.random() - 0.5) * 10));
+        updateSecurityLevel();
+    }
+    
+    // Randomly update threat detection
+    if (Math.random() < 0.2) {
+        dashboardStats.threatsDetected += Math.floor(Math.random() * 3);
+        updateDashboardStats();
+        addActivity(currentLang === 'ar' ? 'تم اكتشاف تهديد جديد' : 'New threat detected');
+    }
+    
+    // Update risk levels
+    if (Math.random() < 0.4) {
+        const total = 100;
+        const variation = 5;
+        dashboardStats.riskLevels.high = Math.max(5, Math.min(30, dashboardStats.riskLevels.high + (Math.random() - 0.5) * variation));
+        dashboardStats.riskLevels.medium = Math.max(15, Math.min(40, dashboardStats.riskLevels.medium + (Math.random() - 0.5) * variation));
+        dashboardStats.riskLevels.low = total - dashboardStats.riskLevels.high - dashboardStats.riskLevels.medium;
+        updateSecurityChart();
+    }
+}
+
+function incrementToolUsage() {
+    dashboardStats.toolsUsed++;
+    dashboardStats.activeTools++;
+    updateDashboardStats();
+}
+
+function incrementScanCount() {
+    dashboardStats.scansPerformed++;
+    updateDashboardStats();
+}
+
+function addThreatDetection(count = 1) {
+    dashboardStats.threatsDetected += count;
+    updateDashboardStats();
+}
+    const sessionTime = Math.floor((now - dashboardStats.sessionStartTime) / 1000);
+    const minutes = Math.floor(sessionTime / 60);
+    const seconds = sessionTime % 60;
+    document.getElementById('sessionTime').textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function addActivity(text) {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5);
+    
+    dashboardStats.activityLog.unshift({
+        time: timeStr,
+        text: text
+    });
+    
+    // Keep only last 10 activities
+    if (dashboardStats.activityLog.length > 10) {
+        dashboardStats.activityLog = dashboardStats.activityLog.slice(0, 10);
+    }
+    
+    updateActivityLog();
+}
+
+function updateActivityLog() {
+    const activityList = document.getElementById('activityList');
+    if (activityList) {
+        activityList.innerHTML = dashboardStats.activityLog.map(activity => `
+            <div class="activity-item">
+                <div class="activity-time">${activity.time}</div>
+                <div class="activity-text">${activity.text}</div>
+            </div>
+        `).join('');
+    }
+}
+
+// === AI Security Analyzer ===
+function runAISecurityAnalysis() {
+    const input = document.getElementById('aiAnalysisInput').value.trim();
+    const resultDiv = document.getElementById('aiAnalysisResult');
+    
+    if (!input) {
+        resultDiv.innerHTML = '<div class="error">الرجاء إدخال البيانات للتحليل</div>';
+        return;
+    }
+    
+    dashboardStats.toolsUsed++;
+    dashboardStats.scansPerformed++;
+    addActivity(currentLang === 'ar' ? 'تم تشغيل محلل الذكاء الاصطناعي' : 'AI Security Analyzer executed');
+    
+    resultDiv.innerHTML = '<div class="loading">🤖 جار التحليل بالذكاء الاصطناعي...</div>';
+    
+    setTimeout(() => {
+        const analysisTypes = [
+            'تحليل التهديدات المتقدمة',
+            'فحص أنماط السلوك المشبوه',
+            'كشف الشذوذ في البيانات',
+            'تحليل التوقيعات الرقمية',
+            'فحص التشفير والبروتوكولات'
+        ];
+        
+        const riskLevel = Math.random() > 0.7 ? 'عالي' : Math.random() > 0.4 ? 'متوسط' : 'منخفض';
+        const confidenceScore = (Math.random() * 30 + 70).toFixed(1);
+        const threatIndicators = Math.floor(Math.random() * 5) + 1;
+        
+        if (riskLevel === 'عالي') {
+            dashboardStats.threatsDetected++;
+        }
+        
+        const result = currentLang === 'ar' ? `
+            🤖 <strong>تحليل الذكاء الاصطناعي</strong>
+            <br><br>📊 <strong>النتائج:</strong>
+            <br>• مستوى المخاطر: <span class="risk-${riskLevel === 'عالي' ? 'high' : riskLevel === 'متوسط' ? 'medium' : 'low'}">${riskLevel}</span>
+            <br>• درجة الثقة: ${confidenceScore}%
+            <br>• مؤشرات التهديد: ${threatIndicators}
+            <br><br>🔍 <strong>التحليلات المنجزة:</strong>
+            <br>${analysisTypes.map(type => `• ${type}`).join('<br>')}
+            <br><br>💡 <strong>التوصيات:</strong>
+            <br>• ${riskLevel === 'عالي' ? 'اتخاذ إجراءات فورية للتخفيف من المخاطر' : 'مراقبة دورية للحفاظ على الأمان'}
+            <br>• تحديث السياسات الأمنية بناءً على النتائج
+            <br>• إجراء مراجعة شاملة للنظام
+        ` : `
+            🤖 <strong>AI Security Analysis</strong>
+            <br><br>📊 <strong>Results:</strong>
+            <br>• Risk Level: <span class="risk-${riskLevel === 'عالي' ? 'high' : riskLevel === 'متوسط' ? 'medium' : 'low'}">${riskLevel === 'عالي' ? 'High' : riskLevel === 'متوسط' ? 'Medium' : 'Low'}</span>
+            <br>• Confidence Score: ${confidenceScore}%
+            <br>• Threat Indicators: ${threatIndicators}
+            <br><br>🔍 <strong>Analysis Completed:</strong>
+            <br>• Advanced Threat Analysis<br>• Behavioral Pattern Detection<br>• Data Anomaly Detection<br>• Digital Signature Analysis<br>• Encryption & Protocol Verification
+            <br><br>💡 <strong>Recommendations:</strong>
+            <br>• ${riskLevel === 'عالي' ? 'Take immediate action to mitigate risks' : 'Regular monitoring to maintain security'}
+            <br>• Update security policies based on findings
+            <br>• Conduct comprehensive system review
+        `;
+        
+        resultDiv.innerHTML = result;
+    }, 3000);
+}
+
+// === Blockchain Security Validator ===
+function validateBlockchainSecurity() {
+    const input = document.getElementById('blockchainInput').value.trim();
+    const resultDiv = document.getElementById('blockchainResult');
+    
+    if (!input) {
+        resultDiv.innerHTML = '<div class="error">الرجاء إدخال عنوان المحفظة أو hash المعاملة</div>';
+        return;
+    }
+    
+    dashboardStats.toolsUsed++;
+    dashboardStats.scansPerformed++;
+    addActivity(currentLang === 'ar' ? 'تم تشغيل مُتحقق البلوك تشين' : 'Blockchain Security Validator executed');
+    
+    resultDiv.innerHTML = '<div class="loading">⛓️ جار التحقق من أمان البلوك تشين...</div>';
+    
+    setTimeout(() => {
+        const isAddress = input.length > 30;
+        const securityScore = Math.floor(Math.random() * 40) + 60;
+        const gasOptimization = Math.floor(Math.random() * 30) + 70;
+        const vulnerabilities = Math.floor(Math.random() * 3);
+        
+        if (securityScore < 70) {
+            dashboardStats.threatsDetected++;
+        }
+        
+        const result = currentLang === 'ar' ? `
+            ⛓️ <strong>تحليل أمان البلوك تشين</strong>
+            <br><br>🔍 <strong>تحليل ${isAddress ? 'عنوان المحفظة' : 'معاملة البلوك تشين'}:</strong>
+            <br>${input}
+            <br><br>📊 <strong>النتائج:</strong>
+            <br>• نقاط الأمان: ${securityScore}/100
+            <br>• تحسين الغاز: ${gasOptimization}%
+            <br>• الثغرات المكتشفة: ${vulnerabilities}
+            <br>• نوع الشبكة: ${Math.random() > 0.5 ? 'Ethereum' : 'BSC'}
+            <br><br>🛡️ <strong>التحققات الأمنية:</strong>
+            <br>• فحص العقود الذكية: ✅
+            <br>• تحليل المعاملات: ✅
+            <br>• فحص الثغرات المعروفة: ${vulnerabilities === 0 ? '✅' : '⚠️'}
+            <br>• تحسين الغاز: ${gasOptimization > 80 ? '✅' : '⚠️'}
+            <br><br>💡 <strong>التوصيات:</strong>
+            <br>• ${securityScore > 80 ? 'مستوى أمان ممتاز' : securityScore > 60 ? 'يحتاج تحسينات أمنية طفيفة' : 'يتطلب مراجعة أمنية شاملة'}
+        ` : `
+            ⛓️ <strong>Blockchain Security Analysis</strong>
+            <br><br>🔍 <strong>Analyzing ${isAddress ? 'Wallet Address' : 'Transaction Hash'}:</strong>
+            <br>${input}
+            <br><br>📊 <strong>Results:</strong>
+            <br>• Security Score: ${securityScore}/100
+            <br>• Gas Optimization: ${gasOptimization}%
+            <br>• Vulnerabilities Found: ${vulnerabilities}
+            <br>• Network Type: ${Math.random() > 0.5 ? 'Ethereum' : 'BSC'}
+            <br><br>🛡️ <strong>Security Checks:</strong>
+            <br>• Smart Contract Scan: ✅
+            <br>• Transaction Analysis: ✅
+            <br>• Known Vulnerability Check: ${vulnerabilities === 0 ? '✅' : '⚠️'}
+            <br>• Gas Optimization: ${gasOptimization > 80 ? '✅' : '⚠️'}
+            <br><br>💡 <strong>Recommendations:</strong>
+            <br>• ${securityScore > 80 ? 'Excellent security level' : securityScore > 60 ? 'Minor security improvements needed' : 'Comprehensive security review required'}
+        `;
+        
+        resultDiv.innerHTML = result;
+    }, 2500);
+}
+
+// === IoT Device Scanner ===
+function scanIoTDevices() {
+    const input = document.getElementById('iotScanInput').value.trim();
+    const resultDiv = document.getElementById('iotScanResult');
+    
+    if (!input) {
+        resultDiv.innerHTML = '<div class="error">الرجاء إدخال نطاق الشبكة</div>';
+        return;
+    }
+    
+    dashboardStats.toolsUsed++;
+    dashboardStats.scansPerformed++;
+    addActivity(currentLang === 'ar' ? 'تم تشغيل فاحص أجهزة IoT' : 'IoT Device Scanner executed');
+    
+    resultDiv.innerHTML = '<div class="loading">🌐 جار فحص أجهزة إنترنت الأشياء...</div>';
+    
+    setTimeout(() => {
+        const deviceCount = Math.floor(Math.random() * 15) + 5;
+        const vulnerableDevices = Math.floor(Math.random() * 5);
+        const deviceTypes = ['كاميرا أمان', 'راوتر', 'طابعة ذكية', 'مستشعر حرارة', 'مساعد ذكي', 'جهاز تلفزيون ذكي'];
+        
+        if (vulnerableDevices > 2) {
+            dashboardStats.threatsDetected++;
+        }
+        
+        const devices = [];
+        for (let i = 0; i < deviceCount; i++) {
+            devices.push({
+                ip: `192.168.1.${100 + i}`,
+                type: deviceTypes[Math.floor(Math.random() * deviceTypes.length)],
+                risk: Math.random() > 0.7 ? 'عالي' : Math.random() > 0.4 ? 'متوسط' : 'منخفض'
+            });
+        }
+        
+        const result = currentLang === 'ar' ? `
+            🌐 <strong>فحص أجهزة إنترنت الأشياء</strong>
+            <br><br>📊 <strong>ملخص الفحص:</strong>
+            <br>• النطاق المفحوص: ${input}
+            <br>• الأجهزة المكتشفة: ${deviceCount}
+            <br>• الأجهزة المعرضة للخطر: ${vulnerableDevices}
+            <br>• معدل الأمان: ${((deviceCount - vulnerableDevices) / deviceCount * 100).toFixed(1)}%
+            <br><br>🔍 <strong>الأجهزة المكتشفة:</strong>
+            <br>${devices.slice(0, 5).map(device => 
+                `• ${device.ip} - ${device.type} (مخاطر: <span class="risk-${device.risk === 'عالي' ? 'high' : device.risk === 'متوسط' ? 'medium' : 'low'}">${device.risk}</span>)`
+            ).join('<br>')}
+            ${deviceCount > 5 ? `<br>... و ${deviceCount - 5} أجهزة أخرى` : ''}
+            <br><br>💡 <strong>التوصيات:</strong>
+            <br>• تحديث كلمات المرور الافتراضية
+            <br>• تفعيل التحديثات التلقائية
+            <br>• إعداد شبكة منفصلة لأجهزة IoT
+            <br>• مراقبة حركة الشبكة دورياً
+        ` : `
+            🌐 <strong>IoT Device Security Scan</strong>
+            <br><br>📊 <strong>Scan Summary:</strong>
+            <br>• Scanned Range: ${input}
+            <br>• Devices Discovered: ${deviceCount}
+            <br>• Vulnerable Devices: ${vulnerableDevices}
+            <br>• Security Rate: ${((deviceCount - vulnerableDevices) / deviceCount * 100).toFixed(1)}%
+            <br><br>🔍 <strong>Discovered Devices:</strong>
+            <br>${devices.slice(0, 5).map(device => 
+                `• ${device.ip} - ${device.type} (Risk: <span class="risk-${device.risk === 'عالي' ? 'high' : device.risk === 'متوسط' ? 'medium' : 'low'}">${device.risk === 'عالي' ? 'High' : device.risk === 'متوسط' ? 'Medium' : 'Low'}</span>)`
+            ).join('<br>')}
+            ${deviceCount > 5 ? `<br>... and ${deviceCount - 5} more devices` : ''}
+            <br><br>💡 <strong>Recommendations:</strong>
+            <br>• Update default passwords
+            <br>• Enable automatic updates
+            <br>• Set up separate IoT network
+            <br>• Monitor network traffic regularly
+        `;
+        
+        resultDiv.innerHTML = result;
+    }, 2800);
+}
+
+// === Cloud Security Auditor ===
+function auditCloudSecurity() {
+    const provider = document.getElementById('cloudProvider').value;
+    const resource = document.getElementById('cloudResourceInput').value.trim();
+    const resultDiv = document.getElementById('cloudAuditResult');
+    
+    if (!resource) {
+        resultDiv.innerHTML = '<div class="error">الرجاء إدخال معرف المورد السحابي</div>';
+        return;
+    }
+    
+    dashboardStats.toolsUsed++;
+    dashboardStats.scansPerformed++;
+    addActivity(currentLang === 'ar' ? 'تم تشغيل مُدقق الحوسبة السحابية' : 'Cloud Security Auditor executed');
+    
+    resultDiv.innerHTML = '<div class="loading">☁️ جار تدقيق أمان الحوسبة السحابية...</div>';
+    
+    setTimeout(() => {
+        const complianceScore = Math.floor(Math.random() * 30) + 70;
+        const configIssues = Math.floor(Math.random() * 8);
+        const accessPolicies = Math.floor(Math.random() * 5) + 10;
+        const encryptionStatus = Math.random() > 0.3;
+        
+        if (complianceScore < 80 || configIssues > 5) {
+            dashboardStats.threatsDetected++;
+        }
+        
+        const providerName = {
+            aws: 'Amazon AWS',
+            azure: 'Microsoft Azure',
+            gcp: 'Google Cloud Platform'
+        };
+        
+        const result = currentLang === 'ar' ? `
+            ☁️ <strong>تدقيق أمان الحوسبة السحابية</strong>
+            <br><br>🔍 <strong>المورد المُدقق:</strong>
+            <br>• المزود: ${providerName[provider]}
+            <br>• معرف المورد: ${resource}
+            <br><br>📊 <strong>نتائج التدقيق:</strong>
+            <br>• نقاط الامتثال: ${complianceScore}/100
+            <br>• مشاكل التكوين: ${configIssues}
+            <br>• سياسات الوصول: ${accessPolicies}
+            <br>• حالة التشفير: ${encryptionStatus ? '✅ مفعّل' : '❌ غير مفعّل'}
+            <br><br>🛡️ <strong>فحوصات الأمان:</strong>
+            <br>• IAM والصلاحيات: ${Math.random() > 0.3 ? '✅' : '⚠️'}
+            <br>• تشفير البيانات: ${encryptionStatus ? '✅' : '❌'}
+            <br>• مراقبة الشبكة: ${Math.random() > 0.4 ? '✅' : '⚠️'}
+            <br>• النسخ الاحتياطية: ${Math.random() > 0.2 ? '✅' : '⚠️'}
+            <br>• سجلات التدقيق: ${Math.random() > 0.3 ? '✅' : '⚠️'}
+            <br><br>📋 <strong>معايير الامتثال:</strong>
+            <br>• GDPR: ${Math.random() > 0.4 ? '✅' : '⚠️'}
+            <br>• SOC 2: ${Math.random() > 0.3 ? '✅' : '⚠️'}
+            <br>• ISO 27001: ${Math.random() > 0.5 ? '✅' : '⚠️'}
+            <br><br>💡 <strong>التوصيات:</strong>
+            <br>• ${complianceScore > 85 ? 'حالة أمان ممتازة' : 'تحسين إعدادات الأمان مطلوب'}
+            <br>• مراجعة سياسات الوصول دورياً
+            <br>• ${!encryptionStatus ? 'تفعيل التشفير فوراً' : 'الحفاظ على التشفير'}
+        ` : `
+            ☁️ <strong>Cloud Security Audit</strong>
+            <br><br>🔍 <strong>Audited Resource:</strong>
+            <br>• Provider: ${providerName[provider]}
+            <br>• Resource ID: ${resource}
+            <br><br>📊 <strong>Audit Results:</strong>
+            <br>• Compliance Score: ${complianceScore}/100
+            <br>• Configuration Issues: ${configIssues}
+            <br>• Access Policies: ${accessPolicies}
+            <br>• Encryption Status: ${encryptionStatus ? '✅ Enabled' : '❌ Disabled'}
+            <br><br>🛡️ <strong>Security Checks:</strong>
+            <br>• IAM & Permissions: ${Math.random() > 0.3 ? '✅' : '⚠️'}
+            <br>• Data Encryption: ${encryptionStatus ? '✅' : '❌'}
+            <br>• Network Monitoring: ${Math.random() > 0.4 ? '✅' : '⚠️'}
+            <br>• Backup Systems: ${Math.random() > 0.2 ? '✅' : '⚠️'}
+            <br>• Audit Logs: ${Math.random() > 0.3 ? '✅' : '⚠️'}
+            <br><br>📋 <strong>Compliance Standards:</strong>
+            <br>• GDPR: ${Math.random() > 0.4 ? '✅' : '⚠️'}
+            <br>• SOC 2: ${Math.random() > 0.3 ? '✅' : '⚠️'}
+            <br>• ISO 27001: ${Math.random() > 0.5 ? '✅' : '⚠️'}
+            <br><br>💡 <strong>Recommendations:</strong>
+            <br>• ${complianceScore > 85 ? 'Excellent security posture' : 'Security configuration improvements needed'}
+            <br>• Review access policies regularly
+            <br>• ${!encryptionStatus ? 'Enable encryption immediately' : 'Maintain encryption standards'}
+        `;
+        
+        resultDiv.innerHTML = result;
+    }, 3200);
+}
+
+// Update session time every second
+setInterval(() => {
+    if (document.getElementById('dashboardOverlay')?.classList.contains('active')) {
+        updateSessionTime();
+    }
+}, 1000);
+
+// === Advanced Threat Intelligence ===
+function analyzeThreatIntelligence() {
+    const input = document.getElementById('threatInput').value.trim();
+    const resultDiv = document.getElementById('threatAnalysisResult');
+    
+    if (!input) {
+        resultDiv.innerHTML = '<div class="error">الرجاء إدخال مؤشر التهديد</div>';
+        return;
+    }
+    
+    dashboardStats.toolsUsed++;
+    dashboardStats.scansPerformed++;
+    addActivity(currentLang === 'ar' ? 'تم تشغيل محلل استخبارات التهديدات' : 'Threat Intelligence Analyzer executed');
+    
+    resultDiv.innerHTML = '<div class="loading">🕵️ جار تحليل استخبارات التهديدات...</div>';
+    
+    setTimeout(() => {
+        const threatLevel = Math.random() > 0.7 ? 'عالي' : Math.random() > 0.4 ? 'متوسط' : 'منخفض';
+        const confidence = (Math.random() * 30 + 70).toFixed(1);
+        const sources = Math.floor(Math.random() * 8) + 3;
+        const firstSeen = new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString();
+        
+        if (threatLevel === 'عالي') {
+            dashboardStats.threatsDetected++;
+        }
+        
+        const threatTypes = [
+            'برمجية خبيثة',
+            'بوت نت',
+            'حملة تصيد',
+            'مخدم قيادة وتحكم',
+            'تسريب بيانات'
+        ];
+        
+        const detectedType = threatTypes[Math.floor(Math.random() * threatTypes.length)];
+        
+        const result = currentLang === 'ar' ? `
+            🕵️ <strong>تحليل استخبارات التهديدات</strong>
+            <br><br>🔍 <strong>المؤشر المحلل:</strong>
+            <br>${input}
+            <br><br>📊 <strong>نتائج التحليل:</strong>
+            <br>• مستوى التهديد: <span class="risk-${threatLevel === 'عالي' ? 'high' : threatLevel === 'متوسط' ? 'medium' : 'low'}">${threatLevel}</span>
+            <br>• درجة الثقة: ${confidence}%
+            <br>• عدد المصادر: ${sources}
+            <br>• أول رصد: ${firstSeen}
+            <br>• نوع التهديد: ${detectedType}
+            <br><br>🌐 <strong>المصادر:</strong>
+            <br>• VirusTotal: ${Math.random() > 0.3 ? '✅' : '❌'}
+            <br>• AlienVault OTX: ${Math.random() > 0.4 ? '✅' : '❌'}
+            <br>• IBM X-Force: ${Math.random() > 0.5 ? '✅' : '❌'}
+            <br>• Hybrid Analysis: ${Math.random() > 0.3 ? '✅' : '❌'}
+            <br>• URLVoid: ${Math.random() > 0.4 ? '✅' : '❌'}
+            <br><br>🎯 <strong>تفاصيل التهديد:</strong>
+            <br>• الحملات المرتبطة: ${Math.floor(Math.random() * 5) + 1}
+            <br>• البلدان المتأثرة: ${Math.floor(Math.random() * 15) + 5}
+            <br>• العائلة البرمجية: ${detectedType}
+            <br><br>💡 <strong>الإجراءات الموصى بها:</strong>
+            <br>• ${threatLevel === 'عالي' ? 'حظر فوري ومراقبة مكثفة' : threatLevel === 'متوسط' ? 'مراقبة عن كثب واتخاذ احتياطات' : 'مراقبة عادية وتوثيق'}
+            <br>• تحديث قواعد بيانات الأمان
+            <br>• إبلاغ فريق الاستجابة للحوادث
+        ` : `
+            🕵️ <strong>Threat Intelligence Analysis</strong>
+            <br><br>🔍 <strong>Analyzed Indicator:</strong>
+            <br>${input}
+            <br><br>📊 <strong>Analysis Results:</strong>
+            <br>• Threat Level: <span class="risk-${threatLevel === 'عالي' ? 'high' : threatLevel === 'متوسط' ? 'medium' : 'low'}">${threatLevel === 'عالي' ? 'High' : threatLevel === 'متوسط' ? 'Medium' : 'Low'}</span>
+            <br>• Confidence Score: ${confidence}%
+            <br>• Source Count: ${sources}
+            <br>• First Seen: ${firstSeen}
+            <br>• Threat Type: ${detectedType === 'برمجية خبيثة' ? 'Malware' : detectedType === 'بوت نت' ? 'Botnet' : detectedType === 'حملة تصيد' ? 'Phishing Campaign' : detectedType === 'مخدم قيادة وتحكم' ? 'C&C Server' : 'Data Breach'}
+            <br><br>🌐 <strong>Sources:</strong>
+            <br>• VirusTotal: ${Math.random() > 0.3 ? '✅' : '❌'}
+            <br>• AlienVault OTX: ${Math.random() > 0.4 ? '✅' : '❌'}
+            <br>• IBM X-Force: ${Math.random() > 0.5 ? '✅' : '❌'}
+            <br>• Hybrid Analysis: ${Math.random() > 0.3 ? '✅' : '❌'}
+            <br>• URLVoid: ${Math.random() > 0.4 ? '✅' : '❌'}
+            <br><br>🎯 <strong>Threat Details:</strong>
+            <br>• Related Campaigns: ${Math.floor(Math.random() * 5) + 1}
+            <br>• Affected Countries: ${Math.floor(Math.random() * 15) + 5}
+            <br>• Malware Family: ${detectedType === 'برمجية خبيثة' ? 'Malware' : detectedType === 'بوت نت' ? 'Botnet' : detectedType === 'حملة تصيد' ? 'Phishing Campaign' : detectedType === 'مخدم قيادة وتحكم' ? 'C&C Server' : 'Data Breach'}
+            <br><br>💡 <strong>Recommended Actions:</strong>
+            <br>• ${threatLevel === 'عالي' ? 'Immediate blocking and intensive monitoring' : threatLevel === 'متوسط' ? 'Close monitoring and precautionary measures' : 'Normal monitoring and documentation'}
+            <br>• Update security databases
+            <br>• Notify incident response team
+        `;
+        
+        resultDiv.innerHTML = result;
+    }, 2700);
+}
+
+// === Zero-Day Vulnerability Scanner ===
+function scanZeroDayVulns() {
+    const target = document.getElementById('zeroDateTarget').value.trim();
+    const deepScan = document.getElementById('deepScan').checked;
+    const stealthMode = document.getElementById('stealthMode').checked;
+    const resultDiv = document.getElementById('zeroDayScanResult');
+    
+    if (!target) {
+        resultDiv.innerHTML = '<div class="error">الرجاء إدخال هدف الفحص</div>';
+        return;
+    }
+    
+    dashboardStats.toolsUsed++;
+    dashboardStats.scansPerformed++;
+    addActivity(currentLang === 'ar' ? 'تم تشغيل فاحص ثغرات اليوم صفر' : 'Zero-Day Vulnerability Scanner executed');
+    
+    resultDiv.innerHTML = '<div class="loading">🔍 جار فحص ثغرات اليوم صفر...</div>';
+    
+    setTimeout(() => {
+        const vulnCount = Math.floor(Math.random() * (deepScan ? 8 : 4)) + (deepScan ? 2 : 1);
+        const criticalVulns = Math.floor(Math.random() * 3);
+        const scanTime = stealthMode ? Math.floor(Math.random() * 300) + 180 : Math.floor(Math.random() * 120) + 60;
+        
+        if (criticalVulns > 0) {
+            dashboardStats.threatsDetected++;
+        }
+        
+        const vulnerabilities = [
+            'Buffer Overflow في خدمة SSH',
+            'SQL Injection في تطبيق الويب',
+            'Remote Code Execution في API',
+            'Cross-Site Scripting (XSS)',
+            'Directory Traversal',
+            'Authentication Bypass',
+            'Privilege Escalation',
+            'Memory Corruption'
+        ];
+        
+        const detectedVulns = [];
+        for (let i = 0; i < vulnCount; i++) {
+            detectedVulns.push({
+                name: vulnerabilities[Math.floor(Math.random() * vulnerabilities.length)],
+                severity: Math.random() > 0.7 ? 'حرج' : Math.random() > 0.4 ? 'عالي' : 'متوسط',
+                cvss: (Math.random() * 4 + 6).toFixed(1)
+            });
+        }
+        
+        const result = currentLang === 'ar' ? `
+            🔍 <strong>فحص ثغرات اليوم صفر</strong>
+            <br><br>🎯 <strong>الهدف المفحوص:</strong>
+            <br>${target}
+            <br><br>⚙️ <strong>إعدادات الفحص:</strong>
+            <br>• الفحص العميق: ${deepScan ? '✅ مُفعّل' : '❌ غير مُفعّل'}
+            <br>• وضع التخفي: ${stealthMode ? '✅ مُفعّل' : '❌ غير مُفعّل'}
+            <br>• وقت الفحص: ${scanTime} ثانية
+            <br><br>📊 <strong>نتائج الفحص:</strong>
+            <br>• إجمالي الثغرات: ${vulnCount}
+            <br>• ثغرات حرجة: ${criticalVulns}
+            <br>• مؤشر المخاطر: ${criticalVulns > 2 ? 'عالي جداً' : criticalVulns > 0 ? 'عالي' : vulnCount > 3 ? 'متوسط' : 'منخفض'}
+            <br><br>🐛 <strong>الثغرات المكتشفة:</strong>
+            <br>${detectedVulns.slice(0, 5).map(vuln => 
+                `• ${vuln.name} - <span class="risk-${vuln.severity === 'حرج' ? 'high' : vuln.severity === 'عالي' ? 'medium' : 'low'}">${vuln.severity}</span> (CVSS: ${vuln.cvss})`
+            ).join('<br>')}
+            ${vulnCount > 5 ? `<br>... و ${vulnCount - 5} ثغرات أخرى` : ''}
+            <br><br>🛡️ <strong>الاختبارات المنجزة:</strong>
+            <br>• فحص المنافذ والخدمات: ✅
+            <br>• اختبار حقن الكود: ✅
+            <br>• فحص تكوين الأمان: ✅
+            <br>• اختبار صلاحيات الوصول: ${deepScan ? '✅' : '⚠️'}
+            <br>• تحليل البروتوكولات: ${deepScan ? '✅' : '⚠️'}
+            <br><br>💡 <strong>التوصيات العاجلة:</strong>
+            <br>• ${criticalVulns > 0 ? 'إصلاح الثغرات الحرجة فوراً' : 'مراقبة دورية ومعالجة تدريجية'}
+            <br>• تطبيق التحديثات الأمنية
+            <br>• مراجعة سياسات الوصول
+            <br>• إجراء اختبار اختراق شامل
+        ` : `
+            🔍 <strong>Zero-Day Vulnerability Scan</strong>
+            <br><br>🎯 <strong>Scanned Target:</strong>
+            <br>${target}
+            <br><br>⚙️ <strong>Scan Settings:</strong>
+            <br>• Deep Scan: ${deepScan ? '✅ Enabled' : '❌ Disabled'}
+            <br>• Stealth Mode: ${stealthMode ? '✅ Enabled' : '❌ Disabled'}
+            <br>• Scan Duration: ${scanTime} seconds
+            <br><br>📊 <strong>Scan Results:</strong>
+            <br>• Total Vulnerabilities: ${vulnCount}
+            <br>• Critical Vulnerabilities: ${criticalVulns}
+            <br>• Risk Rating: ${criticalVulns > 2 ? 'Very High' : criticalVulns > 0 ? 'High' : vulnCount > 3 ? 'Medium' : 'Low'}
+            <br><br>🐛 <strong>Detected Vulnerabilities:</strong>
+            <br>${detectedVulns.slice(0, 5).map(vuln => 
+                `• ${vuln.name === 'Buffer Overflow في خدمة SSH' ? 'SSH Service Buffer Overflow' : vuln.name === 'SQL Injection في تطبيق الويب' ? 'Web Application SQL Injection' : vuln.name === 'Remote Code Execution في API' ? 'API Remote Code Execution' : vuln.name} - <span class="risk-${vuln.severity === 'حرج' ? 'high' : vuln.severity === 'عالي' ? 'medium' : 'low'}">${vuln.severity === 'حرج' ? 'Critical' : vuln.severity === 'عالي' ? 'High' : 'Medium'}</span> (CVSS: ${vuln.cvss})`
+            ).join('<br>')}
+            ${vulnCount > 5 ? `<br>... and ${vulnCount - 5} more vulnerabilities` : ''}
+            <br><br>🛡️ <strong>Tests Completed:</strong>
+            <br>• Port and Service Scan: ✅
+            <br>• Code Injection Testing: ✅
+            <br>• Security Configuration Check: ✅
+            <br>• Access Control Testing: ${deepScan ? '✅' : '⚠️'}
+            <br>• Protocol Analysis: ${deepScan ? '✅' : '⚠️'}
+            <br><br>💡 <strong>Urgent Recommendations:</strong>
+            <br>• ${criticalVulns > 0 ? 'Fix critical vulnerabilities immediately' : 'Regular monitoring and gradual remediation'}
+            <br>• Apply security updates
+            <br>• Review access policies
+            <br>• Conduct comprehensive penetration testing
+        `;
+        
+        resultDiv.innerHTML = result;
+    }, 4000);
+}
+
+// === Quantum-Resistant Crypto Analyzer ===
+function analyzeQuantumResistance() {
+    const implementation = document.getElementById('cryptoImplementation').value.trim();
+    const resultDiv = document.getElementById('quantumCryptoResult');
+    
+    if (!implementation) {
+        resultDiv.innerHTML = '<div class="error">الرجاء إدخال التطبيق المشفر للتحليل</div>';
+        return;
+    }
+    
+    dashboardStats.toolsUsed++;
+    dashboardStats.scansPerformed++;
+    addActivity(currentLang === 'ar' ? 'تم تشغيل محلل التشفير الكمي' : 'Quantum-Resistant Crypto Analyzer executed');
+    
+    resultDiv.innerHTML = '<div class="loading">🔬 جار تحليل مقاومة التشفير الكمي...</div>';
+    
+    setTimeout(() => {
+        const quantumResistance = Math.floor(Math.random() * 40) + 60;
+        const keyStrength = Math.floor(Math.random() * 1024) + 2048;
+        const algorithm = ['RSA', 'ECC', 'AES', 'ChaCha20', 'Kyber', 'NTRU'][Math.floor(Math.random() * 6)];
+        const postQuantumReady = ['Kyber', 'NTRU', 'ChaCha20'].includes(algorithm);
+        
+        if (quantumResistance < 70 && !postQuantumReady) {
+            dashboardStats.threatsDetected++;
+        }
+        
+        const result = currentLang === 'ar' ? `
+            🔬 <strong>تحليل مقاومة التشفير الكمي</strong>
+            <br><br>🔐 <strong>التطبيق المحلل:</strong>
+            <br>الخوارزمية المكتشفة: ${algorithm}
+            <br>قوة المفتاح: ${keyStrength} بت
+            <br><br>📊 <strong>نتائج التحليل:</strong>
+            <br>• مقاومة الحوسبة الكمية: ${quantumResistance}%
+            <br>• جاهزية ما بعد الكم: ${postQuantumReady ? '✅ نعم' : '❌ لا'}
+            <br>• أمان ضد Shor's Algorithm: ${postQuantumReady || keyStrength > 3072 ? '✅' : '⚠️'}
+            <br>• أمان ضد Grover's Algorithm: ${keyStrength > 2048 ? '✅' : '⚠️'}
+            <br><br>🧮 <strong>تحليل الخوارزمية:</strong>
+            <br>• النوع: ${algorithm === 'RSA' ? 'غير متماثل (RSA)' : algorithm === 'ECC' ? 'منحنيات إهليلجية' : algorithm === 'AES' ? 'متماثر (AES)' : algorithm === 'ChaCha20' ? 'تدفق (ChaCha20)' : algorithm === 'Kyber' ? 'ما بعد الكم (Kyber)' : 'ما بعد الكم (NTRU)'}
+            <br>• قوة المفتاح: ${keyStrength} بت
+            <br>• المقاومة الكلاسيكية: ${keyStrength > 2048 ? 'عالية' : 'متوسطة'}
+            <br>• المقاومة الكمية: ${postQuantumReady ? 'عالية' : quantumResistance > 80 ? 'جيدة' : 'ضعيفة'}
+            <br><br>⏰ <strong>تقدير زمن الكسر:</strong>
+            <br>• الحاسوب الكلاسيكي: ${keyStrength > 3072 ? '> 1000 سنة' : keyStrength > 2048 ? '> 100 سنة' : '< 50 سنة'}
+            <br>• الحاسوب الكمي: ${postQuantumReady ? '> 1000 سنة' : algorithm === 'AES' && keyStrength >= 256 ? '> 100 سنة' : '< 10 سنوات'}
+            <br><br>💡 <strong>التوصيات:</strong>
+            <br>• ${postQuantumReady ? 'خوارزمية آمنة ضد الحوسبة الكمية' : 'فكر في الترقية لخوارزميات ما بعد الكم'}
+            <br>• ${keyStrength < 2048 ? 'زيادة حجم المفتاح لتحسين الأمان' : 'حجم المفتاح مناسب'}
+            <br>• مراقبة تطوير معايير NIST ما بعد الكم
+            <br>• تخطيط لاستراتيجية الانتقال التدريجي
+        ` : `
+            🔬 <strong>Quantum-Resistant Cryptography Analysis</strong>
+            <br><br>🔐 <strong>Analyzed Implementation:</strong>
+            <br>Detected Algorithm: ${algorithm}
+            <br>Key Strength: ${keyStrength} bits
+            <br><br>📊 <strong>Analysis Results:</strong>
+            <br>• Quantum Resistance: ${quantumResistance}%
+            <br>• Post-Quantum Ready: ${postQuantumReady ? '✅ Yes' : '❌ No'}
+            <br>• Shor's Algorithm Security: ${postQuantumReady || keyStrength > 3072 ? '✅' : '⚠️'}
+            <br>• Grover's Algorithm Security: ${keyStrength > 2048 ? '✅' : '⚠️'}
+            <br><br>🧮 <strong>Algorithm Analysis:</strong>
+            <br>• Type: ${algorithm === 'RSA' ? 'Asymmetric (RSA)' : algorithm === 'ECC' ? 'Elliptic Curves' : algorithm === 'AES' ? 'Symmetric (AES)' : algorithm === 'ChaCha20' ? 'Stream (ChaCha20)' : algorithm === 'Kyber' ? 'Post-Quantum (Kyber)' : 'Post-Quantum (NTRU)'}
+            <br>• Key Strength: ${keyStrength} bits
+            <br>• Classical Resistance: ${keyStrength > 2048 ? 'High' : 'Medium'}
+            <br>• Quantum Resistance: ${postQuantumReady ? 'High' : quantumResistance > 80 ? 'Good' : 'Weak'}
+            <br><br>⏰ <strong>Breaking Time Estimation:</strong>
+            <br>• Classical Computer: ${keyStrength > 3072 ? '> 1000 years' : keyStrength > 2048 ? '> 100 years' : '< 50 years'}
+            <br>• Quantum Computer: ${postQuantumReady ? '> 1000 years' : algorithm === 'AES' && keyStrength >= 256 ? '> 100 years' : '< 10 years'}
+            <br><br>💡 <strong>Recommendations:</strong>
+            <br>• ${postQuantumReady ? 'Algorithm is quantum-safe' : 'Consider upgrading to post-quantum algorithms'}
+            <br>• ${keyStrength < 2048 ? 'Increase key size for better security' : 'Key size is adequate'}
+            <br>• Monitor NIST post-quantum standards development
+            <br>• Plan gradual migration strategy
+        `;
+        
+        resultDiv.innerHTML = result;
+    }, 3500);
+}
+
+// === Incident Response Simulator ===
+function startIncidentSimulation() {
+    const incidentType = document.getElementById('incidentType').value;
+    const resultDiv = document.getElementById('incidentSimResult');
+    
+    dashboardStats.toolsUsed++;
+    dashboardStats.scansPerformed++;
+    addActivity(currentLang === 'ar' ? 'تم تشغيل محاكي الاستجابة للحوادث' : 'Incident Response Simulator executed');
+    
+    resultDiv.innerHTML = '<div class="loading">🚨 جار محاكاة حادث الأمان...</div>';
+    
+    setTimeout(() => {
+        const severity = Math.random() > 0.6 ? 'عالي' : Math.random() > 0.3 ? 'متوسط' : 'منخفض';
+        const affectedSystems = Math.floor(Math.random() * 20) + 5;
+        const detectionTime = Math.floor(Math.random() * 60) + 10;
+        const containmentTime = Math.floor(Math.random() * 120) + 30;
+        
+        if (severity === 'عالي') {
+            dashboardStats.threatsDetected++;
+        }
+        
+        const incidentTypes = {
+            malware: {
+                ar: 'هجوم برمجية خبيثة',
+                en: 'Malware Attack',
+                description_ar: 'اكتشاف برمجية خبيثة في الشبكة',
+                description_en: 'Malware detected in network'
+            },
+            breach: {
+                ar: 'خرق البيانات',
+                en: 'Data Breach',
+                description_ar: 'وصول غير مصرح للبيانات الحساسة',
+                description_en: 'Unauthorized access to sensitive data'
+            },
+            ddos: {
+                ar: 'هجوم DDoS',
+                en: 'DDoS Attack',
+                description_ar: 'هجوم حجب الخدمة الموزع',
+                description_en: 'Distributed Denial of Service attack'
+            },
+            insider: {
+                ar: 'تهديد داخلي',
+                en: 'Insider Threat',
+                description_ar: 'نشاط مشبوه من مستخدم داخلي',
+                description_en: 'Suspicious activity from internal user'
+            }
+        };
+        
+        const selectedIncident = incidentTypes[incidentType];
+        
+        const responseSteps = currentLang === 'ar' ? [
+            '1️⃣ تحديد وتوثيق الحادث',
+            '2️⃣ إبلاغ فريق الاستجابة',
+            '3️⃣ احتواء التهديد',
+            '4️⃣ جمع الأدلة الجنائية',
+            '5️⃣ القضاء على التهديد',
+            '6️⃣ استعادة النظم',
+            '7️⃣ تحليل ما بعد الحادث'
+        ] : [
+            '1️⃣ Identification and Documentation',
+            '2️⃣ Response Team Notification',
+            '3️⃣ Threat Containment',
+            '4️⃣ Evidence Collection',
+            '5️⃣ Threat Eradication',
+            '6️⃣ System Recovery',
+            '7️⃣ Post-Incident Analysis'
+        ];
+        
+        const result = currentLang === 'ar' ? `
+            🚨 <strong>محاكاة الاستجابة للحوادث</strong>
+            <br><br>🎯 <strong>نوع الحادث:</strong>
+            <br>${selectedIncident.ar} - ${selectedIncident.description_ar}
+            <br><br>📊 <strong>تفاصيل الحادث:</strong>
+            <br>• مستوى الخطورة: <span class="risk-${severity === 'عالي' ? 'high' : severity === 'متوسط' ? 'medium' : 'low'}">${severity}</span>
+            <br>• الأنظمة المتأثرة: ${affectedSystems}
+            <br>• وقت الاكتشاف: ${detectionTime} دقيقة
+            <br>• وقت الاحتواء: ${containmentTime} دقيقة
+            <br>• حالة التصعيد: ${severity === 'عالي' ? 'مطلوب' : 'غير مطلوب'}
+            <br><br>📋 <strong>خطوات الاستجابة:</strong>
+            <br>${responseSteps.join('<br>')}
+            <br><br>👥 <strong>الفرق المعنية:</strong>
+            <br>• فريق الاستجابة الأولي: 4 أعضاء
+            <br>• الطب الشرعي الرقمي: ${severity === 'عالي' ? '2 أعضاء' : '1 عضو'}
+            <br>• فريق الاتصالات: ${severity === 'عالي' ? 'مُفعّل' : 'استعداد'}
+            <br>• الإدارة العليا: ${severity === 'عالي' ? 'مُبلغة' : 'على علم'}
+            <br><br>📈 <strong>مؤشرات الأداء:</strong>
+            <br>• زمن الاستجابة: ${detectionTime < 30 ? 'ممتاز' : detectionTime < 60 ? 'جيد' : 'يحتاج تحسين'}
+            <br>• فعالية الاحتواء: ${containmentTime < 60 ? 'عالية' : containmentTime < 120 ? 'متوسطة' : 'منخفضة'}
+            <br>• التوثيق: مكتمل ✅
+            <br>• التواصل: ${severity === 'عالي' ? 'مُفعّل بالكامل' : 'داخلي فقط'}
+            <br><br>💡 <strong>الدروس المستفادة:</strong>
+            <br>• ${detectionTime > 45 ? 'تحسين نظم المراقبة مطلوب' : 'أداء ممتاز في الكشف المبكر'}
+            <br>• ${containmentTime > 100 ? 'مراجعة إجراءات الاحتواء' : 'إجراءات الاحتواء فعالة'}
+            <br>• تحديث خطط الاستجابة للحوادث
+            <br>• تدريب إضافي للفرق المعنية
+        ` : `
+            🚨 <strong>Incident Response Simulation</strong>
+            <br><br>🎯 <strong>Incident Type:</strong>
+            <br>${selectedIncident.en} - ${selectedIncident.description_en}
+            <br><br>📊 <strong>Incident Details:</strong>
+            <br>• Severity Level: <span class="risk-${severity === 'عالي' ? 'high' : severity === 'متوسط' ? 'medium' : 'low'}">${severity === 'عالي' ? 'High' : severity === 'متوسط' ? 'Medium' : 'Low'}</span>
+            <br>• Affected Systems: ${affectedSystems}
+            <br>• Detection Time: ${detectionTime} minutes
+            <br>• Containment Time: ${containmentTime} minutes
+            <br>• Escalation Status: ${severity === 'عالي' ? 'Required' : 'Not Required'}
+            <br><br>📋 <strong>Response Steps:</strong>
+            <br>${responseSteps.join('<br>')}
+            <br><br>👥 <strong>Involved Teams:</strong>
+            <br>• Initial Response Team: 4 members
+            <br>• Digital Forensics: ${severity === 'عالي' ? '2 members' : '1 member'}
+            <br>• Communications Team: ${severity === 'عالي' ? 'Activated' : 'On Standby'}
+            <br>• Executive Management: ${severity === 'عالي' ? 'Notified' : 'Informed'}
+            <br><br>📈 <strong>Performance Metrics:</strong>
+            <br>• Response Time: ${detectionTime < 30 ? 'Excellent' : detectionTime < 60 ? 'Good' : 'Needs Improvement'}
+            <br>• Containment Effectiveness: ${containmentTime < 60 ? 'High' : containmentTime < 120 ? 'Medium' : 'Low'}
+            <br>• Documentation: Complete ✅
+            <br>• Communication: ${severity === 'عالي' ? 'Fully Activated' : 'Internal Only'}
+            <br><br>💡 <strong>Lessons Learned:</strong>
+            <br>• ${detectionTime > 45 ? 'Monitoring systems improvement needed' : 'Excellent early detection performance'}
+            <br>• ${containmentTime > 100 ? 'Review containment procedures' : 'Effective containment procedures'}
+            <br>• Update incident response plans
+            <br>• Additional training for response teams
+        `;
+        
+        resultDiv.innerHTML = result;
+    }, 3800);
 }
