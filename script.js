@@ -6974,19 +6974,468 @@ function updateTimerDisplay() {
     }
 }
 
-function triggerManualScan() {
-    // Show scanning animation
-    const scanBtn = document.querySelector('.scan-now');
-    if (scanBtn) {
-        scanBtn.style.background = 'rgba(0, 255, 136, 0.3)';
-        scanBtn.innerHTML = `
-            <svg viewBox="0 0 24 24" width="16" height="16" style="animation: spin 1s linear infinite;">
-                <path fill="currentColor" d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
-            </svg>
-            <span>جاري الفحص...</span>
-        `;
+// نظام المراقبة المتقدم المتكامل
+class AdvancedSecurityMonitor {
+    constructor() {
+        this.isRunning = false;
+        this.scanInterval = null;
+        this.alertsEnabled = true;
+        this.soundEnabled = true;
+        this.settings = {
+            scanning: {
+                interval: 30,  // بالثواني
+                depth: 'standard',
+                autoScan: true,
+                realTimeProtection: true,
+                scheduledScan: true,
+                scanOnStartup: false
+            },
+            alerts: {
+                enabled: true,
+                sound: true,
+                desktop: true,
+                email: false,
+                severity: 'medium',
+                frequency: 'all'
+            },
+            display: {
+                theme: 'dark',
+                compactView: false,
+                animationsEnabled: true,
+                language: 'ar',
+                fontSize: 'medium'
+            },
+            security: {
+                advancedThreatDetection: true,
+                behaviorAnalysis: false,
+                networkMonitoring: true,
+                fileIntegrityCheck: false,
+                quarantineMode: 'auto'
+            },
+            performance: {
+                cpuUsage: 'medium',
+                lowPowerMode: false,
+                backgroundScanning: true,
+                resourceLimit: 50,
+                priorityMode: 'balanced',
+                cacheOptimization: true
+            }
+        };
+        this.stats = {
+            scansPerformed: 0,
+            threatsDetected: 0,
+            eventsToday: 0,
+            uptime: 0
+        };
+        this.eventHistory = [];
+        this.lastScanTime = null;
+        this.threatLevel = 'low';
+        this.intervalOptions = {
+            10: 'كل 10 ثوان',
+            15: 'كل 15 ثانية', 
+            30: 'كل 30 ثانية',
+            60: 'كل دقيقة',
+            120: 'كل دقيقتين',
+            300: 'كل 5 دقائق',
+            600: 'كل 10 دقائق',
+            900: 'كل 15 دقيقة',
+            1800: 'كل 30 دقيقة',
+            3600: 'كل ساعة'
+        };
+    }
+
+    // بدء النظام
+    start() {
+        console.log('🚀 بدء نظام المراقبة المتقدم...');
+        this.isRunning = true;
+        this.loadSettings();
+        this.initializeMonitoring();
+        this.updateUI();
+        this.addSystemEvent('system', 'تم تفعيل نظام المراقبة المتقدم', 'normal');
+    }
+
+    // إيقاف النظام
+    stop() {
+        console.log('⏹️ إيقاف نظام المراقبة...');
+        this.isRunning = false;
+        if (this.scanInterval) {
+            clearInterval(this.scanInterval);
+            this.scanInterval = null;
+        }
+        this.addSystemEvent('system', 'تم إيقاف نظام المراقبة', 'warning');
+    }
+
+    // تحميل الإعدادات
+    loadSettings() {
+        try {
+            const saved = localStorage.getItem('cyberGuardAdvancedSettings');
+            if (saved) {
+                const settings = JSON.parse(saved);
+                this.settings = { ...this.settings, ...settings };
+                console.log('✅ تم تحميل الإعدادات المحفوظة');
+            }
+        } catch (error) {
+            console.error('❌ خطأ في تحميل الإعدادات:', error);
+        }
+    }
+
+    // حفظ الإعدادات
+    saveSettings() {
+        try {
+            localStorage.setItem('cyberGuardAdvancedSettings', JSON.stringify(this.settings));
+            console.log('💾 تم حفظ الإعدادات');
+            this.applySettings();
+            return true;
+        } catch (error) {
+            console.error('❌ خطأ في حفظ الإعدادات:', error);
+            return false;
+        }
+    }
+
+    // تطبيق الإعدادات
+    applySettings() {
+        // تطبيق إعدادات المسح
+        if (this.settings.scanning.autoScan && this.isRunning) {
+            this.setupAutoScan();
+        } else {
+            this.stopAutoScan();
+        }
+
+        // تطبيق إعدادات العرض
+        this.applyDisplaySettings();
+
+        // تطبيق إعدادات الأمان
+        this.applySecuritySettings();
+
+        // تحديث واجهة المستخدم
+        this.updateUI();
+
+        console.log('⚙️ تم تطبيق جميع الإعدادات');
+    }
+
+    // إعداد المسح التلقائي
+    setupAutoScan() {
+        if (this.scanInterval) {
+            clearInterval(this.scanInterval);
+        }
+
+        const intervalMinutes = this.settings.scanning.interval;
+        const intervalMs = intervalMinutes * 60 * 1000;
+
+        this.scanInterval = setInterval(() => {
+            this.performAutomaticScan();
+        }, intervalMs);
+
+        console.log(`🔄 تم تفعيل المسح التلقائي كل ${intervalMinutes} دقيقة`);
+    }
+
+    // إيقاف المسح التلقائي
+    stopAutoScan() {
+        if (this.scanInterval) {
+            clearInterval(this.scanInterval);
+            this.scanInterval = null;
+            console.log('⏸️ تم إيقاف المسح التلقائي');
+        }
+    }
+
+    // تنفيذ مسح تلقائي
+    performAutomaticScan() {
+        console.log('🔍 تنفيذ مسح تلقائي...');
+        
+        this.stats.scansPerformed++;
+        this.lastScanTime = new Date();
+        
+        // محاكاة نتائج الفحص
+        const scanResults = this.simulateScanResults();
+        
+        // إضافة حدث الفحص
+        this.addSystemEvent('scan', `فحص تلقائي مكتمل - ${scanResults.status}`, scanResults.priority);
+        
+        // عرض النتائج إذا كانت التنبيهات مفعلة
+        if (this.settings.alerts.enabled) {
+            this.showScanNotification(scanResults);
+        }
+        
+        // تحديث الواجهة
+        this.updateUI();
+    }
+
+    // تنفيذ مسح يدوي
+    performManualScan() {
+        console.log('👆 تنفيذ مسح يدوي...');
+        
+        // إظهار أنيميشن المسح
+        this.showScanAnimation();
         
         setTimeout(() => {
+            this.stats.scansPerformed++;
+            this.lastScanTime = new Date();
+            
+            const scanResults = this.simulateScanResults();
+            scanResults.type = 'manual';
+            
+            this.addSystemEvent('scan', `فحص يدوي مكتمل - ${scanResults.status}`, scanResults.priority);
+            
+            if (this.settings.alerts.enabled) {
+                this.showScanNotification(scanResults);
+            }
+            
+            this.updateUI();
+            this.hideScanAnimation();
+        }, 3000);
+    }
+
+    // محاكاة نتائج الفحص
+    simulateScanResults() {
+        const outcomes = [
+            { status: 'نظيف', threats: 0, priority: 'normal' },
+            { status: 'نظيف', threats: 0, priority: 'normal' },
+            { status: 'نظيف', threats: 0, priority: 'normal' },
+            { status: 'تم العثور على تهديدات', threats: Math.floor(Math.random() * 3) + 1, priority: 'high' },
+            { status: 'تحذيرات أمنية', threats: Math.floor(Math.random() * 2) + 1, priority: 'medium' }
+        ];
+        
+        const result = outcomes[Math.floor(Math.random() * outcomes.length)];
+        
+        if (result.threats > 0) {
+            this.stats.threatsDetected += result.threats;
+            this.threatLevel = result.priority === 'high' ? 'high' : 'medium';
+        }
+        
+        return result;
+    }
+
+    // إضافة حدث نظام
+    addSystemEvent(type, message, priority = 'normal') {
+        const event = {
+            id: Date.now(),
+            type: type,
+            message: message,
+            priority: priority,
+            timestamp: new Date(),
+            time: new Date().toLocaleTimeString('ar-EG', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            })
+        };
+        
+        this.eventHistory.unshift(event);
+        this.stats.eventsToday++;
+        
+        // إضافة الحدث للواجهة
+        this.addEventToUI(event);
+        
+        // الاحتفاظ بآخر 100 حدث فقط
+        if (this.eventHistory.length > 100) {
+            this.eventHistory = this.eventHistory.slice(0, 100);
+        }
+    }
+
+    // إضافة حدث للواجهة
+    addEventToUI(event) {
+        const activityList = document.getElementById('securityActivityList');
+        if (!activityList) return;
+        
+        const eventElement = document.createElement('div');
+        eventElement.className = `activity-event ${event.type}`;
+        eventElement.setAttribute('data-type', event.type);
+        
+        const icons = {
+            system: `<svg viewBox="0 0 24 24" width="14" height="14">
+                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>`,
+            scan: `<svg viewBox="0 0 24 24" width="14" height="14">
+                     <path fill="#00ff88" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                   </svg>`,
+            threat: `<svg viewBox="0 0 24 24" width="14" height="14">
+                       <path fill="#ff4757" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                     </svg>`
+        };
+        
+        eventElement.innerHTML = `
+            <div class="event-timeline">
+                <div class="event-time">${event.time}</div>
+                <div class="event-indicator ${event.type}-indicator">
+                    ${icons[event.type] || icons.system}
+                </div>
+            </div>
+            <div class="event-content">
+                <div class="event-title">${event.message}</div>
+                <div class="event-details">
+                    <span class="event-category ${event.type}">${event.type.toUpperCase()}</span>
+                    <span class="event-priority ${event.priority}">${this.getPriorityText(event.priority)}</span>
+                </div>
+            </div>
+        `;
+        
+        // إضافة أنيميشن
+        eventElement.style.opacity = '0';
+        eventElement.style.transform = 'translateY(-10px)';
+        
+        activityList.insertBefore(eventElement, activityList.firstChild);
+        
+        // تفعيل الأنيميشن
+        setTimeout(() => {
+            eventElement.style.opacity = '1';
+            eventElement.style.transform = 'translateY(0)';
+            eventElement.style.transition = 'all 0.3s ease';
+        }, 100);
+        
+        // إزالة الأحداث القديمة (أكثر من 20)
+        const events = activityList.querySelectorAll('.activity-event');
+        if (events.length > 20) {
+            for (let i = 20; i < events.length; i++) {
+                events[i].remove();
+            }
+        }
+    }
+
+    // نص الأولوية
+    getPriorityText(priority) {
+        const texts = {
+            normal: 'عادي',
+            medium: 'متوسط',
+            high: 'عالي',
+            critical: 'حرج'
+        };
+        return texts[priority] || 'عادي';
+    }
+
+    // تطبيق إعدادات العرض
+    applyDisplaySettings() {
+        const body = document.body;
+        
+        // الوضع المظلم/المضيء
+        if (this.settings.display.theme === 'light') {
+            body.classList.add('light-theme');
+        } else {
+            body.classList.remove('light-theme');
+        }
+        
+        // العرض المدمج
+        if (this.settings.display.compactView) {
+            body.classList.add('compact-view');
+        } else {
+            body.classList.remove('compact-view');
+        }
+        
+        // الأنيميشن
+        if (!this.settings.display.animationsEnabled) {
+            body.classList.add('no-animations');
+        } else {
+            body.classList.remove('no-animations');
+        }
+    }
+
+    // تطبيق إعدادات الأمان
+    applySecuritySettings() {
+        // تفعيل/إلغاء تفعيل المراقبة المتقدمة
+        if (this.settings.security.advancedThreatDetection) {
+            console.log('🛡️ تم تفعيل الكشف المتقدم عن التهديدات');
+        }
+        
+        if (this.settings.security.networkMonitoring) {
+            console.log('🌐 تم تفعيل مراقبة الشبكة');
+        }
+    }
+
+    // تحديث واجهة المستخدم
+    updateUI() {
+        // تحديث الإحصائيات
+        this.updateStatistics();
+        
+        // تحديث مؤشر الحالة
+        this.updateStatusIndicator();
+        
+        // تحديث عداد المؤقت
+        this.updateScanTimer();
+        
+        // تحديث واجهة الإعدادات
+        this.updateSettingsUI();
+    }
+    
+    // تحديث واجهة الإعدادات
+    updateSettingsUI() {
+        // تحديث فترة المسح
+        const scanIntervalSelect = document.getElementById('scanInterval');
+        if (scanIntervalSelect) {
+            scanIntervalSelect.value = this.settings.scanning.interval;
+            updateScanInterval(this.settings.scanning.interval); // تحديث النص التوضيحي
+        }
+        
+        // تحديث المسح التلقائي
+        const autoScanCheckbox = document.getElementById('autoScan');
+        if (autoScanCheckbox) {
+            autoScanCheckbox.checked = this.settings.scanning.autoScan;
+        }
+        
+        // تحديث التنبيهات
+        const alertsElements = {
+            soundAlerts: this.settings.alerts.sound,
+            desktopNotifications: this.settings.alerts.desktop,
+            emailAlerts: this.settings.alerts.email
+        };
+        
+        Object.entries(alertsElements).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.checked = value;
+            }
+        });
+    }
+
+    // تحديث الإحصائيات
+    updateStatistics() {
+        const elements = {
+            scansPerformed: document.getElementById('scansPerformed'),
+            threatsDetected: document.getElementById('threatsDetected'),
+            threatsBlocked: document.getElementById('threatsBlocked'),
+            eventsToday: document.getElementById('eventsToday'),
+            activeToolsCount: document.getElementById('activeToolsCount'),
+            toolsUsedCount: document.getElementById('toolsUsedCount')
+        };
+        
+        Object.entries(elements).forEach(([key, element]) => {
+            if (element) {
+                element.textContent = this.stats[key] || 0;
+            }
+        });
+    }
+
+    // تحديث مؤشر الحالة
+    updateStatusIndicator() {
+        const statusText = document.querySelector('.status-text');
+        const statusDot = document.querySelector('.status-dot');
+        
+        if (statusText && statusDot) {
+            if (this.isRunning) {
+                statusText.textContent = 'نشط';
+                statusDot.classList.add('active');
+            } else {
+                statusText.textContent = 'متوقف';
+                statusDot.classList.remove('active');
+            }
+        }
+    }
+
+    // عرض أنيميشن المسح
+    showScanAnimation() {
+        const scanBtn = document.querySelector('.scan-now');
+        if (scanBtn) {
+            scanBtn.style.background = 'rgba(0, 255, 136, 0.3)';
+            scanBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" width="16" height="16" style="animation: spin 1s linear infinite;">
+                    <path fill="currentColor" d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
+                </svg>
+                <span>جاري الفحص...</span>
+            `;
+        }
+    }
+
+    // إخفاء أنيميشن المسح
+    hideScanAnimation() {
+        const scanBtn = document.querySelector('.scan-now');
+        if (scanBtn) {
             scanBtn.style.background = '';
             scanBtn.innerHTML = `
                 <svg viewBox="0 0 24 24" width="16" height="16">
@@ -6994,72 +7443,2677 @@ function triggerManualScan() {
                 </svg>
                 <span>فحص الآن</span>
             `;
-        }, 3000);
+        }
     }
-    
-    // Add scan event to activity
-    addSecurityEvent('scan', 'تم إجراء فحص يدوي شامل', 'نظيف', 'normal');
-    
-    // Reset timer
-    scanTimer = 150;
-    
-    showSecurityNotification('تم بدء الفحص اليدوي بنجاح');
+
+    // عرض إشعار المسح
+    showScanNotification(results) {
+        if (!this.settings.alerts.enabled) return;
+        
+        const message = results.type === 'manual' ? 
+            `فحص يدوي مكتمل: ${results.status}` : 
+            `فحص تلقائي مكتمل: ${results.status}`;
+            
+        const type = results.threats > 0 ? 'warning' : 'success';
+        
+        if (typeof showProfessionalNotification === 'function') {
+            showProfessionalNotification(message, type);
+        }
+        
+        // تشغيل صوت إذا كان مفعلاً
+        if (this.settings.alerts.sound && results.threats > 0) {
+            this.playAlertSound();
+        }
+    }
+
+    // تشغيل صوت التنبيه
+    playAlertSound() {
+        try {
+            // محاكاة صوت التنبيه
+            const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBjeK0fDScCoEIHPG7+OVQU0OUqPk77JcIw==');
+            audio.volume = 0.3;
+            audio.play().catch(e => console.log('لا يمكن تشغيل الصوت:', e));
+        } catch (error) {
+            console.log('خطأ في تشغيل الصوت:', error);
+        }
+    }
+
+    // مسح سجل الأحداث
+    clearEventLog() {
+        console.log('🧹 مسح سجل الأحداث...');
+        
+        this.eventHistory = [];
+        this.stats.eventsToday = 0;
+        
+        const activityList = document.getElementById('securityActivityList');
+        if (activityList) {
+            activityList.innerHTML = '';
+        }
+        
+        this.addSystemEvent('system', 'تم مسح سجل الأحداث', 'normal');
+        this.updateUI();
+        
+        if (typeof showProfessionalNotification === 'function') {
+            showProfessionalNotification('تم مسح سجل الأنشطة بنجاح', 'success');
+        }
+    }
+
+    // تحديث مؤقت المسح
+    updateScanTimer() {
+        if (!this.settings.scanning.autoScan || !this.isRunning) return;
+        
+        const timerDisplay = document.getElementById('timerDisplay');
+        if (!timerDisplay) return;
+        
+        const intervalMs = this.settings.scanning.interval * 60 * 1000;
+        const now = Date.now();
+        const lastScan = this.lastScanTime ? this.lastScanTime.getTime() : now;
+        const nextScan = lastScan + intervalMs;
+        const remaining = Math.max(0, nextScan - now);
+        
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        
+        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (remaining < 30000) {
+            timerDisplay.style.color = '#ff4757';
+            timerDisplay.style.animation = 'pulse 1s infinite';
+        } else {
+            timerDisplay.style.color = '#00ff88';
+            timerDisplay.style.animation = '';
+        }
+    }
 }
 
-function triggerAutomaticScan() {
-    console.log('🔰 Triggering automatic security scan...');
+// إنشاء مثيل النظام العالمي
+const advancedSecurityMonitor = new AdvancedSecurityMonitor();
+
+function triggerManualScan() {
+    advancedSecurityMonitor.performManualScan();
+}
+
+function clearSecurityLog() {
+    advancedSecurityMonitor.clearEventLog();
+}
+
+// تحديث فترة المسح فورياً
+function updateScanInterval(seconds) {
+    const intervalSeconds = parseInt(seconds);
     
-    // Add automatic scan event
-    addSecurityEvent('scan', 'فحص تلقائي مجدول مكتمل', 'نظيف', 'normal');
+    // تحديث النص التوضيحي
+    const intervalDisplay = document.getElementById('intervalDisplay');
+    if (intervalDisplay) {
+        if (intervalSeconds < 60) {
+            intervalDisplay.textContent = `${intervalSeconds} ثانية`;
+        } else if (intervalSeconds < 3600) {
+            const minutes = Math.floor(intervalSeconds / 60);
+            intervalDisplay.textContent = `${minutes} دقيقة`;
+        } else {
+            const hours = Math.floor(intervalSeconds / 3600);
+            intervalDisplay.textContent = `${hours} ساعة`;
+        }
+    }
     
-    // Show notification with scan details
-    showSecurityNotification('تم إجراء الفحص التلقائي - النظام نظيف');
+    // تطبيق التغيير فوراً على النظام
+    if (window.advancedSecurityMonitor) {
+        advancedSecurityMonitor.settings.scanning.interval = intervalSeconds;
+        
+        // إعادة تشغيل المسح التلقائي بالفترة الجديدة
+        if (advancedSecurityMonitor.settings.scanning.autoScan && advancedSecurityMonitor.isRunning) {
+            advancedSecurityMonitor.setupAutoScan();
+            console.log(`🔄 تم تحديث فترة المسح إلى ${intervalSeconds} ثانية`);
+            
+            // إشعار للمستخدم
+            if (typeof showProfessionalNotification === 'function') {
+                const timeText = intervalDisplay ? intervalDisplay.textContent : `${intervalSeconds} ثانية`;
+                showProfessionalNotification(`تم تحديث فترة المسح إلى ${timeText} ⏰`, 'success');
+            }
+            
+            // إضافة حدث للنظام
+            advancedSecurityMonitor.addSystemEvent('system', `تم تحديث فترة المسح إلى ${intervalSeconds} ثانية`, 'normal');
+        }
+        
+        // حفظ الإعدادات
+        advancedSecurityMonitor.saveSettings();
+    }
+}
+
+// تحديث حالة المسح التلقائي فورياً
+function toggleAutoScan(enabled) {
+    if (window.advancedSecurityMonitor) {
+        advancedSecurityMonitor.settings.scanning.autoScan = enabled;
+        
+        if (enabled && advancedSecurityMonitor.isRunning) {
+            advancedSecurityMonitor.setupAutoScan();
+            console.log('✅ تم تفعيل المسح التلقائي');
+            if (typeof showProfessionalNotification === 'function') {
+                showProfessionalNotification('تم تفعيل المسح التلقائي 🔄', 'success');
+            }
+            advancedSecurityMonitor.addSystemEvent('system', 'تم تفعيل المسح التلقائي', 'normal');
+        } else {
+            advancedSecurityMonitor.stopAutoScan();
+            console.log('⏸️ تم إيقاف المسح التلقائي');
+            if (typeof showProfessionalNotification === 'function') {
+                showProfessionalNotification('تم إيقاف المسح التلقائي ⏸️', 'warning');
+            }
+            advancedSecurityMonitor.addSystemEvent('system', 'تم إيقاف المسح التلقائي', 'warning');
+        }
+        
+        advancedSecurityMonitor.saveSettings();
+    }
+}
+
+// تحديث إعدادات التنبيهات فورياً
+function updateAlertsSettings(setting, value) {
+    if (window.advancedSecurityMonitor) {
+        advancedSecurityMonitor.settings.alerts[setting] = value;
+        
+        // رسائل خاصة لكل إعداد
+        const messages = {
+            enabled: value ? 'تم تفعيل التنبيهات 🔔' : 'تم إيقاف التنبيهات 🔕',
+            sound: value ? 'تم تفعيل التنبيهات الصوتية 🔊' : 'تم إيقاف التنبيهات الصوتية 🔇',
+            desktop: value ? 'تم تفعيل الإشعارات المكتبية 💻' : 'تم إيقاف الإشعارات المكتبية',
+            email: value ? 'تم تفعيل إشعارات البريد الإلكتروني 📧' : 'تم إيقاف إشعارات البريد الإلكتروني'
+        };
+        
+        if (messages[setting] && typeof showProfessionalNotification === 'function') {
+            showProfessionalNotification(messages[setting], 'success');
+        }
+        
+        advancedSecurityMonitor.addSystemEvent('system', `تم تحديث إعدادات التنبيهات: ${setting}`, 'normal');
+        advancedSecurityMonitor.saveSettings();
+    }
+}
+
+function openMonitorSettings() {
+    createAdvancedMonitorSettingsModal();
+}
+
+// إعدادات المراقب الافتراضية المحسنة
+const monitorSettings = {
+    scanning: {
+        interval: 30,
+        depth: 'standard',
+        autoScan: true,
+        realTimeProtection: true,
+        scheduledScan: false,
+        scanOnStartup: true
+    },
+    alerts: {
+        enabled: true,
+        sound: true,
+        desktop: true,
+        email: false,
+        level: 'medium',
+        customSound: false,
+        urgentAlert: true
+    },
+    display: {
+        maxEvents: 100,
+        refreshRate: 5,
+        showTimestamps: true,
+        animateEvents: true,
+        darkMode: true,
+        compactView: false,
+        showIcons: true
+    },
+    advanced: {
+        logToFile: false,
+        debugMode: false,
+        logLevel: 'info',
+        customRules: false,
+        autoUpdate: true,
+        cloudSync: false
+    },
+    performance: {
+        cpuUsage: 'medium',
+        lowPowerMode: false,
+        backgroundScanning: true,
+        resourceLimit: 50,
+        priorityMode: 'balanced',
+        cacheOptimization: true
+    },
+    security: {
+        advancedThreatDetection: true,
+        behaviorAnalysis: false,
+        networkMonitoring: true,
+        fileIntegrityCheck: false,
+        quarantineMode: 'auto'
+    }
+};
+
+function createAdvancedMonitorSettingsModal() {
+    // إزالة النافذة الموجودة إن وجدت
+    const existingModal = document.querySelector('.advanced-monitor-settings-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    const modal = document.createElement('div');
+    modal.className = 'advanced-monitor-settings-modal';
+    modal.innerHTML = `
+        <div class="modal-backdrop" onclick="closeAdvancedModal()"></div>
+        <div class="professional-settings-container">
+            <div class="professional-header">
+                <div class="header-icon-group">
+                    <div class="main-settings-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32">
+                            <defs>
+                                <linearGradient id="settingsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#00d4aa;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path fill="url(#settingsGradient)" d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+                            <circle cx="12" cy="12" r="2" fill="rgba(255,255,255,0.9)" />
+                        </svg>
+                    </div>
+                    <div class="header-text-group">
+                        <h1 class="professional-title">إعدادات المراقب المتقدمة</h1>
+                        <p class="professional-subtitle">تحكم كامل في نظام المراقبة والأمان</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <div class="status-dot active"></div>
+                        <span class="status-text">نشط</span>
+                    </div>
+                    <button class="professional-close-btn" onclick="closeAdvancedModal()">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="professional-navigation">
+                <button class="professional-nav-tab active" data-section="scanning">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path fill="currentColor" d="M15.5,12C18,12 20,14 20,16.5C20,17.38 19.75,18.21 19.31,18.9L22.39,22L21,23.39L17.88,20.32C17.19,20.75 16.37,21 15.5,21C13,21 11,19 11,16.5C11,14 13,12 15.5,12M15.5,14A2.5,2.5 0 0,0 13,16.5A2.5,2.5 0 0,0 15.5,19A2.5,2.5 0 0,0 18,16.5A2.5,2.5 0 0,0 15.5,14M6.5,2C7.33,2 8,2.67 8,3.5V5H16V3.5C16,2.67 16.67,2 17.5,2C18.33,2 19,2.67 19,3.5V5C20.11,5 21,5.9 21,7V10.81C20.42,10.3 19.74,9.93 19,9.73V7H5V19H9.09C9.21,19.72 9.46,20.39 9.81,21H5C3.9,21 3,20.11 3,19V7C3,5.9 3.9,5 5,5V3.5C5,2.67 5.67,2 6.5,2Z"/>
+                        </svg>
+                    </div>
+                    <div class="nav-text">
+                        <span class="nav-title">المسح</span>
+                        <span class="nav-desc">إعدادات الفحص والمراقبة</span>
+                    </div>
+                </button>
+                
+                <button class="professional-nav-tab" data-section="alerts">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path fill="currentColor" d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21"/>
+                        </svg>
+                    </div>
+                    <div class="nav-text">
+                        <span class="nav-title">التنبيهات</span>
+                        <span class="nav-desc">الإشعارات والتحذيرات</span>
+                    </div>
+                </button>
+                
+                <button class="professional-nav-tab" data-section="display">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path fill="currentColor" d="M21,16V4H3V16H21M21,2A2,2 0 0,1 23,4V16A2,2 0 0,1 21,18H14L16,21V22H8V21L10,18H3C1.89,18 1,17.1 1,16V4C1,2.89 1.89,2 3,2H21Z"/>
+                        </svg>
+                    </div>
+                    <div class="nav-text">
+                        <span class="nav-title">العرض</span>
+                        <span class="nav-desc">واجهة المستخدم والعرض</span>
+                    </div>
+                </button>
+                
+                <button class="professional-nav-tab" data-section="security">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11.5C15.4,11.5 16,12.4 16,13V16C16,17.4 15.4,18 14.8,18H9.2C8.6,18 8,17.4 8,16V13C8,12.4 8.6,11.5 9.2,11.5V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,10V11.5H13.5V10C13.5,8.7 12.8,8.2 12,8.2Z"/>
+                        </svg>
+                    </div>
+                    <div class="nav-text">
+                        <span class="nav-title">الأمان</span>
+                        <span class="nav-desc">حماية متقدمة وكشف التهديدات</span>
+                    </div>
+                </button>
+                
+                <button class="professional-nav-tab" data-section="performance">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path fill="currentColor" d="M13,2.03V2.05L13,4.05C17.39,4.59 20.5,8.58 19.96,12.97C19.5,16.61 16.64,19.5 13,19.93V21.93C18.5,21.38 22.5,16.5 21.95,11C21.5,6.25 17.73,2.5 13,2.03M11,2.06C9.05,2.25 7.19,3 5.67,4.26L7.1,5.74C8.22,4.84 9.57,4.26 11,4.06V2.06M4.26,5.67C3,7.19 2.25,9.04 2.05,11H4.05C4.24,9.58 4.8,8.23 5.69,7.1L4.26,5.67M2.06,13C2.26,14.96 3.03,16.81 4.27,18.33L5.69,16.9C4.81,15.77 4.24,14.42 4.06,13H2.06M7.1,18.37L5.67,19.74C7.18,21 9.04,21.74 11,21.94V19.94C9.58,19.75 8.23,19.19 7.1,18.37M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+                        </svg>
+                    </div>
+                    <div class="nav-text">
+                        <span class="nav-title">الأداء</span>
+                        <span class="nav-desc">تحسين الموارد والسرعة</span>
+                    </div>
+                </button>
+                
+                <button class="professional-nav-tab" data-section="advanced">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path fill="currentColor" d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M10,22C9.75,22 9.54,21.82 9.5,21.58L9.13,18.93C8.5,18.68 7.96,18.34 7.44,17.94L4.95,18.95C4.73,19.03 4.46,18.95 4.34,18.73L2.34,15.27C2.21,15.05 2.27,14.78 2.46,14.63L4.57,12.97L4.5,12L4.57,11.03L2.46,9.37C2.27,9.22 2.21,8.95 2.34,8.73L4.34,5.27C4.46,5.05 4.73,4.96 4.95,5.05L7.44,6.05C7.96,5.66 8.5,5.32 9.13,5.07L9.5,2.42C9.54,2.18 9.75,2 10,2H14C14.25,2 14.46,2.18 14.5,2.42L14.87,5.07C15.5,5.32 16.04,5.66 16.56,6.05L19.05,5.05C19.27,4.96 19.54,5.05 19.66,5.27L21.66,8.73C21.79,8.95 21.73,9.22 21.54,9.37L19.43,11.03L19.5,12L19.43,12.97L21.54,14.63C21.73,14.78 21.79,15.05 21.66,15.27L19.66,18.73C19.54,18.95 19.27,19.04 19.05,18.95L16.56,17.95C16.04,18.34 15.5,18.68 14.87,18.93L14.5,21.58C14.46,21.82 14.25,22 14,22H10M11.25,4L10.88,6.61C9.68,6.86 8.62,7.5 7.85,8.39L5.44,7.35L4.69,8.65L6.8,10.2C6.4,11.37 6.4,12.64 6.8,13.8L4.68,15.36L5.43,16.66L7.86,15.62C8.63,16.5 9.68,17.14 10.87,17.38L11.24,20H12.76L13.13,17.39C14.32,17.14 15.37,16.5 16.14,15.62L18.57,16.66L19.32,15.36L17.2,13.81C17.6,12.64 17.6,11.37 17.2,10.2L19.31,8.65L18.56,7.35L16.15,8.39C15.38,7.5 14.32,6.86 13.12,6.62L12.75,4H11.25Z"/>
+                        </svg>
+                    </div>
+                    <div class="nav-text">
+                        <span class="nav-title">متقدم</span>
+                        <span class="nav-desc">إعدادات متقدمة للخبراء</span>
+                    </div>
+                </button>
+            </div>
+            
+            <div class="professional-content">
+                <div class="settings-section active" id="scanning-section">
+                    ${createProfessionalScanningSection()}
+                </div>
+                <div class="settings-section" id="alerts-section">
+                    ${createProfessionalAlertsSection()}
+                </div>
+                <div class="settings-section" id="display-section">
+                    ${createProfessionalDisplaySection()}
+                </div>
+                <div class="settings-section" id="security-section">
+                    ${createProfessionalSecuritySection()}
+                </div>
+                <div class="settings-section" id="performance-section">
+                    ${createProfessionalPerformanceSection()}
+                </div>
+                <div class="settings-section" id="advanced-section">
+                    ${createProfessionalAdvancedSection()}
+                </div>
+            </div>
+            
+            <div class="professional-footer">
+                <div class="footer-actions-left">
+                    <button class="professional-btn secondary" onclick="resetToDefaultSettings()">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"/>
+                        </svg>
+                        إعادة تعيين
+                    </button>
+                    <button class="professional-btn info" onclick="exportMonitorSettings()">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                        تصدير الإعدادات
+                    </button>
+                    <button class="professional-btn info" onclick="importMonitorSettings()">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M6,2A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6M6,4H13V9H18V20H6V4Z"/>
+                        </svg>
+                        استيراد الإعدادات
+                    </button>
+                </div>
+                <div class="footer-actions-right">
+                    <button class="professional-btn primary" onclick="saveProfessionalSettings()">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/>
+                        </svg>
+                        حفظ التغييرات
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
     
-    // Update scan statistics
+    document.body.appendChild(modal);
+    
+    // إظهار النافذة مع تأثير احترافي
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.classList.add('active');
+    }, 10);
+    
+    // إعداد التنقل الاحترافي
+    setupProfessionalNavigation();
+    
+    // إعداد مستمعات الأحداث
+    setupAdvancedModalEventListeners();
+    
+    // تحديث واجهة الإعدادات
+    setTimeout(() => {
+        updateProfessionalSettingsUI();
+    }, 100);
+}
+
+// إنشاء قسم المسح الاحترافي
+function createProfessionalScanningSection() {
+    return `
+        <div class="professional-section-header">
+            <div class="section-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="#00ff88" d="M15.5,12C18,12 20,14 20,16.5C20,17.38 19.75,18.21 19.31,18.9L22.39,22L21,23.39L17.88,20.32C17.19,20.75 16.37,21 15.5,21C13,21 11,19 11,16.5C11,14 13,12 15.5,12M15.5,14A2.5,2.5 0 0,0 13,16.5A2.5,2.5 0 0,0 15.5,19A2.5,2.5 0 0,0 18,16.5A2.5,2.5 0 0,0 15.5,14M6.5,2C7.33,2 8,2.67 8,3.5V5H16V3.5C16,2.67 16.67,2 17.5,2C18.33,2 19,2.67 19,3.5V5C20.11,5 21,5.9 21,7V10.81C20.42,10.3 19.74,9.93 19,9.73V7H5V19H9.09C9.21,19.72 9.46,20.39 9.81,21H5C3.9,21 3,20.11 3,19V7C3,5.9 3.9,5 5,5V3.5C5,2.67 5.67,2 6.5,2Z"/>
+                </svg>
+            </div>
+            <div class="section-title-group">
+                <h3>إعدادات المسح والمراقبة</h3>
+                <p>تحكم في أنظمة الفحص والكشف التلقائي</p>
+            </div>
+        </div>
+        
+        <div class="professional-settings-grid">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6l5.2 3.2 1-1.73-4.2-2.47V7z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>فترة الفحص</h4>
+                        <p>تحديد تكرار عمليات الفحص التلقائي</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <select class="professional-select" id="scanInterval" onchange="updateScanInterval(this.value)">
+                        <option value="10">كل 10 ثوان (اختبار)</option>
+                        <option value="15">كل 15 ثانية</option>
+                        <option value="30" selected>كل 30 ثانية</option>
+                        <option value="60">كل دقيقة</option>
+                        <option value="120">كل دقيقتين</option>
+                        <option value="300">كل 5 دقائق</option>
+                        <option value="600">كل 10 دقائق</option>
+                        <option value="900">كل 15 دقيقة</option>
+                        <option value="1800">كل 30 دقيقة</option>
+                        <option value="3600">كل ساعة</option>
+                    </select>
+                    <div class="interval-display" id="intervalDisplay">30 ثانية</div>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4zm2.5 2.25l1.41-1.41L21 17.75 19.59 19.16 18.5 18.07l1.41-1.41L18.5 15.25 17.09 16.66 15.5 15.07l1.41-1.41L15.5 12.25l1.59-1.59L18.5 12.07l1.59-1.59L21.5 11.89l-1.59 1.59 1.59 1.59-1.41 1.41-1.59-1.59-1.59 1.59z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>عمق الفحص</h4>
+                        <p>مستوى تفصيل عمليات المراقبة</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <select class="professional-select" id="scanDepth">
+                        <option value="light">فحص خفيف</option>
+                        <option value="standard" selected>فحص قياسي</option>
+                        <option value="deep">فحص عميق</option>
+                        <option value="thorough">فحص شامل</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,16.5L18,9.5L16.59,8.09L11,13.67L7.91,10.59L6.5,12L11,16.5Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>المسح التلقائي</h4>
+                        <p>تفعيل المراقبة المستمرة</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="autoScan" checked onchange="toggleAutoScan(this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>الحماية الفورية</h4>
+                        <p>كشف التهديدات في الوقت الفعلي</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="realTimeProtection" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M6,6.9L3.87,4.78L5.28,3.37L7.4,5.5L6,6.9M13,1V4H11V1H13M20.13,4.78L18,6.9L16.6,5.5L18.72,3.37L20.13,4.78M4.5,10.5V12.5H1.5V10.5H4.5M19.5,10.5H22.5V12.5H19.5V10.5M6,17.1L7.4,18.5L5.28,20.62L3.87,19.21L6,17.1M18,17.1L20.13,19.21L18.72,20.62L16.6,18.5L18,17.1M12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19A7,7 0 0,1 5,12A7,7 0 0,1 12,5M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>المسح عند البدء</h4>
+                        <p>تشغيل فحص أمني عند تشغيل النظام</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="scanOnStartup" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>المسح المجدول</h4>
+                        <p>جدولة عمليات فحص دورية</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="scheduledScan">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// إنشاء قسم التنبيهات الاحترافي
+function createProfessionalAlertsSection() {
+    return `
+        <div class="professional-section-header">
+            <div class="section-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="#00ff88" d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21"/>
+                </svg>
+            </div>
+            <div class="section-title-group">
+                <h3>إعدادات التنبيهات والإشعارات</h3>
+                <p>تخصيص أنواع وطرق التنبيهات الأمنية</p>
+            </div>
+        </div>
+        
+        <div class="professional-settings-grid">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>تفعيل التنبيهات</h4>
+                        <p>تشغيل جميع أنواع الإشعارات</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="alertsEnabled" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>التنبيهات الصوتية</h4>
+                        <p>إشعارات صوتية للتهديدات</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="soundAlerts" checked onchange="updateAlertsSettings('sound', this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M21,16V4H3V16H21M21,2A2,2 0 0,1 23,4V16A2,2 0 0,1 21,18H14L16,21V22H8V21L10,18H3C1.89,18 1,17.1 1,16V4C1,2.89 1.89,2 3,2H21Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>إشعارات سطح المكتب</h4>
+                        <p>إظهار نوافذ منبثقة للتحذيرات</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="desktopNotifications" checked onchange="updateAlertsSettings('desktop', this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>تنبيهات البريد الإلكتروني</h4>
+                        <p>إرسال تحذيرات عبر الإيميل</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="emailAlerts" onchange="updateAlertsSettings('email', this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>مستوى التنبيه</h4>
+                        <p>حساسية كشف التهديدات</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <select class="professional-select" id="alertLevel">
+                        <option value="low">منخفض</option>
+                        <option value="medium" selected>متوسط</option>
+                        <option value="high">عالي</option>
+                        <option value="critical">حرج</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>التنبيهات الطارئة</h4>
+                        <p>إشعارات فورية للتهديدات الحرجة</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="urgentAlerts" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// إنشاء قسم العرض الاحترافي
+function createProfessionalDisplaySection() {
+    return `
+        <div class="professional-section-header">
+            <div class="section-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="#00ff88" d="M21,16V4H3V16H21M21,2A2,2 0 0,1 23,4V16A2,2 0 0,1 21,18H14L16,21V22H8V21L10,18H3C1.89,18 1,17.1 1,16V4C1,2.89 1.89,2 3,2H21Z"/>
+                </svg>
+            </div>
+            <div class="section-title-group">
+                <h3>إعدادات العرض والواجهة</h3>
+                <p>تخصيص مظهر وسلوك واجهة المستخدم</p>
+            </div>
+        </div>
+        
+        <div class="professional-settings-grid">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M3,3H21V5H3V3M3,7H15V9H3V7M3,11H21V13H3V11M3,15H15V17H3V15M3,19H21V21H3V19Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>حد عدد الأحداث</h4>
+                        <p>العدد الأقصى للأحداث المعروضة</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <select class="professional-select" id="maxEvents">
+                        <option value="50">50 حدث</option>
+                        <option value="100" selected>100 حدث</option>
+                        <option value="200">200 حدث</option>
+                        <option value="500">500 حدث</option>
+                        <option value="1000">1000 حدث</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M17.65,6.35C16.2,4.9 14.21,4 12,4C6.48,4 2,8.48 2,14S6.48,24 12,24C17.52,24 22,19.52 22,14C22,11.79 21.1,9.8 19.65,8.35L17.65,6.35M12,6C15.31,6 18,8.69 18,12S15.31,18 12,18S6,15.31 6,12S8.69,6 12,6M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>معدل التحديث</h4>
+                        <p>تكرار تحديث البيانات (ثانية)</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <select class="professional-select" id="refreshRate">
+                        <option value="1">كل ثانية</option>
+                        <option value="2">كل ثانيتين</option>
+                        <option value="5" selected>كل 5 ثوان</option>
+                        <option value="10">كل 10 ثوان</option>
+                        <option value="30">كل 30 ثانية</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6l5.2 3.2 1-1.73-4.2-2.47V7z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>إظهار الطوابع الزمنية</h4>
+                        <p>عرض وقت وتاريخ الأحداث</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="showTimestamps" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,18.5C15.5,18.5 19.31,16.56 21.58,13.4C21.97,12.65 21.97,11.75 21.58,11C19.31,7.44 15.5,5.5 12,5.5C8.5,5.5 4.69,7.44 2.42,11C2.03,11.75 2.03,12.65 2.42,13.4C4.69,16.56 8.5,18.5 12,18.5M12,16.5C9.76,16.5 7.5,15.3 5.5,13C7.5,10.7 9.76,9.5 12,9.5C14.24,9.5 16.5,10.7 18.5,13C16.5,15.3 14.24,16.5 12,16.5M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8M12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>تحريك الأحداث</h4>
+                        <p>تأثيرات بصرية للأحداث الجديدة</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="animateEvents" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.4 6.35,17.41C9.37,20.43 14,20.54 17.33,17.97Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>الوضع الليلي</h4>
+                        <p>استخدام سمة داكنة للعيون</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="darkMode" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M3,3H21V5H3V3M3,7H15V9H3V7M3,11H21V13H3V11M3,15H15V17H3V15M3,19H21V21H3V19Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>العرض المضغوط</h4>
+                        <p>إظهار المزيد من المعلومات في مساحة أقل</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="compactView">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// إنشاء قسم الأمان الاحترافي
+function createProfessionalSecuritySection() {
+    return `
+        <div class="professional-section-header">
+            <div class="section-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="#00ff88" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11.5C15.4,11.5 16,12.4 16,13V16C16,17.4 15.4,18 14.8,18H9.2C8.6,18 8,17.4 8,16V13C8,12.4 8.6,11.5 9.2,11.5V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,10V11.5H13.5V10C13.5,8.7 12.8,8.2 12,8.2Z"/>
+                </svg>
+            </div>
+            <div class="section-title-group">
+                <h3>إعدادات الحماية والأمان</h3>
+                <p>تحكم في أنظمة الحماية المتقدمة وكشف التهديدات</p>
+            </div>
+        </div>
+        
+        <div class="professional-settings-grid">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>كشف التهديدات المتقدم</h4>
+                        <p>تحليل متطور للسلوكيات المشبوهة</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="advancedThreatDetection" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>تحليل السلوك</h4>
+                        <p>مراقبة الأنماط غير الطبيعية</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="behaviorAnalysis">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>مراقبة الشبكة</h4>
+                        <p>تتبع حركة البيانات والاتصالات</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="networkMonitoring" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>فحص سلامة الملفات</h4>
+                        <p>التحقق من تكامل ملفات النظام</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="fileIntegrityCheck">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>وضع الحجر الصحي</h4>
+                        <p>كيفية التعامل مع الملفات المشبوهة</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <select class="professional-select" id="quarantineMode">
+                        <option value="auto" selected>تلقائي</option>
+                        <option value="prompt">السؤال أولاً</option>
+                        <option value="manual">يدوي</option>
+                        <option value="disable">معطل</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// إنشاء قسم الأداء الاحترافي
+function createProfessionalPerformanceSection() {
+    return `
+        <div class="professional-section-header">
+            <div class="section-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="#00ff88" d="M13,2.03V2.05L13,4.05C17.39,4.59 20.5,8.58 19.96,12.97C19.5,16.61 16.64,19.5 13,19.93V21.93C18.5,21.38 22.5,16.5 21.95,11C21.5,6.25 17.73,2.5 13,2.03M11,2.06C9.05,2.25 7.19,3 5.67,4.26L7.1,5.74C8.22,4.84 9.57,4.26 11,4.06V2.06M4.26,5.67C3,7.19 2.25,9.04 2.05,11H4.05C4.24,9.58 4.8,8.23 5.69,7.1L4.26,5.67M2.06,13C2.26,14.96 3.03,16.81 4.27,18.33L5.69,16.9C4.81,15.77 4.24,14.42 4.06,13H2.06M7.1,18.37L5.67,19.74C7.18,21 9.04,21.74 11,21.94V19.94C9.58,19.75 8.23,19.19 7.1,18.37M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+                </svg>
+            </div>
+            <div class="section-title-group">
+                <h3>إعدادات الأداء والموارد</h3>
+                <p>تحسين استهلاك الموارد وسرعة الاستجابة</p>
+            </div>
+        </div>
+        
+        <div class="professional-settings-grid">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>استهلاك المعالج</h4>
+                        <p>مستوى استخدام موارد المعالج</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <select class="professional-select" id="cpuUsage">
+                        <option value="low">منخفض</option>
+                        <option value="medium" selected>متوسط</option>
+                        <option value="high">عالي</option>
+                        <option value="maximum">أقصى</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M15.5,12.5C15.5,13.88 14.38,15 13,15C11.62,15 10.5,13.88 10.5,12.5C10.5,11.12 11.62,10 13,10C14.38,10 15.5,11.12 15.5,12.5M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V8H19V19Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>وضع توفير الطاقة</h4>
+                        <p>تقليل الاستهلاك لإطالة عمر البطارية</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="lowPowerMode">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>المسح في الخلفية</h4>
+                        <p>تشغيل عمليات الفحص كعمليات خلفية</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="backgroundScanning" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>حد الموارد (%)</h4>
+                        <p>النسبة القصوى لاستخدام موارد النظام</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <input type="range" class="professional-range" id="resourceLimit" min="10" max="100" value="50" step="10">
+                    <span class="range-value" id="resourceLimitValue">50%</span>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>وضع الأولوية</h4>
+                        <p>توزيع موارد النظام</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <select class="professional-select" id="priorityMode">
+                        <option value="efficiency">كفاءة</option>
+                        <option value="balanced" selected>متوازن</option>
+                        <option value="performance">أداء</option>
+                        <option value="security">أمان</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>تحسين الذاكرة التخزينية</h4>
+                        <p>تحسين استخدام ذاكرة التخزين المؤقت</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="cacheOptimization" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// إنشاء القسم المتقدم الاحترافي
+function createProfessionalAdvancedSection() {
+    return `
+        <div class="professional-section-header">
+            <div class="section-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="#00ff88" d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M10,22C9.75,22 9.54,21.82 9.5,21.58L9.13,18.93C8.5,18.68 7.96,18.34 7.44,17.94L4.95,18.95C4.73,19.03 4.46,18.95 4.34,18.73L2.34,15.27C2.21,15.05 2.27,14.78 2.46,14.63L4.57,12.97L4.5,12L4.57,11.03L2.46,9.37C2.27,9.22 2.21,8.95 2.34,8.73L4.34,5.27C4.46,5.05 4.73,4.96 4.95,5.05L7.44,6.05C7.96,5.66 8.5,5.32 9.13,5.07L9.5,2.42C9.54,2.18 9.75,2 10,2H14C14.25,2 14.46,2.18 14.5,2.42L14.87,5.07C15.5,5.32 16.04,5.66 16.56,6.05L19.05,5.05C19.27,4.96 19.54,5.05 19.66,5.27L21.66,8.73C21.79,8.95 21.73,9.22 21.54,9.37L19.43,11.03L19.5,12L19.43,12.97L21.54,14.63C21.73,14.78 21.79,15.05 21.66,15.27L19.66,18.73C19.54,18.95 19.27,19.04 19.05,18.95L16.56,17.95C16.04,18.34 15.5,18.68 14.87,18.93L14.5,21.58C14.46,21.82 14.25,22 14,22H10M11.25,4L10.88,6.61C9.68,6.86 8.62,7.5 7.85,8.39L5.44,7.35L4.69,8.65L6.8,10.2C6.4,11.37 6.4,12.64 6.8,13.8L4.68,15.36L5.43,16.66L7.86,15.62C8.63,16.5 9.68,17.14 10.87,17.38L11.24,20H12.76L13.13,17.39C14.32,17.14 15.37,16.5 16.14,15.62L18.57,16.66L19.32,15.36L17.2,13.81C17.6,12.64 17.6,11.37 17.2,10.2L19.31,8.65L18.56,7.35L16.15,8.39C15.38,7.5 14.32,6.86 13.12,6.62L12.75,4H11.25Z"/>
+                </svg>
+            </div>
+            <div class="section-title-group">
+                <h3>الإعدادات المتقدمة للخبراء</h3>
+                <p>خيارات متقدمة لضبط دقيق لسلوك النظام</p>
+            </div>
+        </div>
+        
+        <div class="professional-settings-grid">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>تسجيل الأحداث في ملف</h4>
+                        <p>حفظ سجلات الأحداث في ملفات خارجية</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="logToFile">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>وضع تتبع الأخطاء</h4>
+                        <p>تفعيل معلومات تفصيلية لاستكشاف المشاكل</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="debugMode">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>مستوى التسجيل</h4>
+                        <p>تفصيل المعلومات في سجلات النظام</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <select class="professional-select" id="logLevel">
+                        <option value="error">أخطاء فقط</option>
+                        <option value="warning">تحذيرات وأخطاء</option>
+                        <option value="info" selected>معلومات عامة</option>
+                        <option value="debug">تفاصيل كاملة</option>
+                        <option value="verbose">كل شيء</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>القواعد المخصصة</h4>
+                        <p>إنشاء قواعد مخصصة لكشف التهديدات</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="customRules">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>التحديث التلقائي</h4>
+                        <p>تحديث قواعد البيانات الأمنية تلقائياً</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="autoUpdate" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#00ff88" d="M3,17H9V15H3V17M3,13H15V11H3V13M3,9H21V7H3V9M3,5H18V3H3V5Z"/>
+                        </svg>
+                    </div>
+                    <div class="setting-info">
+                        <h4>المزامنة السحابية</h4>
+                        <p>مزامنة الإعدادات مع الخدمات السحابية</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="professional-toggle">
+                        <input type="checkbox" id="cloudSync">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// إعداد التنقل الاحترافي
+function setupProfessionalNavigation() {
+    const navTabs = document.querySelectorAll('.professional-nav-tab');
+    const sections = document.querySelectorAll('.settings-section');
+    
+    navTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetSection = tab.dataset.section;
+            
+            // إزالة الحالة النشطة من جميع التابات والأقسام
+            navTabs.forEach(t => t.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+            
+            // إضافة الحالة النشطة للتاب والقسم المختار
+            tab.classList.add('active');
+            const targetSectionElement = document.getElementById(`${targetSection}-section`);
+            if (targetSectionElement) {
+                targetSectionElement.classList.add('active');
+            }
+            
+            // تأثير انتقال ناعم
+            targetSectionElement.style.opacity = '0';
+            setTimeout(() => {
+                targetSectionElement.style.opacity = '1';
+            }, 150);
+        });
+    });
+}
+
+// تحديث واجهة الإعدادات الاحترافية
+function updateProfessionalSettingsUI() {
+    try {
+        // تحديث قيم الإدخال من الإعدادات المحفوظة
+        Object.keys(monitorSettings).forEach(category => {
+            if (typeof monitorSettings[category] === 'object') {
+                Object.keys(monitorSettings[category]).forEach(setting => {
+                    const element = document.getElementById(setting);
+                    if (element) {
+                        const value = monitorSettings[category][setting];
+                        
+                        if (element.type === 'checkbox') {
+                            element.checked = value;
+                        } else if (element.type === 'range') {
+                            element.value = value;
+                            const valueDisplay = document.getElementById(setting + 'Value');
+                            if (valueDisplay) {
+                                valueDisplay.textContent = value + '%';
+                            }
+                        } else {
+                            element.value = value;
+                        }
+                    }
+                });
+            }
+        });
+        
+        // إعداد مستمعات تحديث القيم
+        setupSettingsEventListeners();
+        
+    } catch (error) {
+        console.error('خطأ في تحديث واجهة الإعدادات:', error);
+    }
+}
+
+// إعداد مستمعات أحداث الإعدادات
+function setupSettingsEventListeners() {
+    // مستمع لتحديث شريط النسبة المئوية
+    const resourceLimitSlider = document.getElementById('resourceLimit');
+    if (resourceLimitSlider) {
+        resourceLimitSlider.addEventListener('input', function() {
+            const valueDisplay = document.getElementById('resourceLimitValue');
+            if (valueDisplay) {
+                valueDisplay.textContent = this.value + '%';
+            }
+        });
+    }
+    
+    // مستمعات للتغييرات في الإعدادات
+    const allInputs = document.querySelectorAll('.professional-select, .professional-toggle input, .professional-range');
+    allInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            // حفظ تلقائي عند التغيير
+            saveProfessionalSettings();
+        });
+    });
+}
+
+// حفظ الإعدادات الاحترافية
+function saveProfessionalSettings() {
+    try {
+        // إظهار مؤشر تحميل
+        showProfessionalNotification('جاري حفظ الإعدادات وتطبيقها...', 'info');
+        
+        // محاكاة حفظ البيانات
+        setTimeout(() => {
+            // تحديث قيم الإعدادات من النموذج
+            const formData = new FormData();
+            
+            // المسح
+            monitorSettings.scanning.interval = parseInt(document.getElementById('scanInterval')?.value || 30);
+            monitorSettings.scanning.depth = document.getElementById('scanDepth')?.value || 'standard';
+            monitorSettings.scanning.autoScan = document.getElementById('autoScan')?.checked || false;
+            monitorSettings.scanning.realTimeProtection = document.getElementById('realTimeProtection')?.checked || false;
+            monitorSettings.scanning.scheduledScan = document.getElementById('scheduledScan')?.checked || false;
+            monitorSettings.scanning.scanOnStartup = document.getElementById('scanOnStartup')?.checked || false;
+            
+            // التنبيهات
+            monitorSettings.alerts.enabled = document.getElementById('alertsEnabled')?.checked || false;
+            monitorSettings.alerts.sound = document.getElementById('soundAlerts')?.checked || false;
+            monitorSettings.alerts.desktop = document.getElementById('desktopNotifications')?.checked || false;
+            monitorSettings.alerts.email = document.getElementById('emailAlerts')?.checked || false;
+            monitorSettings.alerts.level = document.getElementById('alertLevel')?.value || 'medium';
+            monitorSettings.alerts.urgentAlert = document.getElementById('urgentAlerts')?.checked || false;
+            
+            // العرض
+            monitorSettings.display.maxEvents = parseInt(document.getElementById('maxEvents')?.value || 100);
+            monitorSettings.display.refreshRate = parseInt(document.getElementById('refreshRate')?.value || 5);
+            monitorSettings.display.showTimestamps = document.getElementById('showTimestamps')?.checked || false;
+            monitorSettings.display.animateEvents = document.getElementById('animateEvents')?.checked || false;
+            monitorSettings.display.darkMode = document.getElementById('darkMode')?.checked || false;
+            monitorSettings.display.compactView = document.getElementById('compactView')?.checked || false;
+            
+            // الأمان
+            monitorSettings.security.advancedThreatDetection = document.getElementById('advancedThreatDetection')?.checked || false;
+            monitorSettings.security.behaviorAnalysis = document.getElementById('behaviorAnalysis')?.checked || false;
+            monitorSettings.security.networkMonitoring = document.getElementById('networkMonitoring')?.checked || false;
+            monitorSettings.security.fileIntegrityCheck = document.getElementById('fileIntegrityCheck')?.checked || false;
+            monitorSettings.security.quarantineMode = document.getElementById('quarantineMode')?.value || 'auto';
+            
+            // الأداء
+            monitorSettings.performance.cpuUsage = document.getElementById('cpuUsage')?.value || 'medium';
+            monitorSettings.performance.lowPowerMode = document.getElementById('lowPowerMode')?.checked || false;
+            monitorSettings.performance.backgroundScanning = document.getElementById('backgroundScanning')?.checked || false;
+            monitorSettings.performance.resourceLimit = parseInt(document.getElementById('resourceLimit')?.value || 50);
+            monitorSettings.performance.priorityMode = document.getElementById('priorityMode')?.value || 'balanced';
+            monitorSettings.performance.cacheOptimization = document.getElementById('cacheOptimization')?.checked || false;
+            
+            // متقدم
+            monitorSettings.advanced.logToFile = document.getElementById('logToFile')?.checked || false;
+            monitorSettings.advanced.debugMode = document.getElementById('debugMode')?.checked || false;
+            monitorSettings.advanced.logLevel = document.getElementById('logLevel')?.value || 'info';
+            monitorSettings.advanced.customRules = document.getElementById('customRules')?.checked || false;
+            monitorSettings.advanced.autoUpdate = document.getElementById('autoUpdate')?.checked || false;
+            monitorSettings.advanced.cloudSync = document.getElementById('cloudSync')?.checked || false;
+            
+            // حفظ في localStorage
+            localStorage.setItem('cyberGuardMonitorSettings', JSON.stringify(monitorSettings));
+            
+            // تطبيق الإعدادات فعلياً
+            applySettingsToSystem();
+            
+            // إشعار بالنجاح
+            showProfessionalNotification('تم حفظ وتطبيق جميع الإعدادات بنجاح! ✅', 'success');
+            
+        }, 800); // محاكاة وقت الحفظ
+        
+    } catch (error) {
+        console.error('خطأ في حفظ الإعدادات:', error);
+        showProfessionalNotification('حدث خطأ في حفظ الإعدادات ❌', 'error');
+    }
+}
+
+// تطبيق الإعدادات على النظام فعلياً
+function applySettingsToSystem() {
+    try {
+        console.log('تطبيق الإعدادات على النظام...', monitorSettings);
+        
+        // تطبيق إعدادات المسح
+        if (monitorSettings.scanning.autoScan) {
+            startAutoScanning();
+        } else {
+            stopAutoScanning();
+        }
+        
+        // تطبيق إعدادات التنبيهات
+        configureAlerts();
+        
+        // تطبيق إعدادات العرض
+        configureDisplay();
+        
+        // تطبيق إعدادات الأمان
+        configureSecurity();
+        
+        // تطبيق إعدادات الأداء
+        configurePerformance();
+        
+        // تطبيق الإعدادات المتقدمة
+        configureAdvanced();
+        
+        // تحديث واجهة المستخدم
+        updateUIBasedOnSettings();
+        
+        console.log('تم تطبيق جميع الإعدادات بنجاح');
+        
+    } catch (error) {
+        console.error('خطأ في تطبيق الإعدادات:', error);
+        showProfessionalNotification('حدث خطأ في تطبيق الإعدادات', 'error');
+    }
+}
+
+// بدء المسح التلقائي
+let autoScanInterval = null;
+function startAutoScanning() {
+    if (autoScanInterval) {
+        clearInterval(autoScanInterval);
+    }
+    
+    const intervalMs = monitorSettings.scanning.interval * 1000; // تحويل إلى ميلي ثانية
+    
+    autoScanInterval = setInterval(() => {
+        performAutomaticScan();
+    }, intervalMs);
+    
+    console.log(`تم بدء المسح التلقائي كل ${monitorSettings.scanning.interval} ثانية`);
+    addSecurityEvent('system', 'تم تفعيل المسح التلقائي', 'info');
+}
+
+// إيقاف المسح التلقائي
+function stopAutoScanning() {
+    if (autoScanInterval) {
+        clearInterval(autoScanInterval);
+        autoScanInterval = null;
+        console.log('تم إيقاف المسح التلقائي');
+        addSecurityEvent('system', 'تم إيقاف المسح التلقائي', 'info');
+    }
+}
+
+// تنفيذ المسح التلقائي
+function performAutomaticScan() {
+    console.log('تنفيذ مسح تلقائي...');
+    
+    // محاكاة عملية المسح
+    const scanResults = {
+        scannedItems: Math.floor(Math.random() * 1000) + 500,
+        threatsFound: Math.random() > 0.9 ? Math.floor(Math.random() * 5) : 0,
+        duration: Math.floor(Math.random() * 30) + 10
+    };
+    
+    // إضافة حدث أمني
+    if (scanResults.threatsFound > 0) {
+        addSecurityEvent('threats', `تم اكتشاف ${scanResults.threatsFound} تهديدات`, 'high');
+        
+        // إرسال تنبيه إذا كانت التنبيهات مفعلة
+        if (monitorSettings.alerts.enabled) {
+            showProfessionalNotification(`⚠️ تم اكتشاف ${scanResults.threatsFound} تهديدات في المسح التلقائي!`, 'warning');
+        }
+    } else {
+        addSecurityEvent('scans', `مسح تلقائي مكتمل - ${scanResults.scannedItems} عنصر تم فحصه`, 'success');
+    }
+    
+    // تحديث إحصائيات المسح
+    updateScanStatistics(scanResults);
+}
+
+// تكوين التنبيهات
+function configureAlerts() {
+    // تطبيق إعدادات الصوت
+    if (monitorSettings.alerts.sound) {
+        enableSoundAlerts();
+    } else {
+        disableSoundAlerts();
+    }
+    
+    // تطبيق إعدادات إشعارات سطح المكتب
+    if (monitorSettings.alerts.desktop) {
+        requestNotificationPermission();
+    }
+    
+    console.log('تم تكوين التنبيهات:', monitorSettings.alerts);
+}
+
+// تكوين العرض
+function configureDisplay() {
+    const activityList = document.getElementById('securityActivityList');
+    
+    // تطبيق الحد الأقصى للأحداث
+    if (activityList) {
+        const events = activityList.querySelectorAll('.activity-event');
+        const maxEvents = monitorSettings.display.maxEvents;
+        
+        if (events.length > maxEvents) {
+            for (let i = maxEvents; i < events.length; i++) {
+                events[i].remove();
+            }
+        }
+    }
+    
+    // تطبيق معدل التحديث
+    updateRefreshRate();
+    
+    // تطبيق الوضع المظلم
+    if (monitorSettings.display.darkMode) {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+    
+    // تطبيق العرض المدمج
+    if (monitorSettings.display.compactView) {
+        document.body.classList.add('compact-view');
+    } else {
+        document.body.classList.remove('compact-view');
+    }
+    
+    console.log('تم تكوين العرض:', monitorSettings.display);
+}
+
+// تكوين الأمان
+function configureSecurity() {
+    // تفعيل/إلغاء اكتشاف التهديدات المتقدم
+    if (monitorSettings.security.advancedThreatDetection) {
+        enableAdvancedThreatDetection();
+    }
+    
+    // تفعيل/إلغاء مراقبة الشبكة
+    if (monitorSettings.security.networkMonitoring) {
+        enableNetworkMonitoring();
+    }
+    
+    console.log('تم تكوين الأمان:', monitorSettings.security);
+}
+
+// تكوين الأداء
+function configurePerformance() {
+    // تطبيق وضع توفير الطاقة
+    if (monitorSettings.performance.lowPowerMode) {
+        enableLowPowerMode();
+    } else {
+        disableLowPowerMode();
+    }
+    
+    // تطبيق حد الموارد
+    applyResourceLimit(monitorSettings.performance.resourceLimit);
+    
+    console.log('تم تكوين الأداء:', monitorSettings.performance);
+}
+
+// تكوين الإعدادات المتقدمة
+function configureAdvanced() {
+    // تفعيل/إلغاء وضع التصحيح
+    if (monitorSettings.advanced.debugMode) {
+        console.log('تم تفعيل وضع التصحيح');
+        window.debugMode = true;
+    } else {
+        window.debugMode = false;
+    }
+    
+    // تطبيق مستوى السجلات
+    console.log('مستوى السجلات:', monitorSettings.advanced.logLevel);
+    
+    console.log('تم تكوين الإعدادات المتقدمة:', monitorSettings.advanced);
+}
+
+// تحديث واجهة المستخدم حسب الإعدادات
+function updateUIBasedOnSettings() {
+    // تحديث مؤشر الأمان
+    updateSecurityLevel();
+    
+    // تحديث إحصائيات لوحة القيادة
+    updateDashboardStats();
+    
+    // تحديث عرض الأحداث
+    refreshSecurityActivityDisplay();
+}
+
+// إضافة حدث أمني جديد
+function addSecurityEvent(type, message, priority = 'normal') {
+    const activityList = document.getElementById('securityActivityList');
+    if (!activityList) return;
+    
+    const eventElement = document.createElement('div');
+    eventElement.className = `activity-event ${type}`;
+    eventElement.setAttribute('data-type', type);
+    
+    const currentTime = new Date().toLocaleTimeString('ar-SA', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+    });
+    
+    const iconMap = {
+        system: '<path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>',
+        scans: '<path fill="#00ff88" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>',
+        threats: '<path fill="#ff4757" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>'
+    };
+    
+    eventElement.innerHTML = `
+        <div class="event-timeline">
+            <div class="event-time">${currentTime}</div>
+            <div class="event-indicator ${type}-indicator">
+                <svg viewBox="0 0 24 24" width="14" height="14">
+                    ${iconMap[type] || iconMap.system}
+                </svg>
+            </div>
+        </div>
+        <div class="event-content">
+            <div class="event-title">${message}</div>
+            <div class="event-details">
+                <span class="event-category ${type}">${type.toUpperCase()}</span>
+                <span class="event-priority ${priority}">${priority}</span>
+            </div>
+        </div>
+    `;
+    
+    // إضافة الحدث في المقدمة
+    activityList.insertBefore(eventElement, activityList.firstChild);
+    
+    // إزالة الأحداث الزائدة حسب الحد الأقصى
+    const maxEvents = monitorSettings.display.maxEvents || 100;
+    const events = activityList.querySelectorAll('.activity-event');
+    if (events.length > maxEvents) {
+        for (let i = maxEvents; i < events.length; i++) {
+            events[i].remove();
+        }
+    }
+    
+    // تحديث العدادات
+    updateEventCounters();
+}
+
+// تحديث عدادات الأحداث
+function updateEventCounters() {
+    const allEvents = document.querySelectorAll('.activity-event');
+    const threats = document.querySelectorAll('.activity-event[data-type="threats"]');
+    const scans = document.querySelectorAll('.activity-event[data-type="scans"]');
+    const system = document.querySelectorAll('.activity-event[data-type="system"]');
+    
+    // تحديث العدادات في علامات التبويب
+    const allCount = document.getElementById('allCount');
+    const threatsCount = document.getElementById('threatsCount');
+    const scansCount = document.getElementById('scansCount');
+    const systemCount = document.getElementById('systemCount');
+    
+    if (allCount) allCount.textContent = allEvents.length;
+    if (threatsCount) threatsCount.textContent = threats.length;
+    if (scansCount) scansCount.textContent = scans.length;
+    if (systemCount) systemCount.textContent = system.length;
+}
+
+// دوال مساعدة للوظائف الحقيقية
+
+// تفعيل التنبيهات الصوتية
+function enableSoundAlerts() {
+    window.soundAlertsEnabled = true;
+    console.log('تم تفعيل التنبيهات الصوتية');
+}
+
+// إلغاء تفعيل التنبيهات الصوتية
+function disableSoundAlerts() {
+    window.soundAlertsEnabled = false;
+    console.log('تم إلغاء تفعيل التنبيهات الصوتية');
+}
+
+// طلب إذن الإشعارات
+function requestNotificationPermission() {
+    if ('Notification' in window) {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                console.log('تم منح إذن الإشعارات');
+                showProfessionalNotification('تم تفعيل إشعارات سطح المكتب', 'success');
+            }
+        });
+    }
+}
+
+// تحديث معدل التحديث
+let refreshInterval = null;
+function updateRefreshRate() {
+    if (refreshInterval) {
+        clearInterval(refreshInterval);
+    }
+    
+    const rate = monitorSettings.display.refreshRate * 1000; // تحويل إلى ميلي ثانية
+    
+    refreshInterval = setInterval(() => {
+        refreshSecurityActivityDisplay();
+    }, rate);
+    
+    console.log(`تم تحديث معدل التحديث إلى ${monitorSettings.display.refreshRate} ثوان`);
+}
+
+// تفعيل اكتشاف التهديدات المتقدم
+function enableAdvancedThreatDetection() {
+    window.advancedThreatDetection = true;
+    console.log('تم تفعيل اكتشاف التهديدات المتقدم');
+    addSecurityEvent('system', 'تم تفعيل اكتشاف التهديدات المتقدم', 'info');
+}
+
+// تفعيل مراقبة الشبكة
+function enableNetworkMonitoring() {
+    window.networkMonitoring = true;
+    console.log('تم تفعيل مراقبة الشبكة');
+    addSecurityEvent('system', 'تم تفعيل مراقبة الشبكة', 'info');
+}
+
+// تفعيل وضع توفير الطاقة
+function enableLowPowerMode() {
+    window.lowPowerMode = true;
+    document.body.classList.add('low-power-mode');
+    console.log('تم تفعيل وضع توفير الطاقة');
+    addSecurityEvent('system', 'تم تفعيل وضع توفير الطاقة', 'info');
+}
+
+// إلغاء تفعيل وضع توفير الطاقة
+function disableLowPowerMode() {
+    window.lowPowerMode = false;
+    document.body.classList.remove('low-power-mode');
+    console.log('تم إلغاء تفعيل وضع توفير الطاقة');
+}
+
+// تطبيق حد الموارد
+function applyResourceLimit(limit) {
+    window.resourceLimit = limit;
+    console.log(`تم تطبيق حد الموارد: ${limit}%`);
+}
+
+// تحديث مستوى الأمان
+function updateSecurityLevel() {
+    // حساب مستوى الأمان بناءً على الإعدادات النشطة
+    let securityScore = 0;
+    
+    if (monitorSettings.scanning.autoScan) securityScore += 20;
+    if (monitorSettings.scanning.realTimeProtection) securityScore += 25;
+    if (monitorSettings.alerts.enabled) securityScore += 15;
+    if (monitorSettings.security.advancedThreatDetection) securityScore += 20;
+    if (monitorSettings.security.networkMonitoring) securityScore += 20;
+    
+    // تحديث المؤشرات
+    const securityProgress = document.getElementById('securityProgress');
+    const securityText = document.getElementById('securityText');
+    const securityPercentage = document.getElementById('securityPercentage');
+    const securityCircle = document.getElementById('securityCircle');
+    
+    if (securityProgress) {
+        securityProgress.style.width = `${securityScore}%`;
+    }
+    
+    if (securityText) {
+        securityText.textContent = `${securityScore}%`;
+    }
+    
+    if (securityPercentage) {
+        securityPercentage.textContent = `${securityScore}%`;
+    }
+    
+    if (securityCircle) {
+        const circumference = 2 * Math.PI * 90; // نصف القطر 90
+        const offset = circumference - (securityScore / 100) * circumference;
+        securityCircle.style.strokeDashoffset = offset;
+    }
+    
+    console.log(`تم تحديث مستوى الأمان إلى ${securityScore}%`);
+}
+
+// تحديث إحصائيات لوحة القيادة
+function updateDashboardStats() {
+    // تحديث عداد الأدوات النشطة
+    let activeTools = 0;
+    if (monitorSettings.scanning.autoScan) activeTools++;
+    if (monitorSettings.scanning.realTimeProtection) activeTools++;
+    if (monitorSettings.alerts.enabled) activeTools++;
+    if (monitorSettings.security.advancedThreatDetection) activeTools++;
+    if (monitorSettings.security.networkMonitoring) activeTools++;
+    
+    const activeToolsCounter = document.getElementById('activeToolsCounter');
+    const activeToolsCount = document.getElementById('activeToolsCount');
+    const toolsUsedCount = document.getElementById('toolsUsedCount');
+    
+    if (activeToolsCounter) activeToolsCounter.textContent = activeTools;
+    if (activeToolsCount) activeToolsCount.textContent = activeTools;
+    if (toolsUsedCount) toolsUsedCount.textContent = activeTools;
+    
+    console.log(`تم تحديث عداد الأدوات النشطة: ${activeTools}`);
+}
+
+// تحديث عرض النشاط الأمني
+function refreshSecurityActivityDisplay() {
+    // تحديث الطوابع الزمنية
+    updateTimestamps();
+    
+    // تحديث العدادات
+    updateEventCounters();
+    
+    // تحديث آخر وقت تحديث
+    const lastUpdate = document.getElementById('lastUpdate');
+    if (lastUpdate) {
+        lastUpdate.textContent = 'منذ ثوان';
+    }
+}
+
+// تحديث الطوابع الزمنية
+function updateTimestamps() {
+    if (monitorSettings.display.showTimestamps) {
+        const events = document.querySelectorAll('.activity-event .event-time');
+        events.forEach(timeElement => {
+            // إضافة تاريخ كامل عند تفعيل الطوابع الزمنية
+            const currentTime = new Date();
+            const timeString = currentTime.toLocaleString('ar-SA', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            timeElement.setAttribute('title', timeString);
+        });
+    }
+}
+
+// تحديث إحصائيات المسح
+function updateScanStatistics(results) {
     const scansPerformed = document.getElementById('scansPerformed');
     if (scansPerformed) {
         const currentCount = parseInt(scansPerformed.textContent) || 0;
         scansPerformed.textContent = currentCount + 1;
     }
-}
-
-function clearSecurityLog() {
-    console.log('🔰 Clearing security activity log...');
     
-    const activityList = document.getElementById('securityActivityList');
-    if (activityList) {
-        // Keep only system init event
-        const systemEvent = activityList.querySelector('.activity-event[data-type="system"]');
-        const systemEventClone = systemEvent ? systemEvent.cloneNode(true) : null;
-        
-        // Clear the list
-        activityList.innerHTML = '';
-        
-        // Re-add system event if it existed
-        if (systemEventClone) {
-            activityList.appendChild(systemEventClone);
+    if (results.threatsFound > 0) {
+        const threatsDetected = document.getElementById('threatsDetected');
+        if (threatsDetected) {
+            const currentThreats = parseInt(threatsDetected.textContent) || 0;
+            threatsDetected.textContent = currentThreats + results.threatsFound;
         }
         
-        // Add clearing animation effect
-        activityList.style.opacity = '0.5';
-        setTimeout(() => {
-            activityList.style.opacity = '1';
-        }, 300);
+        const threatsBlocked = document.getElementById('threatsBlocked');
+        if (threatsBlocked) {
+            const currentBlocked = parseInt(threatsBlocked.textContent) || 0;
+            threatsBlocked.textContent = currentBlocked + results.threatsFound;
+        }
     }
-    
-    // Reset activity data but keep system events
-    activityData = activityData.filter(event => 
-        event.type === 'system' && event.title.includes('تفعيل')
-    );
-    
-    updateTabCounts();
-    showSecurityNotification('تم مسح سجل الأنشطة بنجاح');
-    
-    console.log('🔰 Security activity log cleared successfully');
 }
 
-function openMonitorSettings() {
-    showSecurityNotification('إعدادات المراقب - قريباً');
+// تحميل الإعدادات المحفوظة عند بدء التشغيل
+function loadSavedSettings() {
+    try {
+        const savedSettings = localStorage.getItem('cyberGuardMonitorSettings');
+        if (savedSettings) {
+            const parsed = JSON.parse(savedSettings);
+            Object.assign(monitorSettings, parsed);
+            console.log('تم تحميل الإعدادات المحفوظة:', monitorSettings);
+            
+            // تطبيق الإعدادات المحملة
+            applySettingsToSystem();
+            
+            // تحديث واجهة الإعدادات
+            updateProfessionalSettingsUI();
+            
+            addSecurityEvent('system', 'تم تحميل الإعدادات المحفوظة', 'info');
+        }
+    } catch (error) {
+        console.error('خطأ في تحميل الإعدادات:', error);
+    }
+}
+
+// استدعاء تحميل الإعدادات عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        loadSavedSettings();
+        
+        // تهيئة نظام المراقبة المتقدم
+        if (typeof AdvancedSecurityMonitor !== 'undefined') {
+            console.log('🚀 تهيئة نظام المراقبة المتقدم...');
+            window.advancedSecurityMonitor = advancedSecurityMonitor;
+            advancedSecurityMonitor.start();
+            
+            // تشغيل مؤقت تحديث المؤقت
+            setInterval(() => {
+                advancedSecurityMonitor.updateScanTimer();
+            }, 1000);
+            
+            // تشغيل نظام إحصائيات الوقت
+            setInterval(() => {
+                advancedSecurityMonitor.stats.uptime++;
+                const uptimeElement = document.getElementById('sessionTime');
+                if (uptimeElement) {
+                    const hours = Math.floor(advancedSecurityMonitor.stats.uptime / 3600);
+                    const minutes = Math.floor((advancedSecurityMonitor.stats.uptime % 3600) / 60);
+                    const seconds = advancedSecurityMonitor.stats.uptime % 60;
+                    uptimeElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+            
+            // إضافة دالة اختبار سريع (للمطورين)
+            window.testAdvancedSettings = function() {
+                console.log('🧪 اختبار الإعدادات المتقدمة...');
+                
+                // اختبار تغيير فترة المسح
+                console.log('⏰ اختبار تغيير فترة المسح إلى 10 ثوان...');
+                updateScanInterval(10);
+                
+                setTimeout(() => {
+                    console.log('⏰ إعادة تعيين فترة المسح إلى 30 ثانية...');
+                    updateScanInterval(30);
+                }, 5000);
+                
+                // اختبار التنبيهات
+                setTimeout(() => {
+                    console.log('🔊 اختبار التنبيهات...');
+                    showProfessionalNotification('هذا اختبار للنظام! ✅', 'success');
+                }, 2000);
+                
+                // اختبار المسح اليدوي
+                setTimeout(() => {
+                    console.log('🔍 اختبار المسح اليدوي...');
+                    triggerManualScan();
+                }, 7000);
+                
+                console.log('✅ تم بدء الاختبارات - راقب وحدة التحكم والإشعارات');
+            };
+            
+            console.log('ℹ️ يمكنك تشغيل testAdvancedSettings() في وحدة التحكم لاختبار النظام');
+        }
+    }, 1000);
+});
+
+// إعادة تعيين الإعدادات إلى القيم الافتراضية
+function resetToDefaultSettings() {
+    try {
+        // إعادة تعيين جميع القيم
+        monitorSettings.scanning = {
+            interval: 30,
+            depth: 'standard',
+            autoScan: true,
+            realTimeProtection: true,
+            scheduledScan: false,
+            scanOnStartup: true
+        };
+        
+        monitorSettings.alerts = {
+            enabled: true,
+            sound: true,
+            desktop: true,
+            email: false,
+            level: 'medium',
+            urgentAlert: true
+        };
+        
+        monitorSettings.display = {
+            maxEvents: 100,
+            refreshRate: 5,
+            showTimestamps: true,
+            animateEvents: true,
+            darkMode: true,
+            compactView: false
+        };
+        
+        monitorSettings.security = {
+            advancedThreatDetection: true,
+            behaviorAnalysis: false,
+            networkMonitoring: true,
+            fileIntegrityCheck: false,
+            quarantineMode: 'auto'
+        };
+        
+        monitorSettings.performance = {
+            cpuUsage: 'medium',
+            lowPowerMode: false,
+            backgroundScanning: true,
+            resourceLimit: 50,
+            priorityMode: 'balanced',
+            cacheOptimization: true
+        };
+        
+        monitorSettings.advanced = {
+            logToFile: false,
+            debugMode: false,
+            logLevel: 'info',
+            customRules: false,
+            autoUpdate: true,
+            cloudSync: false
+        };
+        
+        // تحديث الواجهة
+        updateProfessionalSettingsUI();
+        
+        showProfessionalNotification('تم إعادة تعيين جميع الإعدادات إلى القيم الافتراضية! 🔄', 'info');
+        
+    } catch (error) {
+        console.error('خطأ في إعادة تعيين الإعدادات:', error);
+        showProfessionalNotification('حدث خطأ في إعادة التعيين ❌', 'error');
+    }
+}
+
+// إظهار إشعار احترافي
+function showProfessionalNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `professional-notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">
+                ${type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'}
+            </div>
+            <div class="notification-text">${message}</div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // إظهار الإشعار
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    // إخفاء الإشعار بعد 3 ثوان
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// إغلاق النافذة المتقدمة
+function closeAdvancedModal() {
+    try {
+        const modal = document.querySelector('.advanced-monitor-settings-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                if (document.body.contains(modal)) {
+                    document.body.removeChild(modal);
+                }
+            }, 400);
+        }
+    } catch (error) {
+        console.error('خطأ في إغلاق النافذة:', error);
+        // إزالة فورية في حالة الخطأ
+        const modal = document.querySelector('.advanced-monitor-settings-modal');
+        if (modal && document.body.contains(modal)) {
+            document.body.removeChild(modal);
+        }
+    }
+}
+
+function setupAdvancedModalEventListeners() {
+    try {
+        // زر الحفظ الاحترافي
+        const saveBtnProfessional = document.querySelector('.professional-btn.primary[onclick="saveProfessionalSettings()"]');
+        if (saveBtnProfessional) {
+            saveBtnProfessional.onclick = function(e) {
+                e.preventDefault();
+                saveProfessionalSettings();
+                showProfessionalNotification('تم حفظ جميع الإعدادات الاحترافية بنجاح! ✅', 'success');
+                setTimeout(() => {
+                    closeAdvancedModal();
+                }, 1500);
+            };
+        }
+        
+        // زر الحفظ العادي
+        const saveBtn = document.querySelector('.btn.primary[onclick="saveMonitorSettings()"]');
+        if (saveBtn) {
+            saveBtn.onclick = function(e) {
+                e.preventDefault();
+                saveMonitorSettings();
+                showProfessionalNotification('تم حفظ جميع الإعدادات بنجاح! ✅', 'success');
+                setTimeout(() => {
+                    closeAdvancedModal();
+                }, 1500);
+            };
+        }
+        
+        // زر إعادة التعيين الاحترافي
+        const resetBtnProfessional = document.querySelector('.professional-btn.secondary[onclick="resetToDefaultSettings()"]');
+        if (resetBtnProfessional) {
+            resetBtnProfessional.onclick = function(e) {
+                e.preventDefault();
+                if (confirm('هل أنت متأكد من إعادة تعيين جميع الإعدادات إلى القيم الافتراضية؟')) {
+                    resetToDefaultSettings();
+                    updateProfessionalSettingsUI();
+                    showProfessionalNotification('تم إعادة تعيين الإعدادات بنجاح! 🔄', 'success');
+                }
+            };
+        }
+        
+        // زر إعادة التعيين العادي
+        const resetBtn = document.querySelector('.btn.secondary[onclick="resetToDefaults()"]');
+        if (resetBtn) {
+            resetBtn.onclick = function(e) {
+                e.preventDefault();
+                if (confirm('هل أنت متأكد من إعادة تعيين جميع الإعدادات إلى القيم الافتراضية؟')) {
+                    resetToDefaultSettings();
+                    updateAdvancedSettingsUI();
+                    showProfessionalNotification('تم إعادة تعيين الإعدادات بنجاح! 🔄', 'success');
+                }
+            };
+        }
+        
+        // زر التصدير
+        const exportBtn = document.querySelector('.btn.info[onclick="exportSettings()"]');
+        if (exportBtn) {
+            exportBtn.onclick = function(e) {
+                e.preventDefault();
+                exportMonitorSettings();
+                showProfessionalNotification('تم تصدير الإعدادات بنجاح! 📤', 'success');
+            };
+        }
+        
+        // زر الاستيراد
+        const importBtn = document.querySelector('.btn.info[onclick="importSettings()"]');
+        if (importBtn) {
+            importBtn.onclick = function(e) {
+                e.preventDefault();
+                importMonitorSettings();
+            };
+        }
+        
+        // أزرار الإغلاق المتعددة
+        const closeButtons = document.querySelectorAll('.professional-close-btn, .close-modal');
+        closeButtons.forEach(btn => {
+            btn.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeAdvancedModal();
+            };
+        });
+        
+        // إغلاق عند النقر على الخلفية
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeAdvancedModal();
+            };
+        }
+        
+        // إغلاق بمفتاح Escape
+        const escapeHandler = function(e) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeAdvancedModal();
+                document.removeEventListener('keydown', escapeHandler);
+            }
+        };
+        document.addEventListener('keydown', escapeHandler);
+        
+    } catch (error) {
+        console.error('خطأ في إعداد مستمعات الأحداث:', error);
+        showProfessionalNotification('حدث خطأ في إعداد الأحداث', 'error');
+    }
+}
+
+// دالة الإشعارات الاحترافية المحسنة
+function showProfessionalNotification(message, type = 'success') {
+    try {
+        // إزالة الإشعارات السابقة
+        const existingNotifications = document.querySelectorAll('.professional-notification');
+        existingNotifications.forEach(notif => notif.remove());
+        
+        const notification = document.createElement('div');
+        notification.className = `professional-notification ${type}`;
+        
+        // أيقونات الإشعارات
+        const icons = {
+            success: `<svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="#00ff88" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,16.5L18,9.5L16.59,8.09L11,13.67L7.91,10.59L6.5,12L11,16.5Z"/>
+                      </svg>`,
+            error: `<svg viewBox="0 0 24 24" width="20" height="20">
+                     <path fill="#ff4757" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M15.31,6.31L14,5L12,7L10,5L8.69,6.31L10.69,8.31L8.69,10.31L10,11.69L12,9.69L14,11.69L15.31,10.31L13.31,8.31L15.31,6.31Z"/>
+                   </svg>`,
+            warning: `<svg viewBox="0 0 24 24" width="20" height="20">
+                       <path fill="#ffa502" d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                     </svg>`,
+            info: `<svg viewBox="0 0 24 24" width="20" height="20">
+                    <path fill="#0096ff" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                  </svg>`
+        };
+        
+        notification.innerHTML = `
+            <div class="notification-content">
+                <div class="notification-icon">${icons[type] || icons.info}</div>
+                <div class="notification-text">${message}</div>
+                <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="notification-progress">
+                <div class="progress-bar"></div>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // تفعيل الأنيميشن
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+        
+        // بدء شريط التقدم
+        const progressBar = notification.querySelector('.progress-bar');
+        if (progressBar) {
+            progressBar.style.animation = 'progressAnimation 4s linear forwards';
+        }
+        
+        // إخفاء الإشعار تلقائياً بعد 4 ثوان
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        notification.remove();
+                    }
+                }, 400);
+            }
+        }, 4000);
+        
+    } catch (error) {
+        console.error('خطأ في عرض الإشعار:', error);
+        // fallback للإشعار البسيط
+        alert(message);
+    }
+}
+
+// تصدير الإعدادات
+function exportMonitorSettings() {
+    try {
+        const settings = JSON.stringify(monitorSettings, null, 2);
+        const blob = new Blob([settings], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `CyberGuard_Settings_${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert('تم تصدير الإعدادات بنجاح! 📁');
+    } catch (error) {
+        console.error('خطأ في تصدير الإعدادات:', error);
+        alert('حدث خطأ في تصدير الإعدادات');
+    }
+}
+
+// استيراد الإعدادات
+function importMonitorSettings() {
+    try {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedSettings = JSON.parse(e.target.result);
+                    
+                    // التحقق من صحة البيانات
+                    if (importedSettings && typeof importedSettings === 'object') {
+                        Object.assign(monitorSettings, importedSettings);
+                        localStorage.setItem('cyberGuardMonitorSettings', JSON.stringify(monitorSettings));
+                        updateAdvancedSettingsUI();
+                        alert('تم استيراد الإعدادات بنجاح! ✅');
+                    } else {
+                        alert('ملف الإعدادات غير صالح');
+                    }
+                } catch (error) {
+                    console.error('خطأ في قراءة الملف:', error);
+                    alert('خطأ في قراءة ملف الإعدادات');
+                }
+            };
+            reader.readAsText(file);
+        };
+        
+        input.click();
+    } catch (error) {
+        console.error('خطأ في استيراد الإعدادات:', error);
+        alert('حدث خطأ في استيراد الإعدادات');
+    }
+}
+
+// إعداد تنقل الإعدادات الأساسي
+function setupSettingsNavigation() {
+    try {
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.settings-section');
+        
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // إزالة الحالة النشطة من جميع التابات والأقسام
+                navTabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                // إضافة الحالة النشطة للتاب المختار
+                this.classList.add('active');
+                
+                // إظهار القسم المطابق
+                const sectionId = this.getAttribute('data-section') + '-section';
+                const activeSection = document.getElementById(sectionId);
+                if (activeSection) {
+                    activeSection.classList.add('active');
+                }
+            });
+        });
+        
+        // تفعيل التاب الأول افتراضياً
+        if (navTabs.length > 0) {
+            navTabs[0].click();
+        }
+    } catch (error) {
+        console.error('خطأ في إعداد التنقل:', error);
+    }
+}
+
+// وظائف إنشاء أقسام الإعدادات المحسنة
+function createAdvancedScanningSection() {
+    return `
+        <div class="section-header">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M15.5,12C18,12 20,14 20,16.5C20,17.38 19.75,18.21 19.31,18.9L22.39,22L21,23.39L17.88,20.32C17.19,20.75 16.37,21 15.5,21C13,21 11,19 11,16.5C11,14 13,12 15.5,12M15.5,14A2.5,2.5 0 0,0 13,16.5A2.5,2.5 0 0,0 15.5,19A2.5,2.5 0 0,0 18,16.5A2.5,2.5 0 0,0 15.5,14M6.5,2C7.33,2 8,2.67 8,3.5V5H16V3.5C16,2.67 16.67,2 17.5,2C18.33,2 19,2.67 19,3.5V5C20.11,5 21,5.9 21,7V10.81C20.42,10.3 19.74,9.93 19,9.73V7H5V19H9.09C9.21,19.72 9.46,20.39 9.81,21H5C3.9,21 3,20.11 3,19V7C3,5.9 3.9,5 5,5V3.5C5,2.67 5.67,2 6.5,2Z"/>
+            </svg>
+            <h3>إعدادات الفحص المتقدمة</h3>
+        </div>
+        <div class="setting-group">
+            <div class="setting-item">
+                <div class="setting-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                    </svg>
+                    <label>فترة الفحص (ثانية)</label>
+                </div>
+                <div class="input-group">
+                    <input type="range" id="scanInterval" min="10" max="300" value="${monitorSettings.scanning.interval}" class="modern-slider">
+                    <div class="slider-value" id="scanIntervalValue">${monitorSettings.scanning.interval}s</div>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"/>
+                    </svg>
+                    <label>عمق الفحص</label>
+                </div>
+                <select id="scanDepth" class="modern-select">
+                    <option value="quick">فحص سريع - أساسي</option>
+                    <option value="standard">فحص عادي - شامل</option>
+                    <option value="deep">فحص عميق - متقدم</option>
+                    <option value="custom">فحص مخصص</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="autoScan" ${monitorSettings.scanning.autoScan ? 'checked' : ''}>
+                    <label for="autoScan" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,16.5L18,9.5L16.59,8.09L11,13.67L7.41,10.09L6,11.5L11,16.5Z"/>
+                        </svg>
+                        تفعيل الفحص التلقائي
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="realTimeProtection" ${monitorSettings.scanning.realTimeProtection ? 'checked' : ''}>
+                    <label for="realTimeProtection" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
+                        </svg>
+                        الحماية في الوقت الفعلي
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="scanOnStartup" ${monitorSettings.scanning.scanOnStartup ? 'checked' : ''}>
+                    <label for="scanOnStartup" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M8.5,13.5L11,16.5L16.5,9.5L15.09,8.09L11,13.09L9.91,11.91L8.5,13.5M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z"/>
+                        </svg>
+                        فحص عند بدء التشغيل
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createMonitorSettingsModal() {
+    // إزالة النافذة الموجودة إن وجدت
+    const existingModal = document.querySelector('.monitor-settings-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    const modal = document.createElement('div');
+    modal.className = 'monitor-settings-modal';
+    modal.innerHTML = `
+        <div class="modal-overlay" onclick="closeMonitorSettings()"></div>
+        <div class="settings-container">
+            <div class="settings-header">
+                <h2>⚙️ إعدادات المراقب</h2>
+                <button class="close-btn" onclick="closeMonitorSettings()">×</button>
+            </div>
+            <div class="settings-content">
+                ${createScanningSection()}
+                ${createAlertsSection()}
+                ${createDisplaySection()}
+                ${createAdvancedSection()}
+                ${createPerformanceSection()}
+            </div>
+            <div class="settings-footer">
+                <button class="btn secondary" onclick="resetToDefaults()">إعادة تعيين</button>
+                <button class="btn info" onclick="exportSettings()">تصدير</button>
+                <button class="btn info" onclick="importSettings()">استيراد</button>
+                <button class="btn primary" onclick="saveMonitorSettings()">حفظ الإعدادات</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // إظهار النافذة مع تأثير
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.classList.add('active');
+    }, 10);
+    
+    // تحديث واجهة الإعدادات
+    setTimeout(() => {
+        updateSettingsUI();
+    }, 100);
+}
+
+function createScanningSection() {
+    return `
+        <div class="settings-section">
+            <h3>🔍 إعدادات الفحص</h3>
+            <div class="setting-item">
+                <label>فترة الفحص (بالثواني)</label>
+                <div class="input-group">
+                    <input type="range" id="scanInterval" min="10" max="300" value="${monitorSettings.scanning.interval}">
+                    <span id="scanIntervalValue">${monitorSettings.scanning.interval}s</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>عمق الفحص</label>
+                <select id="scanDepth">
+                    <option value="quick">سريع</option>
+                    <option value="standard">عادي</option>
+                    <option value="deep">عميق</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="autoScan" ${monitorSettings.scanning.autoScan ? 'checked' : ''}>
+                    <label for="autoScan">تفعيل الفحص التلقائي</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="realTimeProtection" ${monitorSettings.scanning.realTimeProtection ? 'checked' : ''}>
+                    <label for="realTimeProtection">الحماية في الوقت الفعلي</label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createAlertsSection() {
+    return `
+        <div class="settings-section">
+            <h3>🔔 إعدادات التنبيهات</h3>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="alertsEnabled" ${monitorSettings.alerts.enabled ? 'checked' : ''}>
+                    <label for="alertsEnabled">تفعيل التنبيهات</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="soundAlerts" ${monitorSettings.alerts.sound ? 'checked' : ''}>
+                    <label for="soundAlerts">تنبيهات صوتية</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="desktopAlerts" ${monitorSettings.alerts.desktop ? 'checked' : ''}>
+                    <label for="desktopAlerts">تنبيهات سطح المكتب</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>مستوى التنبيه</label>
+                <select id="alertLevel">
+                    <option value="low">منخفض</option>
+                    <option value="medium">متوسط</option>
+                    <option value="high">عالي</option>
+                </select>
+            </div>
+        </div>
+    `;
+}
+
+function createDisplaySection() {
+    return `
+        <div class="settings-section">
+            <h3>🖥️ إعدادات العرض</h3>
+            <div class="setting-item">
+                <label>الحد الأقصى للأحداث المعروضة</label>
+                <div class="input-group">
+                    <input type="range" id="maxEvents" min="50" max="500" value="${monitorSettings.display.maxEvents}">
+                    <span id="maxEventsValue">${monitorSettings.display.maxEvents}</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>معدل التحديث (بالثواني)</label>
+                <div class="input-group">
+                    <input type="range" id="refreshRate" min="1" max="60" value="${monitorSettings.display.refreshRate}">
+                    <span id="refreshRateValue">${monitorSettings.display.refreshRate}s</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="showTimestamps" ${monitorSettings.display.showTimestamps ? 'checked' : ''}>
+                    <label for="showTimestamps">إظهار الطوابع الزمنية</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="animateEvents" ${monitorSettings.display.animateEvents ? 'checked' : ''}>
+                    <label for="animateEvents">تحريك الأحداث</label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createAdvancedSection() {
+    return `
+        <div class="settings-section">
+            <h3>⚡ الإعدادات المتقدمة</h3>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="logToFile" ${monitorSettings.advanced.logToFile ? 'checked' : ''}>
+                    <label for="logToFile">حفظ السجلات في ملف</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="debugMode" ${monitorSettings.advanced.debugMode ? 'checked' : ''}>
+                    <label for="debugMode">وضع التشخيص</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>مستوى السجل</label>
+                <select id="logLevel">
+                    <option value="error">أخطاء فقط</option>
+                    <option value="warn">تحذيرات</option>
+                    <option value="info">معلومات</option>
+                    <option value="debug">تشخيص</option>
+                </select>
+            </div>
+        </div>
+    `;
+}
+
+function createPerformanceSection() {
+    return `
+        <div class="settings-section">
+            <h3>⚡ إعدادات الأداء</h3>
+            <div class="setting-item">
+                <label>استخدام المعالج</label>
+                <select id="cpuUsage">
+                    <option value="low">منخفض</option>
+                    <option value="medium">متوسط</option>
+                    <option value="high">عالي</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="lowPowerMode" ${monitorSettings.performance.lowPowerMode ? 'checked' : ''}>
+                    <label for="lowPowerMode">وضع توفير الطاقة</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="backgroundScanning" ${monitorSettings.performance.backgroundScanning ? 'checked' : ''}>
+                    <label for="backgroundScanning">الفحص في الخلفية</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>حد استخدام الموارد (%)</label>
+                <div class="input-group">
+                    <input type="range" id="resourceLimit" min="10" max="100" value="${monitorSettings.performance.resourceLimit}">
+                    <span id="resourceLimitValue">${monitorSettings.performance.resourceLimit}%</span>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function updateSecurityStats() {
@@ -7686,5 +10740,919 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('🔰 Real-time Security Monitoring Enabled');
     console.log('🔰 25 Advanced Security Tools Ready');
     console.log('🔰 Professional UI Components Loaded');
+    console.log('🔰 Monitor Settings System Ready');
     console.log('🔰 Keyboard Shortcuts: Ctrl+S (Scan), Ctrl+L (Clear Log), Ctrl+M (Risk Matrix)');
+    
+    // تحميل إعدادات المراقب
+    loadMonitorSettings();
+    
+    // تطبيق الإعدادات المحملة
+    applyMonitorSettings();
+});
+
+// === وظائف إعدادات المراقب ===
+
+function updateSettingsUI() {
+    // تحديث المنزلقات والقيم
+    const scanIntervalSlider = document.getElementById('scanInterval');
+    const maxEventsSlider = document.getElementById('maxEvents');
+    const refreshRateSlider = document.getElementById('refreshRate');
+    const resourceLimitSlider = document.getElementById('resourceLimit');
+    
+    if (scanIntervalSlider) {
+        scanIntervalSlider.value = monitorSettings.scanning.interval;
+        scanIntervalSlider.addEventListener('input', (e) => {
+            monitorSettings.scanning.interval = parseInt(e.target.value);
+            document.getElementById('scanIntervalValue').textContent = e.target.value + 's';
+        });
+    }
+    
+    if (maxEventsSlider) {
+        maxEventsSlider.value = monitorSettings.display.maxEvents;
+        maxEventsSlider.addEventListener('input', (e) => {
+            monitorSettings.display.maxEvents = parseInt(e.target.value);
+            document.getElementById('maxEventsValue').textContent = e.target.value;
+        });
+    }
+    
+    if (refreshRateSlider) {
+        refreshRateSlider.value = monitorSettings.display.refreshRate;
+        refreshRateSlider.addEventListener('input', (e) => {
+            monitorSettings.display.refreshRate = parseInt(e.target.value);
+            document.getElementById('refreshRateValue').textContent = e.target.value + 's';
+        });
+    }
+    
+    if (resourceLimitSlider) {
+        resourceLimitSlider.value = monitorSettings.performance.resourceLimit;
+        resourceLimitSlider.addEventListener('input', (e) => {
+            monitorSettings.performance.resourceLimit = parseInt(e.target.value);
+            document.getElementById('resourceLimitValue').textContent = e.target.value + '%';
+        });
+    }
+    
+    // تحديث القوائم المنسدلة
+    updateSelectValue('scanDepth', monitorSettings.scanning.depth);
+    updateSelectValue('alertLevel', monitorSettings.alerts.level);
+    updateSelectValue('logLevel', monitorSettings.advanced.logLevel);
+    updateSelectValue('cpuUsage', monitorSettings.performance.cpuUsage);
+    
+    // تحديث صناديق الاختيار
+    updateCheckboxes();
+}
+
+function updateSelectValue(selectId, value) {
+    const select = document.getElementById(selectId);
+    if (select) {
+        select.value = value;
+        select.addEventListener('change', (e) => {
+            updateSettingValue(selectId, e.target.value);
+        });
+    }
+}
+
+function updateCheckboxes() {
+    const checkboxMappings = {
+        'autoScan': 'scanning.autoScan',
+        'realTimeProtection': 'scanning.realTimeProtection',
+        'alertsEnabled': 'alerts.enabled',
+        'soundAlerts': 'alerts.sound',
+        'desktopAlerts': 'alerts.desktop',
+        'showTimestamps': 'display.showTimestamps',
+        'animateEvents': 'display.animateEvents',
+        'logToFile': 'advanced.logToFile',
+        'debugMode': 'advanced.debugMode',
+        'lowPowerMode': 'performance.lowPowerMode',
+        'backgroundScanning': 'performance.backgroundScanning'
+    };
+    
+    Object.entries(checkboxMappings).forEach(([checkboxId, settingPath]) => {
+        const checkbox = document.getElementById(checkboxId);
+        if (checkbox) {
+            const value = getNestedValue(monitorSettings, settingPath);
+            checkbox.checked = value;
+            checkbox.addEventListener('change', (e) => {
+                setNestedValue(monitorSettings, settingPath, e.target.checked);
+            });
+        }
+    });
+}
+
+function updateSettingValue(settingId, value) {
+    const mappings = {
+        'scanDepth': 'scanning.depth',
+        'alertLevel': 'alerts.level',
+        'logLevel': 'advanced.logLevel',
+        'cpuUsage': 'performance.cpuUsage'
+    };
+    
+    if (mappings[settingId]) {
+        setNestedValue(monitorSettings, mappings[settingId], value);
+    }
+}
+
+function getNestedValue(obj, path) {
+    return path.split('.').reduce((current, key) => current && current[key], obj);
+}
+
+function setNestedValue(obj, path, value) {
+    const keys = path.split('.');
+    const lastKey = keys.pop();
+    const target = keys.reduce((current, key) => current[key], obj);
+    target[lastKey] = value;
+}
+
+function closeMonitorSettings() {
+    const modal = document.querySelector('.monitor-settings-modal');
+    if (modal) {
+        modal.style.opacity = '0';
+        modal.classList.remove('active');
+        setTimeout(() => {
+            if (modal.parentNode) {
+                modal.remove();
+            }
+        }, 300);
+    }
+}
+
+function saveMonitorSettings() {
+    try {
+        localStorage.setItem('cyberguard-monitor-settings', JSON.stringify(monitorSettings));
+        showNotification('تم حفظ الإعدادات بنجاح!', 'success');
+        
+        // تطبيق الإعدادات الجديدة
+        applyMonitorSettings();
+        
+        console.log('✅ Monitor settings saved:', monitorSettings);
+    } catch (error) {
+        showNotification('فشل في حفظ الإعدادات', 'error');
+        console.error('❌ Save error:', error);
+    }
+}
+
+function resetToDefaults() {
+    if (confirm('هل أنت متأكد من إعادة تعيين جميع الإعدادات للافتراضية؟')) {
+        // إعادة تعيين الإعدادات
+        Object.assign(monitorSettings, {
+            scanning: {
+                interval: 30,
+                depth: 'standard',
+                autoScan: true,
+                realTimeProtection: true
+            },
+            alerts: {
+                enabled: true,
+                sound: true,
+                desktop: true,
+                level: 'medium',
+                email: false
+            },
+            display: {
+                maxEvents: 100,
+                refreshRate: 5,
+                showTimestamps: true,
+                animateEvents: true,
+                darkMode: true
+            },
+            advanced: {
+                logToFile: false,
+                debugMode: false,
+                logLevel: 'info',
+                customRules: false
+            },
+            performance: {
+                cpuUsage: 'medium',
+                lowPowerMode: false,
+                backgroundScanning: true,
+                resourceLimit: 50
+            }
+        });
+        
+        updateSettingsUI();
+        showNotification('تم إعادة تعيين الإعدادات بنجاح', 'success');
+    }
+}
+
+function exportSettings() {
+    try {
+        const dataStr = JSON.stringify(monitorSettings, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `cyberguard-settings-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        showNotification('تم تصدير الإعدادات بنجاح', 'success');
+    } catch (error) {
+        showNotification('فشل في تصدير الإعدادات', 'error');
+        console.error('Export error:', error);
+    }
+}
+
+function importSettings() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const importedSettings = JSON.parse(event.target.result);
+                
+                // التحقق من صحة البنية
+                if (importedSettings.scanning && importedSettings.alerts && 
+                    importedSettings.display && importedSettings.advanced && 
+                    importedSettings.performance) {
+                    
+                    Object.assign(monitorSettings, importedSettings);
+                    updateSettingsUI();
+                    showNotification('تم استيراد الإعدادات بنجاح', 'success');
+                } else {
+                    throw new Error('تنسيق ملف غير صحيح');
+                }
+            } catch (error) {
+                showNotification('خطأ في قراءة الملف: ' + error.message, 'error');
+            }
+        };
+        reader.readAsText(file);
+    });
+    input.click();
+}
+
+function applyMonitorSettings() {
+    console.log('🔧 Applying monitor settings...');
+    
+    // تطبيق إعدادات الفحص
+    if (monitorSettings.scanning.autoScan && window.liveSecurityInterval) {
+        clearInterval(window.liveSecurityInterval);
+        window.liveSecurityInterval = setInterval(
+            generateSecurityActivity, 
+            monitorSettings.scanning.interval * 1000
+        );
+    }
+    
+    // تطبيق إعدادات العرض
+    const activityList = document.querySelector('.activity-list');
+    if (activityList) {
+        if (monitorSettings.display.animateEvents) {
+            activityList.classList.add('animated');
+        } else {
+            activityList.classList.remove('animated');
+        }
+    }
+    
+    // تطبيق إعدادات الأداء
+    if (monitorSettings.performance.lowPowerMode) {
+        document.documentElement.style.setProperty('--animation-duration', '0.8s');
+    } else {
+        document.documentElement.style.setProperty('--animation-duration', '0.3s');
+    }
+    
+    console.log('✅ Monitor settings applied successfully');
+}
+
+function showNotification(message, type = 'info', duration = 3000) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-icon">
+                ${type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'}
+            </span>
+            <span class="notification-message">${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+    `;
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+        background: ${type === 'success' ? 'linear-gradient(135deg, #00ff88, #32ff99)' : 
+                    type === 'error' ? 'linear-gradient(135deg, #ff4757, #ff6b7a)' : 
+                    type === 'warning' ? 'linear-gradient(135deg, #ffa502, #ff6348)' :
+                    'linear-gradient(135deg, #3742fa, #5352ed)'};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 350px;
+        font-size: 14px;
+        border: 1px solid rgba(255,255,255,0.2);
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
+        }
+    }, duration);
+}
+
+// تحميل الإعدادات عند بدء التشغيل
+function loadMonitorSettings() {
+    try {
+        const saved = localStorage.getItem('cyberguard-monitor-settings');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            Object.assign(monitorSettings, parsed);
+            console.log('✅ Monitor settings loaded from localStorage');
+        }
+    } catch (error) {
+        console.warn('⚠️ Failed to load settings:', error);
+    }
+}
+
+// وظائف إنشاء أقسام الإعدادات المحسنة - الجزء الثاني
+function createAdvancedAlertsSection() {
+    return `
+        <div class="section-header">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21"/>
+            </svg>
+            <h3>إعدادات التنبيهات المتقدمة</h3>
+        </div>
+        <div class="setting-group">
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="alertsEnabled" ${monitorSettings.alerts.enabled ? 'checked' : ''}>
+                    <label for="alertsEnabled" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M10,21H14A2,2 0 0,1 12,23A2,2 0 0,1 10,21M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19Z"/>
+                        </svg>
+                        تفعيل جميع التنبيهات
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="soundAlerts" ${monitorSettings.alerts.sound ? 'checked' : ''}>
+                    <label for="soundAlerts" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/>
+                        </svg>
+                        التنبيهات الصوتية
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="desktopAlerts" ${monitorSettings.alerts.desktop ? 'checked' : ''}>
+                    <label for="desktopAlerts" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M21,16V4H3V16H21M21,2A2,2 0 0,1 23,4V16A2,2 0 0,1 21,18H14L16,21V22H8V21L10,18H3C1.89,18 1,17.1 1,16V4C1,2.89 1.89,2 3,2H21Z"/>
+                        </svg>
+                        تنبيهات سطح المكتب
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M12,2L13.09,8.26L22,9L14.74,13.74L17.18,22L12,17.27L6.82,22L9.26,13.74L2,9L10.91,8.26L12,2Z"/>
+                    </svg>
+                    <label>مستوى التنبيه</label>
+                </div>
+                <select id="alertLevel" class="modern-select">
+                    <option value="low">منخفض - تنبيهات أساسية</option>
+                    <option value="medium">متوسط - تنبيهات مهمة</option>
+                    <option value="high">عالي - جميع التنبيهات</option>
+                    <option value="critical">حرج - طوارئ فقط</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="urgentAlert" ${monitorSettings.alerts.urgentAlert ? 'checked' : ''}>
+                    <label for="urgentAlert" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                        </svg>
+                        تنبيهات الطوارئ العاجلة
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createAdvancedDisplaySection() {
+    return `
+        <div class="section-header">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M21,16V4H3V16H21M21,2A2,2 0 0,1 23,4V16A2,2 0 0,1 21,18H14L16,21V22H8V21L10,18H3C1.89,18 1,17.1 1,16V4C1,2.89 1.89,2 3,2H21Z"/>
+            </svg>
+            <h3>إعدادات العرض المتقدمة</h3>
+        </div>
+        <div class="setting-group">
+            <div class="setting-item">
+                <div class="setting-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V5H19V19Z"/>
+                    </svg>
+                    <label>الحد الأقصى للأحداث</label>
+                </div>
+                <div class="input-group">
+                    <input type="range" id="maxEvents" min="50" max="500" value="${monitorSettings.display.maxEvents}" class="modern-slider">
+                    <div class="slider-value" id="maxEventsValue">${monitorSettings.display.maxEvents}</div>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                    </svg>
+                    <label>معدل التحديث (ثانية)</label>
+                </div>
+                <div class="input-group">
+                    <input type="range" id="refreshRate" min="1" max="60" value="${monitorSettings.display.refreshRate}" class="modern-slider">
+                    <div class="slider-value" id="refreshRateValue">${monitorSettings.display.refreshRate}s</div>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="showTimestamps" ${monitorSettings.display.showTimestamps ? 'checked' : ''}>
+                    <label for="showTimestamps" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                        </svg>
+                        إظهار الطوابع الزمنية
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="animateEvents" ${monitorSettings.display.animateEvents ? 'checked' : ''}>
+                    <label for="animateEvents" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                        </svg>
+                        تحريك الأحداث والانتقالات
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="compactView" ${monitorSettings.display.compactView ? 'checked' : ''}>
+                    <label for="compactView" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M3,3H21V5H3V3M3,7H15V9H3V7M3,11H21V13H3V11M3,15H15V17H3V15M3,19H21V21H3V19Z"/>
+                        </svg>
+                        العرض المضغوط
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createAdvancedSecuritySection() {
+    return `
+        <div class="section-header">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11.5C15.4,11.5 16,12.4 16,13V16C16,17.4 15.4,18 14.8,18H9.2C8.6,18 8,17.4 8,16V13C8,12.4 8.6,11.5 9.2,11.5V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,10V11.5H13.5V10C13.5,8.7 12.8,8.2 12,8.2Z"/>
+            </svg>
+            <h3>إعدادات الأمان المتقدمة</h3>
+        </div>
+        <div class="setting-group">
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="advancedThreatDetection" ${monitorSettings.security.advancedThreatDetection ? 'checked' : ''}>
+                    <label for="advancedThreatDetection" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                        </svg>
+                        كشف التهديدات المتقدم
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="behaviorAnalysis" ${monitorSettings.security.behaviorAnalysis ? 'checked' : ''}>
+                    <label for="behaviorAnalysis" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M9,5A4,4 0 0,1 13,9A4,4 0 0,1 9,13A4,4 0 0,1 5,9A4,4 0 0,1 9,5M9,15C11.67,15 17,16.34 17,19V21H1V19C1,16.34 6.33,15 9,15M16.76,5.36C18.78,7.56 18.78,10.61 16.76,12.63L15.08,10.94C15.92,9.76 15.92,8.23 15.08,7.05L16.76,5.36M20.07,2C24,6.05 23.97,12.11 20.07,16.07L18.44,14.37C21.21,11.19 21.21,6.65 18.44,3.63L20.07,2Z"/>
+                        </svg>
+                        تحليل السلوك
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="networkMonitoring" ${monitorSettings.security.networkMonitoring ? 'checked' : ''}>
+                    <label for="networkMonitoring" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M15,9C15,7.89 14.1,7 13,7H11C9.89,7 9,7.89 9,9V15C9,16.11 9.89,17 11,17H13C14.11,17 15,16.11 15,15M13,9V15H11V9M21,15C21,16.11 20.11,17 19,17H17V15H19V9H17V7H19C20.11,7 21,7.89 21,9M7,15V17H5C3.89,17 3,16.11 3,15V9C3,7.89 3.89,7 5,7H7V9H5V15Z"/>
+                        </svg>
+                        مراقبة الشبكة
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="fileIntegrityCheck" ${monitorSettings.security.fileIntegrityCheck ? 'checked' : ''}>
+                    <label for="fileIntegrityCheck" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
+                        </svg>
+                        فحص سلامة الملفات
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z"/>
+                    </svg>
+                    <label>وضع الحجر الصحي</label>
+                </div>
+                <select id="quarantineMode" class="modern-select">
+                    <option value="auto">تلقائي - حجر ذكي</option>
+                    <option value="manual">يدوي - مراجعة المستخدم</option>
+                    <option value="strict">صارم - حجر فوري</option>
+                    <option value="disabled">معطل</option>
+                </select>
+            </div>
+        </div>
+    `;
+}
+
+function createAdvancedPerformanceSection() {
+    return `
+        <div class="section-header">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M13,2.03V2.05L13,4.05C17.39,4.59 20.5,8.58 19.96,12.97C19.5,16.61 16.64,19.5 13,19.93V21.93C18.5,21.38 22.5,16.5 21.95,11C21.5,6.25 17.73,2.5 13,2.03M11,2.06C9.05,2.25 7.19,3 5.67,4.26L7.1,5.74C8.22,4.84 9.57,4.26 11,4.06V2.06M4.26,5.67C3,7.19 2.25,9.04 2.05,11H4.05C4.24,9.58 4.8,8.23 5.69,7.1L4.26,5.67M2.06,13C2.26,14.96 3.03,16.81 4.27,18.33L5.69,16.9C4.81,15.77 4.24,14.42 4.06,13H2.06M7.1,18.37L5.67,19.74C7.18,21 9.04,21.74 11,21.94V19.94C9.58,19.75 8.23,19.19 7.1,18.37M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+            </svg>
+            <h3>إعدادات الأداء المتقدمة</h3>
+        </div>
+        <div class="setting-group">
+            <div class="setting-item">
+                <div class="setting-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M13,2.03V2.05L13,4.05C17.39,4.59 20.5,8.58 19.96,12.97C19.5,16.61 16.64,19.5 13,19.93V21.93C18.5,21.38 22.5,16.5 21.95,11C21.5,6.25 17.73,2.5 13,2.03Z"/>
+                    </svg>
+                    <label>استخدام المعالج</label>
+                </div>
+                <select id="cpuUsage" class="modern-select">
+                    <option value="low">منخفض - توفير الطاقة</option>
+                    <option value="medium">متوسط - متوازن</option>
+                    <option value="high">عالي - أداء أقصى</option>
+                    <option value="adaptive">تكيفي - ذكي</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                    </svg>
+                    <label>حد استخدام الموارد (%)</label>
+                </div>
+                <div class="input-group">
+                    <input type="range" id="resourceLimit" min="10" max="100" value="${monitorSettings.performance.resourceLimit}" class="modern-slider">
+                    <div class="slider-value" id="resourceLimitValue">${monitorSettings.performance.resourceLimit}%</div>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="lowPowerMode" ${monitorSettings.performance.lowPowerMode ? 'checked' : ''}>
+                    <label for="lowPowerMode" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,2V10L16,7L13,4V2Z"/>
+                        </svg>
+                        وضع توفير الطاقة
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="backgroundScanning" ${monitorSettings.performance.backgroundScanning ? 'checked' : ''}>
+                    <label for="backgroundScanning" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
+                        </svg>
+                        الفحص في الخلفية
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="cacheOptimization" ${monitorSettings.performance.cacheOptimization ? 'checked' : ''}>
+                    <label for="cacheOptimization" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M13,9H18.5L13,14.5V9M6,6H11V12H6V6Z"/>
+                        </svg>
+                        تحسين ذاكرة التخزين المؤقت
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createAdvancedOptionsSection() {
+    return `
+        <div class="section-header">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M10,22C9.75,22 9.54,21.82 9.5,21.58L9.13,18.93C8.5,18.68 7.96,18.34 7.44,17.94L4.95,18.95C4.73,19.03 4.46,18.95 4.34,18.73L2.34,15.27C2.21,15.05 2.27,14.78 2.46,14.63L4.57,12.97L4.5,12L4.57,11.03L2.46,9.37C2.27,9.22 2.21,8.95 2.34,8.73L4.34,5.27C4.46,5.05 4.73,4.96 4.95,5.05L7.44,6.05C7.96,5.66 8.5,5.32 9.13,5.07L9.5,2.42C9.54,2.18 9.75,2 10,2H14C14.25,2 14.46,2.18 14.5,2.42L14.87,5.07C15.5,5.32 16.04,5.66 16.56,6.05L19.05,5.05C19.27,4.96 19.54,5.05 19.66,5.27L21.66,8.73C21.79,8.95 21.73,9.22 21.54,9.37L19.43,11.03L19.5,12L19.43,12.97L21.54,14.63C21.73,14.78 21.79,15.05 21.66,15.27L19.66,18.73C19.54,18.95 19.27,19.04 19.05,18.95L16.56,17.95C16.04,18.34 15.5,18.68 14.87,18.93L14.5,21.58C14.46,21.82 14.25,22 14,22H10M11.25,4L10.88,6.61C9.68,6.86 8.62,7.5 7.85,8.39L5.44,7.35L4.69,8.65L6.8,10.2C6.4,11.37 6.4,12.64 6.8,13.8L4.68,15.36L5.43,16.66L7.86,15.62C8.63,16.5 9.68,17.14 10.87,17.38L11.24,20H12.76L13.13,17.39C14.32,17.14 15.37,16.5 16.14,15.62L18.57,16.66L19.32,15.36L17.2,13.81C17.6,12.64 17.6,11.37 17.2,10.2L19.31,8.65L18.56,7.35L16.15,8.39C15.38,7.5 14.32,6.86 13.12,6.62L12.75,4H11.25Z"/>
+            </svg>
+            <h3>الخيارات المتقدمة</h3>
+        </div>
+        <div class="setting-group">
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="logToFile" ${monitorSettings.advanced.logToFile ? 'checked' : ''}>
+                    <label for="logToFile" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                        حفظ السجلات في ملف
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="debugMode" ${monitorSettings.advanced.debugMode ? 'checked' : ''}>
+                    <label for="debugMode" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M20,8H17.19C16.74,7.22 16.12,6.55 15.37,6.04L17,4.41L15.59,3L13.42,5.17C12.96,5.06 12.49,5 12,5C11.51,5 11.04,5.06 10.59,5.17L8.41,3L7,4.41L8.62,6.04C7.88,6.55 7.26,7.22 6.81,8H4V10H6.09C6.04,10.33 6,10.66 6,11V12H4V14H6V15C6,15.34 6.04,15.67 6.09,16H4V18H6.81C7.85,19.79 9.78,21 12,21C14.22,21 16.15,19.79 17.19,18H20V16H17.91C17.96,15.67 18,15.34 18,15V14H20V12H18V11C18,10.66 17.96,10.33 17.91,10H20V8Z"/>
+                        </svg>
+                        وضع التشخيص
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"/>
+                    </svg>
+                    <label>مستوى السجل</label>
+                </div>
+                <select id="logLevel" class="modern-select">
+                    <option value="error">أخطاء فقط</option>
+                    <option value="warn">تحذيرات ومهم</option>
+                    <option value="info">معلومات عامة</option>
+                    <option value="debug">تشخيص مفصل</option>
+                    <option value="verbose">شامل - كل شيء</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="autoUpdate" ${monitorSettings.advanced.autoUpdate ? 'checked' : ''}>
+                    <label for="autoUpdate" class="checkbox-label">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M12,18A6,6 0 0,1 6,12C6,9 8.24,6.5 11.08,6.08L9.41,7.75L10.83,9.17L14.83,5.17L10.83,1.17L9.41,2.59L11.08,4.26C7.17,4.69 4,8.08 4,12A8,8 0 0,0 12,20C15.31,20 18.17,17.8 19.29,14.67L17.58,14C16.84,16.23 14.66,17.86 12,18M16.59,16.24L15.17,14.83L19.17,10.83L23.17,14.83L21.75,16.24L20.08,14.58C20.69,15.92 21,17.37 21,18.83C21,20.1 19.1,21 16.5,21C13.9,21 12,20.1 12,18.83C12,18.05 13.07,17.45 14.67,17.17L15.08,18.67C14.22,18.83 13.5,19.17 13.5,19.67C13.5,20.1 14.6,20.5 16.5,20.5C18.4,20.5 19.5,20.1 19.5,19.67C19.5,18.83 19.33,17.92 18.92,17.08L16.59,16.24Z"/>
+                        </svg>
+                        التحديث التلقائي
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// إعداد تنقل الإعدادات المتقدمة
+function setupAdvancedSettingsNavigation() {
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = {
+        'scanning': createAdvancedScanningSection,
+        'alerts': createAdvancedAlertsSection,
+        'display': createAdvancedDisplaySection,
+        'security': createAdvancedSecuritySection,
+        'performance': createAdvancedPerformanceSection,
+        'advanced': createAdvancedOptionsSection
+    };
+
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // إزالة الحالة النشطة من جميع العناصر
+            navItems.forEach(nav => nav.classList.remove('active'));
+            // إضافة الحالة النشطة للعنصر المختار
+            this.classList.add('active');
+            
+            // الحصول على نوع القسم
+            const sectionType = this.getAttribute('data-section');
+            
+            // تحديث المحتوى
+            const contentContainer = document.querySelector('.settings-content');
+            if (contentContainer && sections[sectionType]) {
+                contentContainer.innerHTML = sections[sectionType]();
+                
+                // إعداد مستمعات الأحداث للعناصر الجديدة
+                setupAdvancedSettingsEventListeners();
+            }
+        });
+    });
+}
+
+// إعداد مستمعات الأحداث للإعدادات المتقدمة
+function setupAdvancedSettingsEventListeners() {
+    // مستمعات أحداث المنزلقات
+    const sliders = document.querySelectorAll('.modern-slider');
+    sliders.forEach(slider => {
+        slider.addEventListener('input', function() {
+            const valueDisplay = document.getElementById(this.id + 'Value');
+            if (valueDisplay) {
+                const unit = this.id.includes('Rate') ? 's' : '%';
+                valueDisplay.textContent = this.value + unit;
+            }
+            
+            // حفظ القيمة
+            saveAdvancedSetting(this.id, this.value);
+        });
+    });
+
+    // مستمعات أحداث مربعات الاختيار
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            saveAdvancedSetting(this.id, this.checked);
+        });
+    });
+
+    // مستمعات أحداث القوائم المنسدلة
+    const selects = document.querySelectorAll('.modern-select');
+    selects.forEach(select => {
+        select.addEventListener('change', function() {
+            saveAdvancedSetting(this.id, this.value);
+        });
+    });
+}
+
+// حفظ إعداد متقدم
+function saveAdvancedSetting(settingId, value) {
+    try {
+        // تحديد الفئة والإعداد من المعرف
+        const categoryMap = {
+            'realTimeMonitoring': 'scanning',
+            'deepScan': 'scanning',
+            'autoQuarantine': 'scanning',
+            'scheduleScans': 'scanning',
+            'scanFrequency': 'scanning',
+            'emailAlerts': 'alerts',
+            'pushNotifications': 'alerts',
+            'soundAlerts': 'alerts',
+            'customAlerts': 'alerts',
+            'alertThreshold': 'alerts',
+            'theme': 'display',
+            'language': 'display',
+            'refreshRate': 'display',
+            'showTimestamps': 'display',
+            'animateEvents': 'display',
+            'compactView': 'display',
+            'advancedThreatDetection': 'security',
+            'behaviorAnalysis': 'security',
+            'networkMonitoring': 'security',
+            'fileIntegrityCheck': 'security',
+            'quarantineMode': 'security',
+            'cpuUsage': 'performance',
+            'resourceLimit': 'performance',
+            'lowPowerMode': 'performance',
+            'backgroundScanning': 'performance',
+            'cacheOptimization': 'performance',
+            'logToFile': 'advanced',
+            'debugMode': 'advanced',
+            'logLevel': 'advanced',
+            'autoUpdate': 'advanced'
+        };
+
+        const category = categoryMap[settingId];
+        if (category && monitorSettings[category]) {
+            monitorSettings[category][settingId] = value;
+            
+            // حفظ في التخزين المحلي
+            localStorage.setItem('cyberGuardMonitorSettings', JSON.stringify(monitorSettings));
+            
+            console.log(`تم حفظ الإعداد: ${settingId} = ${value}`);
+        }
+    } catch (error) {
+        console.error('خطأ في حفظ الإعداد:', error);
+    }
+}
+
+// تحديث واجهة المستخدم للإعدادات المتقدمة
+function updateAdvancedSettingsUI() {
+    try {
+        // تحديث المنزلقات
+        const sliders = document.querySelectorAll('.modern-slider');
+        sliders.forEach(slider => {
+            const categoryMap = {
+                'scanFrequency': 'scanning',
+                'alertThreshold': 'alerts',
+                'refreshRate': 'display',
+                'resourceLimit': 'performance'
+            };
+            
+            const category = categoryMap[slider.id];
+            if (category && monitorSettings[category] && monitorSettings[category][slider.id] !== undefined) {
+                slider.value = monitorSettings[category][slider.id];
+                
+                const valueDisplay = document.getElementById(slider.id + 'Value');
+                if (valueDisplay) {
+                    const unit = slider.id.includes('Rate') ? 's' : 
+                                slider.id.includes('Frequency') ? 'h' : '%';
+                    valueDisplay.textContent = slider.value + unit;
+                }
+            }
+        });
+
+        // تحديث مربعات الاختيار
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            const categoryMap = {
+                'realTimeMonitoring': 'scanning',
+                'deepScan': 'scanning',
+                'autoQuarantine': 'scanning',
+                'scheduleScans': 'scanning',
+                'emailAlerts': 'alerts',
+                'pushNotifications': 'alerts',
+                'soundAlerts': 'alerts',
+                'customAlerts': 'alerts',
+                'showTimestamps': 'display',
+                'animateEvents': 'display',
+                'compactView': 'display',
+                'advancedThreatDetection': 'security',
+                'behaviorAnalysis': 'security',
+                'networkMonitoring': 'security',
+                'fileIntegrityCheck': 'security',
+                'lowPowerMode': 'performance',
+                'backgroundScanning': 'performance',
+                'cacheOptimization': 'performance',
+                'logToFile': 'advanced',
+                'debugMode': 'advanced',
+                'autoUpdate': 'advanced'
+            };
+            
+            const category = categoryMap[checkbox.id];
+            if (category && monitorSettings[category] && monitorSettings[category][checkbox.id] !== undefined) {
+                checkbox.checked = monitorSettings[category][checkbox.id];
+            }
+        });
+
+        // تحديث القوائم المنسدلة
+        const selects = document.querySelectorAll('.modern-select');
+        selects.forEach(select => {
+            const categoryMap = {
+                'theme': 'display',
+                'language': 'display',
+                'quarantineMode': 'security',
+                'cpuUsage': 'performance',
+                'logLevel': 'advanced'
+            };
+            
+            const category = categoryMap[select.id];
+            if (category && monitorSettings[category] && monitorSettings[category][select.id] !== undefined) {
+                select.value = monitorSettings[category][select.id];
+            }
+        });
+    } catch (error) {
+        console.error('خطأ في تحديث واجهة المستخدم:', error);
+    }
+}
+
+// تحميل الإعدادات المحفوظة
+function loadSavedMonitorSettings() {
+    try {
+        const savedSettings = localStorage.getItem('cyberGuardMonitorSettings');
+        if (savedSettings) {
+            const parsedSettings = JSON.parse(savedSettings);
+            Object.assign(monitorSettings, parsedSettings);
+        }
+    } catch (error) {
+        console.error('خطأ في تحميل الإعدادات المحفوظة:', error);
+    }
+}
+
+// تشغيل النظام عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    try {
+        // تحميل الإعدادات المحفوظة
+        loadSavedMonitorSettings();
+        
+        // إعداد النظام
+        console.log('🚀 تم تشغيل CyberGuard Platform بنجاح');
+        console.log('📊 إعدادات المراقب جاهزة');
+        
+    } catch (error) {
+        console.error('خطأ في تشغيل النظام:', error);
+    }
 });
