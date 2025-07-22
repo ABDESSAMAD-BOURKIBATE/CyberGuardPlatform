@@ -1,0 +1,109 @@
+/* Personal Avatar Styles */
+.avatar-upload-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 2px dashed #00ff88;
+    border-radius: 10px;
+    text-align: center;
+    background: rgba(0,255,136,0.1);
+}
+
+.upload-instructions {
+    color: #00ff88;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.avatar-upload-input {
+    display: none;
+}
+
+.avatar-upload-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #00ff88, #00d4aa);
+    color: #1a1a2e;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin: 5px;
+}
+
+.avatar-upload-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,255,136,0.4);
+}
+
+.personal-avatar, .avatar-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50% !important;
+    border: 3px solid #00ff88;
+    object-fit: cover !important;
+    box-shadow: 0 0 20px rgba(0,255,136,0.5);
+}
+
+.avatar-preview {
+    margin-top: 15px;
+    display: none;
+}
+
+.avatar-actions {
+    margin-top: 10px;
+}
+
+.remove-avatar-btn {
+    background: linear-gradient(135deg, #ff4757, #ff6b7a);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.remove-avatar-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(255,71,87,0.4);
+}
+
+/* Default avatar when no personal image */
+.default-avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.use-default-btn {
+    background: linear-gradient(135deg, #3742fa, #5352ed);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.use-default-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(55,66,250,0.4);
+}
+
+/* Developer Avatar Professional Styling */
+.professional-avatar .avatar-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 3px solid #00ff88;
+    box-shadow: 0 0 25px rgba(0,255,136,0.6);
+    transition: all 0.3s ease;
+}
+
+.professional-avatar:hover .avatar-image {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(0,255,136,0.8);
+}

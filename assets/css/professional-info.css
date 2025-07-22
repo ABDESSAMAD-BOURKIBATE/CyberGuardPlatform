@@ -1,0 +1,377 @@
+/* Professional Icons and Enhanced Developer Modal Styles */
+
+/* Info Headers with Icons */
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,212,170,0.05));
+    border: 1px solid rgba(0,255,136,0.3);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #00ff88, #00d4aa);
+    border-radius: 0 2px 2px 0;
+}
+
+.info-header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0,255,136,0.3);
+}
+
+.info-icon {
+    width: 24px;
+    height: 24px;
+    filter: drop-shadow(0 0 8px rgba(0,255,136,0.4));
+    animation: iconPulse 3s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* Contact Information Styles */
+.contact-info {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(26,26,46,0.8);
+    border: 1px solid rgba(0,255,136,0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.contact-item {
+    margin-top: 15px;
+}
+
+.contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.contact-detail-icon {
+    width: 18px;
+    height: 18px;
+    filter: drop-shadow(0 0 6px rgba(0,212,170,0.5));
+}
+
+.contact-label {
+    font-weight: 500;
+    color: #00d4aa;
+    font-size: 14px;
+}
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,212,170,0.1));
+    border: 1px solid rgba(0,255,136,0.3);
+    border-radius: 25px;
+    color: #00ff88;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.contact-link:hover {
+    background: linear-gradient(135deg, rgba(0,255,136,0.2), rgba(0,212,170,0.2));
+    border-color: #00ff88;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,255,136,0.3);
+}
+
+.link-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Tool Information Styles */
+.tool-info {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(26,26,46,0.8);
+    border: 1px solid rgba(0,255,136,0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.tool-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    background: rgba(0,255,136,0.05);
+    border: 1px solid rgba(0,255,136,0.15);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.detail-item:hover {
+    background: rgba(0,255,136,0.1);
+    border-color: rgba(0,255,136,0.3);
+    transform: translateX(5px);
+}
+
+.detail-icon {
+    width: 18px;
+    height: 18px;
+    filter: drop-shadow(0 0 6px rgba(0,212,170,0.5));
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #00d4aa;
+    min-width: 100px;
+}
+
+.serial-code {
+    background: rgba(0,255,136,0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    color: #00ff88;
+    border: 1px solid rgba(0,255,136,0.3);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.version-badge, .security-badge {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.version-badge {
+    background: linear-gradient(135deg, #3742fa, #5352ed);
+    color: white;
+    box-shadow: 0 2px 8px rgba(55,66,250,0.3);
+}
+
+.security-badge {
+    background: linear-gradient(135deg, #00ff88, #00d4aa);
+    color: #1a1a2e;
+    box-shadow: 0 2px 8px rgba(0,255,136,0.3);
+}
+
+/* Usage Policy Styles */
+.usage-policy {
+    padding: 20px;
+    background: rgba(26,26,46,0.9);
+    border: 2px solid rgba(255,107,107,0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.policy-header {
+    background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(255,71,87,0.05));
+    border-color: rgba(255,107,107,0.4);
+}
+
+.policy-header::before {
+    background: linear-gradient(180deg, #ff6b6b, #ff4757);
+}
+
+.warning-notice {
+    margin-top: 20px;
+}
+
+.alert-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, rgba(255,71,87,0.1), rgba(255,107,107,0.05));
+    border: 1px solid rgba(255,71,87,0.3);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.alert-icon {
+    width: 20px;
+    height: 20px;
+    filter: drop-shadow(0 0 8px rgba(255,71,87,0.5));
+}
+
+.important-notice strong {
+    color: #ff4757;
+    font-size: 16px;
+    text-shadow: 0 0 10px rgba(255,71,87,0.3);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background: rgba(255,71,87,0.1);
+    border-radius: 8px;
+    border-left: 4px solid #ff4757;
+}
+
+.section-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.section-title h5 {
+    margin: 0;
+    color: #ff4757;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.prohibition-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.prohibition-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    background: rgba(255,71,87,0.05);
+    border: 1px solid rgba(255,71,87,0.15);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.prohibition-list li:hover {
+    background: rgba(255,71,87,0.1);
+    border-color: rgba(255,71,87,0.3);
+    transform: translateX(5px);
+}
+
+.list-icon {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.prohibition-list li span {
+    color: #ff6b6b;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.agreement-notice, .legal-warning {
+    margin-top: 20px;
+}
+
+.agreement-box, .legal-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 1px solid;
+}
+
+.agreement-box {
+    background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,212,170,0.05));
+    border-color: rgba(0,255,136,0.3);
+}
+
+.legal-box {
+    background: linear-gradient(135deg, rgba(255,167,38,0.1), rgba(255,183,77,0.05));
+    border-color: rgba(255,167,38,0.3);
+}
+
+.agreement-icon, .legal-icon {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.agreement-box p {
+    color: #00ff88;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.legal-box strong {
+    color: #ffa726;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    text-shadow: 0 0 8px rgba(255,167,38,0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .info-header {
+        padding: 12px 15px;
+        gap: 8px;
+    }
+    
+    .info-header h4 {
+        font-size: 16px;
+    }
+    
+    .contact-info, .tool-info, .usage-policy {
+        padding: 15px;
+    }
+    
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .contact-detail {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+/* Animation for smooth transitions */
+.contact-info, .tool-info, .usage-policy {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -480,6 +480,9 @@ function switchLanguage(lang) {
             }
         });
 
+        // Update dashboard elements
+        updateDashboardLanguage(lang);
+
         // Update network monitor text
         const monitor = document.getElementById('networkMonitor');
         const monitorText = monitor?.querySelector('.monitor-text');
@@ -499,11 +502,296 @@ function switchLanguage(lang) {
         // Update modal content language
         updateModalLanguage();
 
+        // Update dashboard language
+        updateDashboardLanguage(lang);
+
+        // Update timer display with current language
+        if (window.advancedSecurityMonitor) {
+            advancedSecurityMonitor.updateScanTimer();
+        }
+
         // Refresh results to match the new language
         refreshAllResults();
+        
+        // Show success notification
+        const successMsg = lang === 'ar' ? 'تم تغيير اللغة بنجاح' : 'Language changed successfully';
+        if (typeof showProfessionalNotification === 'function') {
+            showProfessionalNotification(successMsg, 'success');
+        }
+        
+        console.log(`✅ Language switched to: ${lang}`);
     } catch (e) {
         console.error('Error switching language:', e);
     }
+}
+
+// Dashboard language update function
+function updateDashboardLanguage(lang) {
+    // Translation mappings for dashboard elements
+    const translations = {
+        ar: {
+            // Dashboard stats
+            'الفحوصات النشطة': 'الفحوصات النشطة',
+            'التنبيهات': 'التنبيهات',
+            'التهديدات المحجوبة': 'التهديدات المحجوبة',
+            'الجلسات الآمنة': 'الجلسات الآمنة',
+            'الأحداث اليوم': 'الأحداث اليوم',
+            'صحة النظام': 'صحة النظام',
+            'آخر تحديث': 'آخر تحديث',
+            'منذ ثوان': 'منذ ثوان',
+            'جيد': 'جيد',
+            'ممتاز': 'ممتاز',
+            // Control buttons
+            'بدء المراقبة': 'بدء المراقبة',
+            'إيقاف المراقبة': 'إيقاف المراقبة',
+            'فحص سريع': 'فحص سريع',
+            'فحص الآن': 'فحص الآن',
+            'مسح': 'مسح',
+            'الإعدادات المتقدمة': 'الإعدادات المتقدمة',
+            'مسح السجل': 'مسح السجل',
+            // Timer display
+            'الفحص التالي خلال:': 'الفحص التالي خلال:',
+            'المراقبة المباشرة': 'المراقبة المباشرة',
+            'غير نشط': 'غير نشط',
+            'متوقف': 'متوقف',
+            'نشط': 'نشط',
+            // Activity monitor
+            'مراقب النشاط': 'مراقب النشاط',
+            'أنشطة الأمان': 'أنشطة الأمان',
+            'لا توجد أنشطة': 'لا توجد أنشطة',
+            'جميع الأحداث': 'جميع الأحداث',
+            'التهديدات': 'التهديدات',
+            'الفحوصات': 'الفحوصات',
+            'النظام': 'النظام',
+            'البحث في الأنشطة...': 'البحث في الأنشطة...',
+            // Settings categories
+            'المسح': 'المسح',
+            'إعدادات الفحص والمراقبة': 'إعدادات الفحص والمراقبة',
+            'التنبيهات': 'التنبيهات',
+            'الإشعارات والتحذيرات': 'الإشعارات والتحذيرات',
+            'العرض': 'العرض',
+            'واجهة المستخدم والعرض': 'واجهة المستخدم والعرض',
+            'الأمان': 'الأمان',
+            'حماية متقدمة وكشف التهديدات': 'حماية متقدمة وكشف التهديدات',
+            'الأداء': 'الأداء',
+            'تحسين الموارد والسرعة': 'تحسين الموارد والسرعة',
+            'متقدم': 'متقدم',
+            'إعدادات متقدمة للخبراء': 'إعدادات متقدمة للخبراء',
+            // Scan settings
+            'إعدادات المسح والمراقبة': 'إعدادات المسح والمراقبة',
+            'تحكم في أنظمة الفحص والكشف التلقائي': 'تحكم في أنظمة الفحص والكشف التلقائي',
+            'فترة الفحص': 'فترة الفحص',
+            'تحديد تكرار عمليات الفحص التلقائي': 'تحديد تكرار عمليات الفحص التلقائي',
+            'كل 30 ثانية': 'كل 30 ثانية',
+            '30 ثانية': '30 ثانية',
+            'عمق الفحص': 'عمق الفحص',
+            'مستوى تفصيل عمليات المراقبة': 'مستوى تفصيل عمليات المراقبة',
+            'فحص قياسي': 'فحص قياسي',
+            'المسح التلقائي': 'المسح التلقائي',
+            'تفعيل المراقبة المستمرة': 'تفعيل المراقبة المستمرة',
+            'الحماية الفورية': 'الحماية الفورية',
+            'كشف التهديدات في الوقت الفعلي': 'كشف التهديدات في الوقت الفعلي',
+            'المسح عند البدء': 'المسح عند البدء',
+            'تشغيل فحص أمني عند تشغيل النظام': 'تشغيل فحص أمني عند تشغيل النظام',
+            'المسح المجدول': 'المسح المجدول',
+            'جدولة عمليات فحص دورية': 'جدولة عمليات فحص دورية',
+            'Complete control over monitoring and security system': 'تحكم كامل في نظام المراقبة والأمان',
+            'الآن': 'الآن',
+            // Event types
+            'تنبيه أمني عالي': 'تنبيه أمني عالي',
+            'محاولة اختراق محجوبة': 'محاولة اختراق محجوبة',
+            'رابط مشبوه محجوب': 'رابط مشبوه محجوب',
+            'فحص الملفات المؤقتة': 'فحص الملفات المؤقتة',
+            'فحص سريع مكتمل': 'فحص سريع مكتمل',
+            'تحديث تعريفات الأمان': 'تحديث تعريفات الأمان',
+            'تحديث قواعد بيانات الأمان': 'تحديث قواعد بيانات الأمان',
+            'فحص النظام الأولي مكتمل': 'فحص النظام الأولي مكتمل',
+            // Event statuses
+            'تهديد': 'تهديد',
+            'محجوب': 'محجوب',
+            'فحص': 'فحص',
+            'نظيف': 'نظيف',
+            'مكتمل': 'مكتمل',
+            'محدث': 'محدث',
+            'منذ 3 دقائق': 'منذ 3 دقائق',
+        },
+        en: {
+            // Dashboard stats  
+            'الفحوصات النشطة': 'Active Scans',
+            'التنبيهات': 'Alerts',
+            'التهديدات المحجوبة': 'Blocked Threats',
+            'الجلسات الآمنة': 'Secure Sessions',
+            'الأحداث اليوم': 'Events Today',
+            'صحة النظام': 'System Health',
+            'آخر تحديث': 'Last Update',
+            'منذ ثوان': 'seconds ago',
+            'جيد': 'Good',
+            'ممتاز': 'Excellent',
+            // Control buttons
+            'بدء المراقبة': 'Start Monitoring',
+            'إيقاف المراقبة': 'Stop Monitoring',
+            'فحص سريع': 'Quick Scan',
+            'فحص الآن': 'Scan Now',
+            'مسح': 'Clear',
+            'الإعدادات المتقدمة': 'Advanced Settings',
+            'مسح السجل': 'Clear Log',
+            // Timer display
+            'الفحص التالي خلال:': 'Next scan in:',
+            'المراقبة المباشرة': 'LIVE MONITORING',
+            'غير نشط': 'Inactive',
+            'متوقف': 'Stopped',
+            'نشط': 'Active',
+            // Activity monitor
+            'مراقب النشاط': 'Activity Monitor',
+            'أنشطة الأمان': 'Security Activities',
+            'لا توجد أنشطة': 'No Activities',
+            'جميع الأحداث': 'All Events',
+            'التهديدات': 'Threats',
+            'الفحوصات': 'Scans',
+            'النظام': 'System',
+            'البحث في الأنشطة...': 'Search activities...',
+            // Settings categories
+            'المسح': 'Scanning',
+            'إعدادات الفحص والمراقبة': 'Scan and Monitoring Settings',
+            'التنبيهات': 'Alerts',
+            'الإشعارات والتحذيرات': 'Notifications and Warnings',
+            'العرض': 'Display',
+            'واجهة المستخدم والعرض': 'User Interface and Display',
+            'الأمان': 'Security',
+            'حماية متقدمة وكشف التهديدات': 'Advanced Protection and Threat Detection',
+            'الأداء': 'Performance',
+            'تحسين الموارد والسرعة': 'Resource Optimization and Speed',
+            'متقدم': 'Advanced',
+            'إعدادات متقدمة للخبراء': 'Advanced Settings for Experts',
+            // Scan settings
+            'إعدادات المسح والمراقبة': 'Scan and Monitoring Settings',
+            'تحكم في أنظمة الفحص والكشف التلقائي': 'Control scanning systems and automatic detection',
+            'فترة الفحص': 'Scan Interval',
+            'تحديد تكرار عمليات الفحص التلقائي': 'Set frequency of automatic scans',
+            'كل 30 ثانية': 'Every 30 seconds',
+            '30 ثانية': '30 seconds',
+            'عمق الفحص': 'Scan Depth',
+            'مستوى تفصيل عمليات المراقبة': 'Level of monitoring detail',
+            'فحص قياسي': 'Standard Scan',
+            'المسح التلقائي': 'Automatic Scanning',
+            'تفعيل المراقبة المستمرة': 'Enable continuous monitoring',
+            'الحماية الفورية': 'Real-time Protection',
+            'كشف التهديدات في الوقت الفعلي': 'Real-time threat detection',
+            'المسح عند البدء': 'Scan on Startup',
+            'تشغيل فحص أمني عند تشغيل النظام': 'Run security scan on system startup',
+            'المسح المجدول': 'Scheduled Scanning',
+            'جدولة عمليات فحص دورية': 'Schedule periodic scan operations',
+            'Complete control over monitoring and security system': 'Complete control over monitoring and security system',
+            'الآن': 'Now',
+            // Event types
+            'تنبيه أمني عالي': 'High Security Alert',
+            'محاولة اختراق محجوبة': 'Blocked Intrusion Attempt',
+            'رابط مشبوه محجوب': 'Suspicious Link Blocked',
+            'فحص الملفات المؤقتة': 'Temporary Files Scan',
+            'فحص سريع مكتمل': 'Quick Scan Completed',
+            'تحديث تعريفات الأمان': 'Security Definitions Update',
+            'تحديث قواعد بيانات الأمان': 'Security Database Update',
+            'فحص النظام الأولي مكتمل': 'Initial System Scan Completed',
+            // Event statuses
+            'تهديد': 'Threat',
+            'محجوب': 'Blocked',
+            'فحص': 'Scan',
+            'نظيف': 'Clean',
+            'مكتمل': 'Completed',
+            'محدث': 'Updated',
+            'منذ 3 دقائق': '3 minutes ago',
+            'أنشطة الأمان': 'Security Activities',
+            'لا توجد أنشطة': 'No activities',
+        }
+    };
+
+    const langTexts = translations[lang];
+    
+    // Update dashboard stats labels
+    document.querySelectorAll('.dashboard-stats .stat-item h3').forEach(stat => {
+        const arabicText = stat.textContent.trim();
+        if (langTexts[arabicText]) {
+            stat.textContent = langTexts[arabicText];
+        }
+    });
+
+    // Update control buttons
+    document.querySelectorAll('.dashboard-controls button').forEach(btn => {
+        const arabicText = btn.textContent.trim();
+        if (langTexts[arabicText]) {
+            btn.textContent = langTexts[arabicText];
+        }
+    });
+
+    // Update activity monitor header
+    const activityHeader = document.querySelector('.activity-monitor h3');
+    if (activityHeader) {
+        const arabicText = activityHeader.textContent.trim();
+        if (langTexts[arabicText]) {
+            activityHeader.textContent = langTexts[arabicText];
+        }
+    }
+
+    // Update security events header
+    const eventsHeader = document.querySelector('.security-events h3');
+    if (eventsHeader) {
+        const arabicText = eventsHeader.textContent.trim();
+        if (langTexts[arabicText]) {
+            eventsHeader.textContent = langTexts[arabicText];
+        }
+    }
+
+    // Update timer label (will be updated by timer function)
+    const timerLabel = document.querySelector('.timer-display .timer-label');
+    if (timerLabel) {
+        timerLabel.textContent = langTexts['الفحص التالي خلال:'];
+    }
+    
+    // Enhanced translation update for all data attributes
+    document.querySelectorAll('[data-ar], [data-en]').forEach(element => {
+        const langKey = lang === 'ar' ? 'data-ar' : 'data-en';
+        const targetText = element.getAttribute(langKey);
+        if (targetText) {
+            element.textContent = targetText;
+        }
+    });
+    
+    // Update placeholders
+    document.querySelectorAll('[data-placeholder-ar], [data-placeholder-en]').forEach(element => {
+        const langKey = lang === 'ar' ? 'data-placeholder-ar' : 'data-placeholder-en';
+        const targetPlaceholder = element.getAttribute(langKey);
+        if (targetPlaceholder) {
+            element.placeholder = targetPlaceholder;
+        }
+    });
+    
+    // Update activity events with translation
+    document.querySelectorAll('.activity-event .event-title').forEach(title => {
+        const arabicText = title.textContent.trim();
+        if (langTexts[arabicText]) {
+            title.textContent = langTexts[arabicText];
+        }
+    });
+    
+    // Update event categories and statuses
+    document.querySelectorAll('.event-category, .event-result').forEach(element => {
+        const arabicText = element.textContent.trim();
+        if (langTexts[arabicText]) {
+            element.textContent = langTexts[arabicText];
+        }
+    });
+    
+    // Update modal content
+    document.querySelectorAll('.modal-content, .settings-content').forEach(modal => {
+        modal.querySelectorAll('h3, h4, h5, label, span, p').forEach(element => {
+            if (!element.hasAttribute('data-ar') && !element.hasAttribute('data-en')) {
+                const arabicText = element.textContent.trim();
+                if (langTexts[arabicText] && arabicText.length > 2) {
+                    element.textContent = langTexts[arabicText];
+                }
+            }
+        });
+    });
 }
 
 // Refresh all tool results in the current language
@@ -7051,7 +7339,19 @@ class AdvancedSecurityMonitor {
         this.loadSettings();
         this.initializeMonitoring();
         this.updateUI();
-        this.addSystemEvent('system', 'تم تفعيل نظام المراقبة المتقدم', 'normal');
+        
+        // بدء مؤقت التحديث
+        if (this.timerInterval) clearInterval(this.timerInterval);
+        this.timerInterval = setInterval(() => {
+            this.updateScanTimer();
+        }, 1000);
+        
+        const message = currentLang === 'ar' ? 'تم تفعيل نظام المراقبة المتقدم' : 'Advanced Monitoring System Activated';
+        this.addSystemEvent('system', message, 'normal');
+        
+        if (typeof showProfessionalNotification === 'function') {
+            showProfessionalNotification(message, 'success');
+        }
     }
 
     // إيقاف النظام
@@ -7062,7 +7362,20 @@ class AdvancedSecurityMonitor {
             clearInterval(this.scanInterval);
             this.scanInterval = null;
         }
-        this.addSystemEvent('system', 'تم إيقاف نظام المراقبة', 'warning');
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+        
+        const message = currentLang === 'ar' ? 'تم إيقاف نظام المراقبة' : 'Monitoring System Stopped';
+        this.addSystemEvent('system', message, 'warning');
+        
+        // تحديث مؤقت العرض
+        const timerDisplay = document.getElementById('timerDisplay');
+        if (timerDisplay) {
+            timerDisplay.textContent = currentLang === 'ar' ? 'متوقف' : 'Stopped';
+            timerDisplay.style.color = '#ff6b6b';
+        }
     }
 
     // تحميل الإعدادات
@@ -7149,7 +7462,8 @@ class AdvancedSecurityMonitor {
         const scanResults = this.simulateScanResults();
         
         // إضافة حدث الفحص
-        this.addSystemEvent('scan', `فحص تلقائي مكتمل - ${scanResults.status}`, scanResults.priority);
+        const message = currentLang === 'ar' ? `فحص تلقائي مكتمل - ${scanResults.status}` : `Automatic scan completed - ${scanResults.statusEn}`;
+        this.addSystemEvent('scan', message, scanResults.priority);
         
         // عرض النتائج إذا كانت التنبيهات مفعلة
         if (this.settings.alerts.enabled) {
@@ -7174,7 +7488,8 @@ class AdvancedSecurityMonitor {
             const scanResults = this.simulateScanResults();
             scanResults.type = 'manual';
             
-            this.addSystemEvent('scan', `فحص يدوي مكتمل - ${scanResults.status}`, scanResults.priority);
+            const message = currentLang === 'ar' ? `فحص يدوي مكتمل - ${scanResults.status}` : `Manual scan completed - ${scanResults.statusEn}`;
+            this.addSystemEvent('scan', message, scanResults.priority);
             
             if (this.settings.alerts.enabled) {
                 this.showScanNotification(scanResults);
@@ -7188,11 +7503,36 @@ class AdvancedSecurityMonitor {
     // محاكاة نتائج الفحص
     simulateScanResults() {
         const outcomes = [
-            { status: 'نظيف', threats: 0, priority: 'normal' },
-            { status: 'نظيف', threats: 0, priority: 'normal' },
-            { status: 'نظيف', threats: 0, priority: 'normal' },
-            { status: 'تم العثور على تهديدات', threats: Math.floor(Math.random() * 3) + 1, priority: 'high' },
-            { status: 'تحذيرات أمنية', threats: Math.floor(Math.random() * 2) + 1, priority: 'medium' }
+            { 
+                status: 'نظيف', 
+                statusEn: 'Clean',
+                threats: 0, 
+                priority: 'normal' 
+            },
+            { 
+                status: 'نظيف', 
+                statusEn: 'Clean',
+                threats: 0, 
+                priority: 'normal' 
+            },
+            { 
+                status: 'نظيف', 
+                statusEn: 'Clean',
+                threats: 0, 
+                priority: 'normal' 
+            },
+            { 
+                status: 'تم العثور على تهديدات', 
+                statusEn: 'Threats detected',
+                threats: Math.floor(Math.random() * 3) + 1, 
+                priority: 'high' 
+            },
+            { 
+                status: 'تحذيرات أمنية', 
+                statusEn: 'Security warnings',
+                threats: Math.floor(Math.random() * 2) + 1, 
+                priority: 'medium' 
+            }
         ];
         
         const result = outcomes[Math.floor(Math.random() * outcomes.length)];
@@ -7500,7 +7840,14 @@ class AdvancedSecurityMonitor {
 
     // تحديث مؤقت المسح
     updateScanTimer() {
-        if (!this.settings.scanning.autoScan || !this.isRunning) return;
+        if (!this.settings.scanning.autoScan || !this.isRunning) {
+            const timerDisplay = document.getElementById('timerDisplay');
+            if (timerDisplay) {
+                timerDisplay.textContent = currentLang === 'ar' ? 'غير نشط' : 'Inactive';
+                timerDisplay.style.color = '#ff6b6b';
+            }
+            return;
+        }
         
         const timerDisplay = document.getElementById('timerDisplay');
         if (!timerDisplay) return;
@@ -7511,17 +7858,102 @@ class AdvancedSecurityMonitor {
         const nextScan = lastScan + intervalMs;
         const remaining = Math.max(0, nextScan - now);
         
+        if (remaining <= 0) {
+            // وقت بدء المسح الجديد
+            this.performAutomaticScan();
+            return;
+        }
+        
         const minutes = Math.floor(remaining / 60000);
         const seconds = Math.floor((remaining % 60000) / 1000);
         
-        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        const timeText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        const prefix = currentLang === 'ar' ? 'الفحص التالي خلال: ' : 'Next scan in: ';
+        
+        timerDisplay.textContent = prefix + timeText;
         
         if (remaining < 30000) {
             timerDisplay.style.color = '#ff4757';
             timerDisplay.style.animation = 'pulse 1s infinite';
+        } else if (remaining < 60000) {
+            timerDisplay.style.color = '#ffa726';
+            timerDisplay.style.animation = '';
         } else {
             timerDisplay.style.color = '#00ff88';
             timerDisplay.style.animation = '';
+        }
+    }
+
+    // تنفيذ المسح التلقائي
+    performAutomaticScan() {
+        if (!this.isRunning || !this.settings.scanning.autoScan) return;
+        
+        this.lastScanTime = new Date();
+        this.stats.scansPerformed++;
+        
+        const message = currentLang === 'ar' ? 'تم تنفيذ مسح تلقائي' : 'Automatic scan performed';
+        this.addSystemEvent('scan', message, 'normal');
+        
+        // محاكاة نتائج المسح
+        const randomThreat = Math.random() < 0.1; // 10% احتمال اكتشاف تهديد
+        if (randomThreat) {
+            this.stats.threatsDetected++;
+            const threatMessage = currentLang === 'ar' ? 'تم اكتشاف تهديد محتمل' : 'Potential threat detected';
+            this.addSystemEvent('threat', threatMessage, 'high');
+            
+            if (typeof showProfessionalNotification === 'function') {
+                showProfessionalNotification(threatMessage, 'warning');
+            }
+        }
+        
+        this.updateUI();
+        
+        // إعادة بدء المؤقت للمسح التالي
+        this.resetScanTimer();
+    }
+
+    // تنفيذ المسح اليدوي
+    performManualScan() {
+        if (!this.isRunning) {
+            const message = currentLang === 'ar' ? 'النظام غير نشط' : 'System not active';
+            if (typeof showProfessionalNotification === 'function') {
+                showProfessionalNotification(message, 'error');
+            }
+            return;
+        }
+        
+        this.lastScanTime = new Date();
+        this.stats.scansPerformed++;
+        
+        const message = currentLang === 'ar' ? 'تم تنفيذ مسح يدوي' : 'Manual scan performed';
+        this.addSystemEvent('scan', message, 'normal');
+        
+        // محاكاة مسح سريع
+        const scanResults = Math.floor(Math.random() * 3) + 1; // 1-3 نتائج
+        for (let i = 0; i < scanResults; i++) {
+            setTimeout(() => {
+                const results = [
+                    { ar: 'فحص ملفات النظام', en: 'System files check' },
+                    { ar: 'فحص الشبكة', en: 'Network scan' },
+                    { ar: 'فحص العمليات النشطة', en: 'Active processes check' }
+                ];
+                const result = results[i % results.length];
+                const resultMessage = currentLang === 'ar' ? result.ar : result.en;
+                this.addSystemEvent('scan', resultMessage + ' ✓', 'normal');
+            }, i * 500);
+        }
+        
+        this.updateUI();
+        
+        if (typeof showProfessionalNotification === 'function') {
+            showProfessionalNotification(message, 'success');
+        }
+    }
+
+    // إعادة تعيين مؤقت المسح
+    resetScanTimer() {
+        if (this.settings.scanning.autoScan && this.isRunning) {
+            this.lastScanTime = new Date();
         }
     }
 }
@@ -7710,14 +8142,14 @@ function createAdvancedMonitorSettingsModal() {
                         </svg>
                     </div>
                     <div class="header-text-group">
-                        <h1 class="professional-title">إعدادات المراقب المتقدمة</h1>
-                        <p class="professional-subtitle">تحكم كامل في نظام المراقبة والأمان</p>
+                        <h1 class="professional-title" data-ar="إعدادات المراقب المتقدمة" data-en="Advanced Monitor Settings">${currentLang === 'ar' ? 'إعدادات المراقب المتقدمة' : 'Advanced Monitor Settings'}</h1>
+                        <p class="professional-subtitle" data-ar="تحكم كامل في نظام المراقبة والأمان" data-en="Complete control over monitoring and security system">${currentLang === 'ar' ? 'تحكم كامل في نظام المراقبة والأمان' : 'Complete control over monitoring and security system'}</p>
                     </div>
                 </div>
                 <div class="header-actions">
                     <div class="status-indicator">
                         <div class="status-dot active"></div>
-                        <span class="status-text">نشط</span>
+                        <span class="status-text" data-ar="نشط" data-en="Active">نشط</span>
                     </div>
                     <button class="professional-close-btn" onclick="closeAdvancedModal()">
                         <svg viewBox="0 0 24 24" width="20" height="20">
@@ -7735,8 +8167,8 @@ function createAdvancedMonitorSettingsModal() {
                         </svg>
                     </div>
                     <div class="nav-text">
-                        <span class="nav-title">المسح</span>
-                        <span class="nav-desc">إعدادات الفحص والمراقبة</span>
+                        <span class="nav-title" data-ar="المسح" data-en="Scanning">المسح</span>
+                        <span class="nav-desc" data-ar="إعدادات الفحص والمراقبة" data-en="Scan and Monitoring Settings">إعدادات الفحص والمراقبة</span>
                     </div>
                 </button>
                 
@@ -7747,8 +8179,8 @@ function createAdvancedMonitorSettingsModal() {
                         </svg>
                     </div>
                     <div class="nav-text">
-                        <span class="nav-title">التنبيهات</span>
-                        <span class="nav-desc">الإشعارات والتحذيرات</span>
+                        <span class="nav-title" data-ar="التنبيهات" data-en="Alerts">التنبيهات</span>
+                        <span class="nav-desc" data-ar="الإشعارات والتحذيرات" data-en="Notifications and Warnings">الإشعارات والتحذيرات</span>
                     </div>
                 </button>
                 
@@ -7759,8 +8191,8 @@ function createAdvancedMonitorSettingsModal() {
                         </svg>
                     </div>
                     <div class="nav-text">
-                        <span class="nav-title">العرض</span>
-                        <span class="nav-desc">واجهة المستخدم والعرض</span>
+                        <span class="nav-title" data-ar="العرض" data-en="Display">العرض</span>
+                        <span class="nav-desc" data-ar="واجهة المستخدم والعرض" data-en="User Interface and Display">واجهة المستخدم والعرض</span>
                     </div>
                 </button>
                 
@@ -7771,8 +8203,8 @@ function createAdvancedMonitorSettingsModal() {
                         </svg>
                     </div>
                     <div class="nav-text">
-                        <span class="nav-title">الأمان</span>
-                        <span class="nav-desc">حماية متقدمة وكشف التهديدات</span>
+                        <span class="nav-title" data-ar="الأمان" data-en="Security">الأمان</span>
+                        <span class="nav-desc" data-ar="حماية متقدمة وكشف التهديدات" data-en="Advanced Protection and Threat Detection">حماية متقدمة وكشف التهديدات</span>
                     </div>
                 </button>
                 
@@ -7783,8 +8215,8 @@ function createAdvancedMonitorSettingsModal() {
                         </svg>
                     </div>
                     <div class="nav-text">
-                        <span class="nav-title">الأداء</span>
-                        <span class="nav-desc">تحسين الموارد والسرعة</span>
+                        <span class="nav-title" data-ar="الأداء" data-en="Performance">الأداء</span>
+                        <span class="nav-desc" data-ar="تحسين الموارد والسرعة" data-en="Resource Optimization and Speed">تحسين الموارد والسرعة</span>
                     </div>
                 </button>
                 
@@ -7795,8 +8227,8 @@ function createAdvancedMonitorSettingsModal() {
                         </svg>
                     </div>
                     <div class="nav-text">
-                        <span class="nav-title">متقدم</span>
-                        <span class="nav-desc">إعدادات متقدمة للخبراء</span>
+                        <span class="nav-title" data-ar="متقدم" data-en="Advanced">متقدم</span>
+                        <span class="nav-desc" data-ar="إعدادات متقدمة للخبراء" data-en="Advanced Expert Settings">إعدادات متقدمة للخبراء</span>
                     </div>
                 </button>
             </div>
@@ -7886,8 +8318,8 @@ function createProfessionalScanningSection() {
                 </svg>
             </div>
             <div class="section-title-group">
-                <h3>إعدادات المسح والمراقبة</h3>
-                <p>تحكم في أنظمة الفحص والكشف التلقائي</p>
+                <h3 data-ar="إعدادات المسح والمراقبة" data-en="Scan and Monitoring Settings">إعدادات المسح والمراقبة</h3>
+                <p data-ar="تحكم في أنظمة الفحص والكشف التلقائي" data-en="Control scan systems and automatic detection">تحكم في أنظمة الفحص والكشف التلقائي</p>
             </div>
         </div>
         
@@ -7900,8 +8332,8 @@ function createProfessionalScanningSection() {
                         </svg>
                     </div>
                     <div class="setting-info">
-                        <h4>فترة الفحص</h4>
-                        <p>تحديد تكرار عمليات الفحص التلقائي</p>
+                        <h4 data-ar="فترة الفحص" data-en="Scan Interval">فترة الفحص</h4>
+                        <p data-ar="تحديد تكرار عمليات الفحص التلقائي" data-en="Set frequency of automatic scans">تحديد تكرار عمليات الفحص التلقائي</p>
                     </div>
                 </div>
                 <div class="setting-control">
@@ -7929,8 +8361,8 @@ function createProfessionalScanningSection() {
                         </svg>
                     </div>
                     <div class="setting-info">
-                        <h4>عمق الفحص</h4>
-                        <p>مستوى تفصيل عمليات المراقبة</p>
+                        <h4 data-ar="عمق الفحص" data-en="Scan Depth">عمق الفحص</h4>
+                        <p data-ar="مستوى تفصيل عمليات المراقبة" data-en="Level of monitoring detail">مستوى تفصيل عمليات المراقبة</p>
                     </div>
                 </div>
                 <div class="setting-control">
@@ -7951,8 +8383,8 @@ function createProfessionalScanningSection() {
                         </svg>
                     </div>
                     <div class="setting-info">
-                        <h4>المسح التلقائي</h4>
-                        <p>تفعيل المراقبة المستمرة</p>
+                        <h4 data-ar="المسح التلقائي" data-en="Auto Scan">المسح التلقائي</h4>
+                        <p data-ar="تفعيل المراقبة المستمرة" data-en="Enable continuous monitoring">تفعيل المراقبة المستمرة</p>
                     </div>
                 </div>
                 <div class="setting-control">
@@ -7971,8 +8403,8 @@ function createProfessionalScanningSection() {
                         </svg>
                     </div>
                     <div class="setting-info">
-                        <h4>الحماية الفورية</h4>
-                        <p>كشف التهديدات في الوقت الفعلي</p>
+                        <h4 data-ar="الحماية الفورية" data-en="Real-time Protection">الحماية الفورية</h4>
+                        <p data-ar="كشف التهديدات في الوقت الفعلي" data-en="Real-time threat detection">كشف التهديدات في الوقت الفعلي</p>
                     </div>
                 </div>
                 <div class="setting-control">
@@ -7991,8 +8423,8 @@ function createProfessionalScanningSection() {
                         </svg>
                     </div>
                     <div class="setting-info">
-                        <h4>المسح عند البدء</h4>
-                        <p>تشغيل فحص أمني عند تشغيل النظام</p>
+                        <h4 data-ar="المسح عند البدء" data-en="Scan on Startup">المسح عند البدء</h4>
+                        <p data-ar="تشغيل فحص أمني عند تشغيل النظام" data-en="Run security scan at system startup">تشغيل فحص أمني عند تشغيل النظام</p>
                     </div>
                 </div>
                 <div class="setting-control">
@@ -8011,8 +8443,8 @@ function createProfessionalScanningSection() {
                         </svg>
                     </div>
                     <div class="setting-info">
-                        <h4>المسح المجدول</h4>
-                        <p>جدولة عمليات فحص دورية</p>
+                        <h4 data-ar="المسح المجدول" data-en="Scheduled Scan">المسح المجدول</h4>
+                        <p data-ar="جدولة عمليات فحص دورية" data-en="Schedule periodic scans">جدولة عمليات فحص دورية</p>
                     </div>
                 </div>
                 <div class="setting-control">
