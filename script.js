@@ -1501,6 +1501,352 @@ const toolExplanations = {
                     </div>
                 </div>
             `
+        },
+        domainAnalyzer: {
+            title: "محلل أمان النطاق",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو محلل أمان النطاق؟</h4>
+                    <p>أداة تحليل شاملة تفحص أمان النطاقات والمواقع الإلكترونية من خلال تقييم عدة جوانب أمنية مهمة.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>جوانب التحليل</h4>
+                    <ul>
+                        <li><strong>عمر النطاق:</strong> فحص تاريخ تسجيل النطاق</li>
+                        <li><strong>شهادة SSL:</strong> التحقق من صحة شهادة الأمان</li>
+                        <li><strong>القوائم السوداء:</strong> فحص وجود النطاق في قوائم المواقع الخبيثة</li>
+                        <li><strong>سمعة النطاق:</strong> تقييم الثقة والموثوقية</li>
+                        <li><strong>سجلات DNS:</strong> فحص إعدادات DNS</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>مؤشرات الأمان:</h5>
+                    <div class="code-example">
+                    ✅ نطاق قديم (أكثر من 5 سنوات) = موثوق
+                    ✅ شهادة SSL صالحة = آمن
+                    ✅ غير موجود في القوائم السوداء = نظيف
+                    ⚠️ نطاق حديث = يحتاج تدقيق
+                    🚨 مشاكل SSL = خطر محتمل
+                    </div>
+                </div>
+            `
+        },
+        sslChecker: {
+            title: "فاحص شهادة SSL",
+            icon: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H8.9V6zM16 16h-3v3h-2v-3H8v-2h3v-3h2v3h3v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو فاحص شهادة SSL؟</h4>
+                    <p>أداة متخصصة تفحص وتحلل شهادات SSL/TLS للمواقع الإلكترونية للتأكد من صحتها وقوة الأمان.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>ما يتم فحصه</h4>
+                    <ul>
+                        <li><strong>صحة الشهادة:</strong> التحقق من صلاحية الشهادة</li>
+                        <li><strong>المُصدر:</strong> التحقق من جهة إصدار الشهادة</li>
+                        <li><strong>تاريخ انتهاء الصلاحية:</strong> مراقبة انتهاء الشهادة</li>
+                        <li><strong>قوة التشفير:</strong> حجم مفتاح التشفير (2048/4096 بت)</li>
+                        <li><strong>الخوارزمية:</strong> نوع خوارزمية التوقيع المستخدمة</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>مؤشرات الأمان:</h5>
+                    <div class="code-example">
+                    🔒 شهادة صالحة = اتصال آمن
+                    ⏰ صالحة لأكثر من 30 يوم = جيد
+                    🔑 مفتاح 2048+ بت = تشفير قوي
+                    🏢 مُصدر موثوق = شهادة معتمدة
+                    ⚠️ انتهاء قريب = تحديث مطلوب
+                    </div>
+                </div>
+            `
+        },
+        fileSignature: {
+            title: "محلل توقيع الملف",
+            icon: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13zm-3 1c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو محلل توقيع الملف؟</h4>
+                    <p>أداة طب شرعي رقمي تحلل التوقيع الداخلي للملفات (File Signature/Magic Number) للكشف عن النوع الحقيقي للملف.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>كيف يعمل التحليل</h4>
+                    <ul>
+                        <li><strong>قراءة الهيدر:</strong> فحص أول 16 بايت من الملف</li>
+                        <li><strong>مقارنة التوقيعات:</strong> مطابقة مع قاعدة بيانات التوقيعات</li>
+                        <li><strong>كشف التلاعب:</strong> مقارنة الامتداد مع النوع الفعلي</li>
+                        <li><strong>تحليل الهيكل:</strong> فحص بنية الملف الداخلية</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أمثلة التوقيعات الشائعة</h4>
+                    <ul>
+                        <li><code>FF D8 FF</code> = ملف JPEG</li>
+                        <li><code>89 50 4E 47</code> = ملف PNG</li>
+                        <li><code>25 50 44 46</code> = ملف PDF</li>
+                        <li><code>50 4B 03 04</code> = ملف ZIP</li>
+                        <li><code>4D 5A</code> = ملف تنفيذي Windows</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>حالات الاستخدام:</h5>
+                    <div class="code-example">
+                    🕵️ التحقيق الجنائي الرقمي
+                    🦠 كشف البرمجيات الخبيثة المقنعة
+                    📧 فحص مرفقات البريد الإلكتروني
+                    🔒 التحقق من سلامة الملفات
+                    ⚠️ كشف محاولات إخفاء نوع الملف
+                    </div>
+                </div>
+            `
+        },
+        browserSecurity: {
+            title: "فاحص أمان المتصفح",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو فاحص أمان المتصفح؟</h4>
+                    <p>أداة تقييم شاملة تفحص إعدادات الأمان الحالية لمتصفحك وتحدد نقاط الضعف والمخاطر المحتملة.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>ما يتم فحصه</h4>
+                    <ul>
+                        <li><strong>بروتوكول الاتصال:</strong> HTTPS vs HTTP</li>
+                        <li><strong>إعدادات الكوكيز:</strong> حالة تفعيل ملفات تعريف الارتباط</li>
+                        <li><strong>JavaScript:</strong> حالة تفعيل السكريبت</li>
+                        <li><strong>التخزين المحلي:</strong> إمكانية الوصول للتخزين المحلي</li>
+                        <li><strong>Do Not Track:</strong> إعدادات منع التتبع</li>
+                        <li><strong>WebRTC:</strong> دعم تقنيات الاتصال المباشر</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>نصائح تحسين الأمان:</h5>
+                    <div class="code-example">
+                    🔒 استخدم HTTPS دائماً
+                    🍪 راجع إعدادات الكوكيز
+                    🚫 فعّل Do Not Track
+                    🔄 حدّث المتصفح باستمرار
+                    🛡️ استخدم إضافات الحماية
+                    🔐 فعّل المصادقة الثنائية
+                    </div>
+                </div>
+            `
+        },
+        metadataExtractor: {
+            title: "مستخرج البيانات الوصفية",
+            icon: "M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3l-1-1h-6L8 4H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو مستخرج البيانات الوصفية؟</h4>
+                    <p>أداة تحليل تستخرج البيانات الوصفية (Metadata) المخفية في الملفات، والتي قد تحتوي على معلومات حساسة.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أنواع البيانات المستخرجة</h4>
+                    <ul>
+                        <li><strong>معلومات الملف:</strong> الاسم، الحجم، تاريخ الإنشاء</li>
+                        <li><strong>بيانات EXIF:</strong> معلومات الكاميرا والموقع الجغرافي</li>
+                        <li><strong>برنامج الإنشاء:</strong> البرنامج المستخدم لإنشاء الملف</li>
+                        <li><strong>معلومات المؤلف:</strong> اسم منشئ الملف</li>
+                        <li><strong>بيانات GPS:</strong> إحداثيات الموقع (في الصور)</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>مخاوف الخصوصية</h4>
+                    <ul>
+                        <li>تسريب الموقع الجغرافي من الصور</li>
+                        <li>كشف هوية منشئ الملف</li>
+                        <li>معلومات الأجهزة المستخدمة</li>
+                        <li>تواريخ ومعلومات حساسة</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>نصائح الحماية:</h5>
+                    <div class="code-example">
+                    🗑️ احذف البيانات الوصفية قبل المشاركة
+                    📍 عطّل GPS في الكاميرا
+                    🔧 استخدم أدوات تنظيف البيانات الوصفية
+                    ⚠️ احذر من مشاركة الصور الشخصية
+                    🔒 راجع إعدادات الخصوصية
+                    </div>
+                </div>
+            `
+        },
+        keyloggerSimulator: {
+            title: "محاكي مسجل لوحة المفاتيح",
+            icon: "M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>⚠️ ما هو محاكي Keylogger؟</h4>
+                    <p><strong>هذه أداة تعليمية</strong> تحاكي عمل برمجيات تسجيل ضغطات المفاتيح لفهم كيفية عملها والحماية منها.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>كيف تعمل برمجيات Keylogger</h4>
+                    <ul>
+                        <li><strong>تسجيل ضغطات المفاتيح:</strong> كل حرف وزر مضغوط</li>
+                        <li><strong>تخزين البيانات:</strong> حفظ المعلومات المسجلة</li>
+                        <li><strong>الإرسال السري:</strong> نقل البيانات للمهاجم</li>
+                        <li><strong>العمل الخفي:</strong> تشغيل بدون علم المستخدم</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>المخاطر المحتملة</h4>
+                    <ul>
+                        <li>سرقة كلمات المرور</li>
+                        <li>تسجيل معلومات البطاقات الائتمانية</li>
+                        <li>سرقة البيانات الشخصية</li>
+                        <li>مراقبة الأنشطة الشخصية</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>طرق الحماية:</h5>
+                    <div class="code-example">
+                    🛡️ استخدم برنامج مكافح فيروسات قوي
+                    🔐 فعّل جدار الحماية
+                    ⌨️ استخدم لوحة مفاتيح افتراضية للبيانات الحساسة
+                    🔄 حدّث نظام التشغيل والبرامج
+                    🚫 تجنب تحميل البرامج من مصادر مجهولة
+                    </div>
+                </div>
+            `
+        },
+        phishingGenerator: {
+            title: "مولد روابط التصيد (تعليمي)",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8zM12 19c-3.87 0-7-3.13-7-7 0-1.26.33-2.44.91-3.47L8.5 10l3.5-2.5L15.5 10l2.59-1.47c.58 1.03.91 2.21.91 3.47 0 3.87-3.13 7-7 7z",
+            content: `
+                <div class="explanation-section">
+                    <h4>⚠️ مولد أمثلة التصيد التعليمي</h4>
+                    <p><strong>هذه أداة تعليمية بحتة</strong> لفهم تقنيات التصيد الشائعة والحماية منها. <span style="color: #ff4500;">يُمنع استخدامها لأغراض ضارة!</span></p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>تقنيات التصيد الشائعة</h4>
+                    <ul>
+                        <li><strong>استبدال الأحرف:</strong> تغيير حروف مشابهة (0 بدلاً من O)</li>
+                        <li><strong>النطاقات الفرعية المزيفة:</strong> إضافة أجزاء مشبوهة</li>
+                        <li><strong>امتدادات مختلفة:</strong> استخدام .net بدلاً من .com</li>
+                        <li><strong>إضافة كلمات:</strong> "secure-" أو "login-"</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>🚨 تحذيرات مهمة</h4>
+                    <ul>
+                        <li><span style="color: #ff4500;">يُمنع إنشاء مواقع تصيد حقيقية</span></li>
+                        <li><span style="color: #ff4500;">لا تستخدم هذه الأمثلة لخداع الناس</span></li>
+                        <li><span style="color: #ff4500;">الغرض تعليمي وتوعوي فقط</span></li>
+                        <li><span style="color: #ff4500;">انتهاك هذا يعرضك للمساءلة القانونية</span></li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>كيفية الحماية:</h5>
+                    <div class="code-example">
+                    🔍 تحقق من الرابط الكامل دائماً
+                    🔒 ابحث عن شهادة SSL الصحيحة
+                    📧 احذر من الروابط في الرسائل المشبوهة
+                    🌐 اكتب عناوين المواقع يدوياً
+                    ⚠️ لا تثق بالروابط المختصرة
+                    </div>
+                </div>
+            `
+        },
+        vpnTester: {
+            title: "اختبار أمان VPN",
+            icon: "M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>ما هو اختبار أمان VPN؟</h4>
+                    <p>أداة تقييم شاملة تختبر فعالية خدمة VPN في حماية خصوصيتك وإخفاء هويتك الرقمية.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>الاختبارات المنجزة</h4>
+                    <ul>
+                        <li><strong>تسريب IP:</strong> التحقق من إخفاء عنوان IP الحقيقي</li>
+                        <li><strong>تسريب DNS:</strong> فحص تسريب استعلامات DNS</li>
+                        <li><strong>تسريب WebRTC:</strong> كشف تسريبات WebRTC</li>
+                        <li><strong>قوة التشفير:</strong> تقييم مستوى التشفير المستخدم</li>
+                        <li><strong>سرعة الاتصال:</strong> قياس تأثير VPN على السرعة</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>أنواع التسريبات</h4>
+                    <ul>
+                        <li><strong>IP Leak:</strong> كشف عنوان IP الحقيقي</li>
+                        <li><strong>DNS Leak:</strong> تسريب خوادم DNS المحلية</li>
+                        <li><strong>WebRTC Leak:</strong> كشف IP عبر متصفح الويب</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>علامات VPN آمن:</h5>
+                    <div class="code-example">
+                    ✅ لا توجد تسريبات IP
+                    ✅ DNS محمي ومشفر
+                    ✅ WebRTC محجوب أو آمن
+                    ✅ تشفير AES-256
+                    ✅ بروتوكولات آمنة (OpenVPN/WireGuard)
+                    </div>
+                </div>
+            `
+        },
+        ransomwareSimulator: {
+            title: "محاكي برمجيات الفدية (تعليمي)",
+            icon: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm3 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>⚠️ محاكي برمجيات الفدية التعليمي</h4>
+                    <p><strong>هذه أداة تعليمية وتدريبية</strong> لفهم كيفية عمل برمجيات الفدية وطرق الحماية منها. <span style="color: #ff4500;">يُمنع منعاً باتاً استخدامها لأغراض ضارة!</span></p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>سيناريوهات المحاكاة</h4>
+                    <ul>
+                        <li><strong>تشفير الملفات:</strong> محاكاة عملية تشفير الملفات</li>
+                        <li><strong>قفل النظام:</strong> محاكاة قفل الوصول للنظام</li>
+                        <li><strong>انتشار الشبكة:</strong> تحليل كيفية انتشار الفدية</li>
+                        <li><strong>عملية الاستعادة:</strong> تدريب على خطوات الاستعادة</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>🚨 تحذيرات قانونية</h4>
+                    <ul>
+                        <li><span style="color: #ff4500;">لا تستخدم لإنشاء فدية حقيقية</span></li>
+                        <li><span style="color: #ff4500;">الغرض تعليمي وتدريبي فقط</span></li>
+                        <li><span style="color: #ff4500;">أي استخدام ضار يعرضك للمساءلة القانونية</span></li>
+                        <li><span style="color: #ff4500;">احصل على إذن قبل التدريب في بيئة مؤسسية</span></li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>استراتيجيات الحماية:</h5>
+                    <div class="code-example">
+                    💾 نسخ احتياطية منتظمة ومعزولة
+                    🔄 تحديثات الأمان المستمرة
+                    🛡️ برامج مكافحة الفيروسات المتقدمة
+                    🚫 تجنب المرفقات والروابط المشبوهة
+                    👥 تدريب الموظفين على التوعية الأمنية
+                    </div>
+                </div>
+            `
         }
     },
     en: {
@@ -2429,6 +2775,352 @@ const toolExplanations = {
                     🔄 Regular policy reviews
                     🛠️ Use policy enforcement tools
                     📊 Monitor compliance metrics
+                    </div>
+                </div>
+            `
+        },
+        domainAnalyzer: {
+            title: "Domain Security Analyzer",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Domain Security Analyzer?</h4>
+                    <p>A comprehensive analysis tool that examines domain and website security by evaluating multiple important security aspects.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Analysis Aspects</h4>
+                    <ul>
+                        <li><strong>Domain Age:</strong> Check domain registration history</li>
+                        <li><strong>SSL Certificate:</strong> Verify security certificate validity</li>
+                        <li><strong>Blacklists:</strong> Check domain presence in malicious site lists</li>
+                        <li><strong>Domain Reputation:</strong> Assess trust and reliability</li>
+                        <li><strong>DNS Records:</strong> Examine DNS configurations</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Security Indicators:</h5>
+                    <div class="code-example">
+                    ✅ Old domain (5+ years) = Trustworthy
+                    ✅ Valid SSL certificate = Secure
+                    ✅ Not in blacklists = Clean
+                    ⚠️ Recent domain = Needs verification
+                    🚨 SSL issues = Potential risk
+                    </div>
+                </div>
+            `
+        },
+        sslChecker: {
+            title: "SSL Certificate Checker",
+            icon: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H8.9V6zM16 16h-3v3h-2v-3H8v-2h3v-3h2v3h3v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is SSL Certificate Checker?</h4>
+                    <p>A specialized tool that examines and analyzes SSL/TLS certificates for websites to verify their validity and security strength.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>What Gets Checked</h4>
+                    <ul>
+                        <li><strong>Certificate Validity:</strong> Verify certificate authenticity</li>
+                        <li><strong>Issuer:</strong> Check certificate authority</li>
+                        <li><strong>Expiration Date:</strong> Monitor certificate expiry</li>
+                        <li><strong>Encryption Strength:</strong> Key size (2048/4096 bit)</li>
+                        <li><strong>Algorithm:</strong> Type of signature algorithm used</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Security Indicators:</h5>
+                    <div class="code-example">
+                    🔒 Valid certificate = Secure connection
+                    ⏰ Valid for 30+ days = Good
+                    🔑 2048+ bit key = Strong encryption
+                    🏢 Trusted issuer = Certified certificate
+                    ⚠️ Expiring soon = Update required
+                    </div>
+                </div>
+            `
+        },
+        fileSignature: {
+            title: "File Signature Analyzer",
+            icon: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13zm-3 1c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is File Signature Analyzer?</h4>
+                    <p>A digital forensics tool that analyzes internal file signatures (File Signature/Magic Number) to detect the true file type.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>How Analysis Works</h4>
+                    <ul>
+                        <li><strong>Header Reading:</strong> Examine first 16 bytes of file</li>
+                        <li><strong>Signature Comparison:</strong> Match against signature database</li>
+                        <li><strong>Tampering Detection:</strong> Compare extension with actual type</li>
+                        <li><strong>Structure Analysis:</strong> Examine internal file structure</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Common Signature Examples</h4>
+                    <ul>
+                        <li><code>FF D8 FF</code> = JPEG file</li>
+                        <li><code>89 50 4E 47</code> = PNG file</li>
+                        <li><code>25 50 44 46</code> = PDF file</li>
+                        <li><code>50 4B 03 04</code> = ZIP file</li>
+                        <li><code>4D 5A</code> = Windows executable</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Use Cases:</h5>
+                    <div class="code-example">
+                    🕵️ Digital forensic investigation
+                    🦠 Detect disguised malware
+                    📧 Email attachment scanning
+                    🔒 File integrity verification
+                    ⚠️ Detect file type hiding attempts
+                    </div>
+                </div>
+            `
+        },
+        browserSecurity: {
+            title: "Browser Security Checker",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Browser Security Checker?</h4>
+                    <p>A comprehensive assessment tool that examines your browser's current security settings and identifies potential weaknesses and risks.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>What Gets Checked</h4>
+                    <ul>
+                        <li><strong>Connection Protocol:</strong> HTTPS vs HTTP</li>
+                        <li><strong>Cookie Settings:</strong> Cookie enablement status</li>
+                        <li><strong>JavaScript:</strong> Script enablement status</li>
+                        <li><strong>Local Storage:</strong> Local storage access capability</li>
+                        <li><strong>Do Not Track:</strong> Tracking prevention settings</li>
+                        <li><strong>WebRTC:</strong> Direct communication technology support</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Security Enhancement Tips:</h5>
+                    <div class="code-example">
+                    🔒 Always use HTTPS
+                    🍪 Review cookie settings
+                    🚫 Enable Do Not Track
+                    🔄 Keep browser updated
+                    🛡️ Use security extensions
+                    🔐 Enable two-factor authentication
+                    </div>
+                </div>
+            `
+        },
+        metadataExtractor: {
+            title: "Metadata Extractor",
+            icon: "M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3l-1-1h-6L8 4H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is Metadata Extractor?</h4>
+                    <p>An analysis tool that extracts hidden metadata from files, which may contain sensitive information.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Types of Extracted Data</h4>
+                    <ul>
+                        <li><strong>File Information:</strong> Name, size, creation date</li>
+                        <li><strong>EXIF Data:</strong> Camera information and GPS location</li>
+                        <li><strong>Creation Software:</strong> Program used to create file</li>
+                        <li><strong>Author Information:</strong> File creator name</li>
+                        <li><strong>GPS Data:</strong> Location coordinates (in photos)</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Privacy Concerns</h4>
+                    <ul>
+                        <li>Location leakage from photos</li>
+                        <li>File creator identity exposure</li>
+                        <li>Used device information</li>
+                        <li>Sensitive dates and information</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Protection Tips:</h5>
+                    <div class="code-example">
+                    🗑️ Remove metadata before sharing
+                    📍 Disable GPS in camera
+                    🔧 Use metadata cleaning tools
+                    ⚠️ Be careful sharing personal photos
+                    🔒 Review privacy settings
+                    </div>
+                </div>
+            `
+        },
+        keyloggerSimulator: {
+            title: "Keylogger Simulator",
+            icon: "M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>⚠️ What is Keylogger Simulator?</h4>
+                    <p><strong>This is an educational tool</strong> that simulates keylogging software behavior to understand how it works and how to protect against it.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>How Keyloggers Work</h4>
+                    <ul>
+                        <li><strong>Keystroke Recording:</strong> Every character and key pressed</li>
+                        <li><strong>Data Storage:</strong> Save recorded information</li>
+                        <li><strong>Secret Transmission:</strong> Send data to attacker</li>
+                        <li><strong>Hidden Operation:</strong> Run without user knowledge</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Potential Risks</h4>
+                    <ul>
+                        <li>Password theft</li>
+                        <li>Credit card information recording</li>
+                        <li>Personal data theft</li>
+                        <li>Personal activity monitoring</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Protection Methods:</h5>
+                    <div class="code-example">
+                    🛡️ Use strong antivirus software
+                    🔐 Enable firewall
+                    ⌨️ Use virtual keyboard for sensitive data
+                    🔄 Update OS and software regularly
+                    🚫 Avoid downloading from unknown sources
+                    </div>
+                </div>
+            `
+        },
+        phishingGenerator: {
+            title: "Phishing Link Generator (Educational)",
+            icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8zM12 19c-3.87 0-7-3.13-7-7 0-1.26.33-2.44.91-3.47L8.5 10l3.5-2.5L15.5 10l2.59-1.47c.58 1.03.91 2.21.91 3.47 0 3.87-3.13 7-7 7z",
+            content: `
+                <div class="explanation-section">
+                    <h4>⚠️ Educational Phishing Examples Generator</h4>
+                    <p><strong>This is purely educational</strong> to understand common phishing techniques and protect against them. <span style="color: #ff4500;">Prohibited for malicious use!</span></p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Common Phishing Techniques</h4>
+                    <ul>
+                        <li><strong>Character Substitution:</strong> Similar characters (0 instead of O)</li>
+                        <li><strong>Fake Subdomains:</strong> Adding suspicious parts</li>
+                        <li><strong>Different Extensions:</strong> Using .net instead of .com</li>
+                        <li><strong>Word Addition:</strong> "secure-" or "login-"</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>🚨 Important Warnings</h4>
+                    <ul>
+                        <li><span style="color: #ff4500;">Prohibited to create real phishing sites</span></li>
+                        <li><span style="color: #ff4500;">Do not use these examples to deceive people</span></li>
+                        <li><span style="color: #ff4500;">Educational and awareness purpose only</span></li>
+                        <li><span style="color: #ff4500;">Violation exposes you to legal consequences</span></li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>How to Protect:</h5>
+                    <div class="code-example">
+                    🔍 Always verify the complete URL
+                    🔒 Look for correct SSL certificate
+                    📧 Beware of links in suspicious emails
+                    🌐 Type website addresses manually
+                    ⚠️ Don't trust shortened links
+                    </div>
+                </div>
+            `
+        },
+        vpnTester: {
+            title: "VPN Security Tester",
+            icon: "M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>What is VPN Security Tester?</h4>
+                    <p>A comprehensive assessment tool that tests VPN service effectiveness in protecting your privacy and hiding your digital identity.</p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Tests Performed</h4>
+                    <ul>
+                        <li><strong>IP Leak:</strong> Verify real IP address hiding</li>
+                        <li><strong>DNS Leak:</strong> Check DNS query leakage</li>
+                        <li><strong>WebRTC Leak:</strong> Detect WebRTC leaks</li>
+                        <li><strong>Encryption Strength:</strong> Assess encryption level used</li>
+                        <li><strong>Connection Speed:</strong> Measure VPN impact on speed</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Types of Leaks</h4>
+                    <ul>
+                        <li><strong>IP Leak:</strong> Real IP address exposure</li>
+                        <li><strong>DNS Leak:</strong> Local DNS server leakage</li>
+                        <li><strong>WebRTC Leak:</strong> IP exposure via web browser</li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Secure VPN Signs:</h5>
+                    <div class="code-example">
+                    ✅ No IP leaks detected
+                    ✅ Protected and encrypted DNS
+                    ✅ WebRTC blocked or secure
+                    ✅ AES-256 encryption
+                    ✅ Secure protocols (OpenVPN/WireGuard)
+                    </div>
+                </div>
+            `
+        },
+        ransomwareSimulator: {
+            title: "Ransomware Simulator (Educational)",
+            icon: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm3 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z",
+            content: `
+                <div class="explanation-section">
+                    <h4>⚠️ Educational Ransomware Simulator</h4>
+                    <p><strong>This is an educational and training tool</strong> to understand how ransomware works and protection methods. <span style="color: #ff4500;">Strictly prohibited for malicious use!</span></p>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>Simulation Scenarios</h4>
+                    <ul>
+                        <li><strong>File Encryption:</strong> Simulate file encryption process</li>
+                        <li><strong>System Lock:</strong> Simulate system access lock</li>
+                        <li><strong>Network Spread:</strong> Analyze ransomware propagation</li>
+                        <li><strong>Recovery Process:</strong> Train on recovery steps</li>
+                    </ul>
+                </div>
+                
+                <div class="explanation-section">
+                    <h4>🚨 Legal Warnings</h4>
+                    <ul>
+                        <li><span style="color: #ff4500;">Do not use to create real ransomware</span></li>
+                        <li><span style="color: #ff4500;">Educational and training purpose only</span></li>
+                        <li><span style="color: #ff4500;">Any malicious use exposes you to legal consequences</span></li>
+                        <li><span style="color: #ff4500;">Get permission before training in corporate environment</span></li>
+                    </ul>
+                </div>
+                
+                <div class="usage-examples">
+                    <h5>Protection Strategies:</h5>
+                    <div class="code-example">
+                    💾 Regular and isolated backups
+                    🔄 Continuous security updates
+                    🛡️ Advanced antivirus software
+                    🚫 Avoid suspicious attachments and links
+                    👥 Employee security awareness training
                     </div>
                 </div>
             `
