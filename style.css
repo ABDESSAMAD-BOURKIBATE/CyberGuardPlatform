@@ -315,15 +315,18 @@ body {
 
 .header p {
     color: #00ff88;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 400;
     text-shadow: 0 0 15px rgba(0, 255, 136, 0.7);
     position: relative;
     z-index: 1;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     opacity: 0.95;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    line-height: 1.7;
+    text-align: justify;
+    padding: 0 15px;
 }
 
 /* Enhanced Icon Animation */
@@ -982,8 +985,10 @@ select.input-field.hash-select {
     }
     
     .header p {
-        font-size: 1.1rem;
-        padding: 0 10px;
+        font-size: 1rem;
+        padding: 0 15px;
+        line-height: 1.6;
+        text-align: justify;
     }
     
     /* تحسين مراقب الشبكة للهواتف */
@@ -1067,7 +1072,10 @@ select.input-field.hash-select {
     }
     
     .header p {
-        font-size: 1rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        padding: 0 10px;
+        text-align: justify;
     }
     
     .tools-grid {
