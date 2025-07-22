@@ -100,72 +100,365 @@
                 </div>
                 
                 <div class="dashboard-content">
-                    <!-- Real-time Statistics -->
+                    <!-- Advanced Security Level Indicator -->
+                    <div class="security-level-container">
+                        <div class="security-level-header">
+                            <h3 data-en="Overall Security Level" data-ar="مستوى الأمان العام">مستوى الأمان العام</h3>
+                            <div class="security-status" id="securityStatus">
+                                <span class="status-badge secure" data-en="SECURE" data-ar="آمن">آمن</span>
+                            </div>
+                        </div>
+                        <div class="security-level-display">
+                            <div class="security-gauge">
+                                <svg class="gauge-bg" viewBox="0 0 200 200">
+                                    <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="8"/>
+                                    <circle cx="100" cy="100" r="90" fill="none" stroke="#00ff88" stroke-width="8" 
+                                            stroke-linecap="round" stroke-dasharray="565.48" stroke-dashoffset="113" 
+                                            class="security-circle" id="securityCircle" style="--progress: 85%"/>
+                                </svg>
+                                <div class="gauge-center">
+                                    <span class="security-percentage" id="securityPercentage">85%</span>
+                                    <span class="security-label" data-en="Security" data-ar="الأمان">الأمان</span>
+                                </div>
+                            </div>
+                            <div class="security-metrics">
+                                <div class="metric-item">
+                                    <span class="metric-label" data-en="Active Tools:" data-ar="الأدوات النشطة:">الأدوات النشطة:</span>
+                                    <span class="metric-value" id="activeToolsCount">0</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label" data-en="Protection Level:" data-ar="مستوى الحماية:">مستوى الحماية:</span>
+                                    <span class="metric-value protection-high" data-en="HIGH" data-ar="عالي">عالي</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced Real-time Statistics -->
                     <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">🛡️</div>
+                        <div class="stat-card enhanced">
+                            <div class="stat-header">
+                                <div class="stat-icon tools-icon">
+                                    <svg viewBox="0 0 24 24" width="28" height="28">
+                                        <path fill="#00ff88" d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-trend positive">+3</div>
+                            </div>
                             <div class="stat-info">
                                 <h3 data-en="Tools Used" data-ar="الأدوات المستخدمة">الأدوات المستخدمة</h3>
                                 <span class="stat-value" id="toolsUsedCount">0</span>
+                                <span class="stat-description" data-en="Security tools utilized" data-ar="أدوات الأمان المستخدمة">أدوات الأمان المستخدمة</span>
                             </div>
                         </div>
                         
-                        <div class="stat-card">
-                            <div class="stat-icon">🔍</div>
+                        <div class="stat-card enhanced">
+                            <div class="stat-header">
+                                <div class="stat-icon scans-icon">
+                                    <svg viewBox="0 0 24 24" width="28" height="28">
+                                        <path fill="#00ff88" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-trend neutral">+0</div>
+                            </div>
                             <div class="stat-info">
                                 <h3 data-en="Scans Performed" data-ar="عمليات الفحص">عمليات الفحص</h3>
                                 <span class="stat-value" id="scansPerformed">0</span>
+                                <span class="stat-description" data-en="Security scans completed" data-ar="فحوصات الأمان المكتملة">فحوصات الأمان المكتملة</span>
                             </div>
                         </div>
                         
-                        <div class="stat-card">
-                            <div class="stat-icon">⚠️</div>
+                        <div class="stat-card enhanced">
+                            <div class="stat-header">
+                                <div class="stat-icon threats-icon">
+                                    <svg viewBox="0 0 24 24" width="28" height="28">
+                                        <path fill="#ff4757" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-trend negative">+0</div>
+                            </div>
                             <div class="stat-info">
                                 <h3 data-en="Threats Detected" data-ar="التهديدات المكتشفة">التهديدات المكتشفة</h3>
                                 <span class="stat-value" id="threatsDetected">0</span>
+                                <span class="stat-description" data-en="Security threats identified" data-ar="التهديدات الأمنية المحددة">التهديدات الأمنية المحددة</span>
                             </div>
                         </div>
                         
-                        <div class="stat-card">
-                            <div class="stat-icon">⏱️</div>
+                        <div class="stat-card enhanced">
+                            <div class="stat-header">
+                                <div class="stat-icon time-icon">
+                                    <svg viewBox="0 0 24 24" width="28" height="28">
+                                        <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6l5.2 3.2 1-1.73-4.2-2.47V7z"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-trend live">LIVE</div>
+                            </div>
                             <div class="stat-info">
                                 <h3 data-en="Session Time" data-ar="وقت الجلسة">وقت الجلسة</h3>
                                 <span class="stat-value" id="sessionTime">00:00</span>
+                                <span class="stat-description" data-en="Active monitoring time" data-ar="وقت المراقبة النشط">وقت المراقبة النشط</span>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Security Analysis Chart -->
-                    <div class="chart-container">
-                        <h3 data-en="Security Analysis Overview" data-ar="نظرة عامة على تحليل الأمان">نظرة عامة على تحليل الأمان</h3>
-                        <div class="security-chart" id="securityChart">
-                            <div class="chart-segment" style="--percentage: 25%; --color: #ff4757;" data-label="High Risk"></div>
-                            <div class="chart-segment" style="--percentage: 35%; --color: #ffa502;" data-label="Medium Risk"></div>
-                            <div class="chart-segment" style="--percentage: 40%; --color: #2ed573;" data-label="Low Risk"></div>
+                    <!-- Enhanced Risk Assessment Matrix -->
+                    <div class="risk-assessment-container">
+                        <div class="risk-header">
+                            <h3 data-en="Advanced Risk Assessment Matrix" data-ar="مصفوفة تقييم المخاطر المتقدمة">مصفوفة تقييم المخاطر المتقدمة</h3>
+                            <div class="risk-controls">
+                                <button class="risk-refresh-btn" onclick="refreshRiskMatrix()">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor" d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                                    </svg>
+                                </button>
+                                <select class="risk-period-selector" onchange="updateRiskPeriod(this.value)">
+                                    <option value="24h">آخر 24 ساعة</option>
+                                    <option value="7d">آخر 7 أيام</option>
+                                    <option value="30d" selected>آخر 30 يوم</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="chart-legend">
-                            <div class="legend-item">
-                                <span class="legend-color" style="background: #ff4757;"></span>
-                                <span data-en="High Risk" data-ar="مخاطر عالية">مخاطر عالية</span>
+                        
+                        <div class="risk-overview">
+                            <div class="coverage-indicator">
+                                <div class="coverage-circle">
+                                    <svg viewBox="0 0 120 120" class="coverage-svg">
+                                        <circle cx="60" cy="60" r="50" class="coverage-bg"></circle>
+                                        <circle cx="60" cy="60" r="50" class="coverage-progress" id="coverageCircle"></circle>
+                                    </svg>
+                                    <div class="coverage-center">
+                                        <span class="coverage-percentage">100%</span>
+                                        <span class="coverage-label" data-en="Security Coverage" data-ar="التغطية الأمنية">التغطية الأمنية</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="legend-item">
-                                <span class="legend-color" style="background: #ffa502;"></span>
-                                <span data-en="Medium Risk" data-ar="مخاطر متوسطة">مخاطر متوسطة</span>
+                            
+                            <div class="risk-distribution">
+                                <div class="risk-category critical">
+                                    <div class="risk-category-header">
+                                        <div class="risk-icon critical-icon">
+                                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                                <path fill="#ff4757" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                                            </svg>
+                                        </div>
+                                        <span class="risk-title" data-en="Critical Risks" data-ar="مخاطر حرجة">مخاطر حرجة</span>
+                                    </div>
+                                    <div class="risk-progress">
+                                        <div class="risk-bar critical-bar" style="width: 15%"></div>
+                                    </div>
+                                    <div class="risk-details">
+                                        <span class="risk-percentage">15%</span>
+                                        <span class="risk-count">3 تهديدات</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="risk-category medium">
+                                    <div class="risk-category-header">
+                                        <div class="risk-icon medium-icon">
+                                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                                <path fill="#ffa502" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                            </svg>
+                                        </div>
+                                        <span class="risk-title" data-en="Medium Risks" data-ar="مخاطر متوسطة">مخاطر متوسطة</span>
+                                    </div>
+                                    <div class="risk-progress">
+                                        <div class="risk-bar medium-bar" style="width: 25%"></div>
+                                    </div>
+                                    <div class="risk-details">
+                                        <span class="risk-percentage">25%</span>
+                                        <span class="risk-count">7 تهديدات</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="risk-category low">
+                                    <div class="risk-category-header">
+                                        <div class="risk-icon low-icon">
+                                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                                <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            </svg>
+                                        </div>
+                                        <span class="risk-title" data-en="Low Risks" data-ar="مخاطر منخفضة">مخاطر منخفضة</span>
+                                    </div>
+                                    <div class="risk-progress">
+                                        <div class="risk-bar low-bar" style="width: 60%"></div>
+                                    </div>
+                                    <div class="risk-details">
+                                        <span class="risk-percentage">60%</span>
+                                        <span class="risk-count">12 تهديدات</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="legend-item">
-                                <span class="legend-color" style="background: #2ed573;"></span>
-                                <span data-en="Low Risk" data-ar="مخاطر منخفضة">مخاطر منخفضة</span>
+                        </div>
+                        
+                        <div class="risk-insights">
+                            <div class="insight-card trend-analysis">
+                                <div class="insight-header">
+                                    <h4 data-en="Trend Analysis" data-ar="تحليل الاتجاهات">تحليل الاتجاهات</h4>
+                                    <span class="trend-indicator positive">↗ +2.3%</span>
+                                </div>
+                                <p data-en="Security posture improved over the last 7 days" data-ar="تحسن الوضع الأمني خلال آخر 7 أيام">تحسن الوضع الأمني خلال آخر 7 أيام</p>
+                            </div>
+                            
+                            <div class="insight-card threat-forecast">
+                                <div class="insight-header">
+                                    <h4 data-en="Threat Forecast" data-ar="توقعات التهديدات">توقعات التهديدات</h4>
+                                    <span class="forecast-level moderate">متوسط</span>
+                                </div>
+                                <p data-en="Expected threat level for next 24 hours: Moderate" data-ar="مستوى التهديد المتوقع لآخر 24 ساعة: متوسط">مستوى التهديد المتوقع لآخر 24 ساعة: متوسط</p>
+                            </div>
+                            
+                            <div class="insight-card compliance-score">
+                                <div class="insight-header">
+                                    <h4 data-en="Compliance Score" data-ar="نقاط الامتثال">نقاط الامتثال</h4>
+                                    <span class="compliance-value">94/100</span>
+                                </div>
+                                <p data-en="Security compliance rating based on industry standards" data-ar="تقييم الامتثال الأمني وفقاً لمعايير الصناعة">تقييم الامتثال الأمني وفقاً لمعايير الصناعة</p>
+                            </div>
+                        </div>
+                    </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Recent Activity -->
-                    <div class="activity-log">
-                        <h3 data-en="Recent Activity" data-ar="النشاط الأخير">النشاط الأخير</h3>
-                        <div class="activity-list" id="activityList">
-                            <div class="activity-item">
-                                <div class="activity-time">--:--</div>
-                                <div class="activity-text" data-en="Dashboard initialized" data-ar="تم تفعيل لوحة القيادة">تم تفعيل لوحة القيادة</div>
+                    <!-- Enhanced Real-time Security Activity Monitor -->
+                    <div class="live-security-monitor">
+                        <div class="monitor-header">
+                            <div class="monitor-title">
+                                <h3 data-en="Live Security Activity Monitor" data-ar="مراقب نشاط الأمان المباشر">مراقب نشاط الأمان المباشر</h3>
+                                <div class="monitor-status">
+                                    <div class="status-pulse"></div>
+                                    <span class="status-text" data-en="LIVE MONITORING" data-ar="المراقبة المباشرة">المراقبة المباشرة</span>
+                                </div>
+                            </div>
+                            <div class="monitor-controls">
+                                <div class="scan-timer">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="#00ff88" d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0 0 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9a8.994 8.994 0 0 0 7.03-14.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+                                    </svg>
+                                    <span id="scanTimer" data-en="Next scan in:" data-ar="الفحص التالي خلال:">الفحص التالي خلال:</span>
+                                    <span id="timerDisplay">02:30</span>
+                                </div>
+                                <button class="monitor-action-btn scan-now" onclick="triggerManualScan()">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                                    </svg>
+                                    <span data-en="Scan Now" data-ar="فحص الآن">فحص الآن</span>
+                                </button>
+                                <button class="monitor-action-btn clear-log" onclick="clearSecurityLog()">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                    </svg>
+                                    <span data-en="Clear" data-ar="مسح">مسح</span>
+                                </button>
+                                <button class="monitor-action-btn settings" onclick="openMonitorSettings()">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor" d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-stats-bar">
+                            <div class="stat-item">
+                                <span class="stat-label" data-en="Events Today" data-ar="الأحداث اليوم">الأحداث اليوم</span>
+                                <span class="stat-value" id="eventsToday">127</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label" data-en="Threats Blocked" data-ar="التهديدات المحجوبة">التهديدات المحجوبة</span>
+                                <span class="stat-value threat-count" id="threatsBlocked">23</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label" data-en="System Health" data-ar="صحة النظام">صحة النظام</span>
+                                <span class="stat-value health-status" id="systemHealth">ممتاز</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label" data-en="Last Update" data-ar="آخر تحديث">آخر تحديث</span>
+                                <span class="stat-value time-ago" id="lastUpdate">منذ ثانيتين</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-feed">
+                            <div class="feed-header">
+                                <div class="feed-tabs">
+                                    <button class="feed-tab active" data-filter="all" onclick="filterActivity('all')">
+                                        <span data-en="All Events" data-ar="جميع الأحداث">جميع الأحداث</span>
+                                        <span class="tab-count" id="allCount">15</span>
+                                    </button>
+                                    <button class="feed-tab" data-filter="threats" onclick="filterActivity('threats')">
+                                        <span data-en="Threats" data-ar="التهديدات">التهديدات</span>
+                                        <span class="tab-count critical" id="threatsCount">3</span>
+                                    </button>
+                                    <button class="feed-tab" data-filter="scans" onclick="filterActivity('scans')">
+                                        <span data-en="Scans" data-ar="الفحوصات">الفحوصات</span>
+                                        <span class="tab-count" id="scansCount">8</span>
+                                    </button>
+                                    <button class="feed-tab" data-filter="system" onclick="filterActivity('system')">
+                                        <span data-en="System" data-ar="النظام">النظام</span>
+                                        <span class="tab-count" id="systemCount">4</span>
+                                    </button>
+                                </div>
+                                <div class="feed-search">
+                                    <input type="text" placeholder="البحث في الأنشطة..." class="search-input" id="activitySearch" onkeyup="searchActivity(this.value)">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" class="search-icon">
+                                        <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-list enhanced" id="securityActivityList">
+                                <div class="activity-event system" data-type="system">
+                                    <div class="event-timeline">
+                                        <div class="event-time" id="systemInitTime">15:42</div>
+                                        <div class="event-indicator system-indicator">
+                                            <svg viewBox="0 0 24 24" width="14" height="14">
+                                                <path fill="#00ff88" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="event-content">
+                                        <div class="event-title" data-en="Security Dashboard Activated" data-ar="تم تفعيل لوحة قيادة الأمان">تم تفعيل لوحة قيادة الأمان</div>
+                                        <div class="event-details">
+                                            <span class="event-category system" data-en="SYSTEM" data-ar="النظام">النظام</span>
+                                            <span class="event-priority normal" data-en="Normal" data-ar="عادي">عادي</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-event scan" data-type="scans">
+                                    <div class="event-timeline">
+                                        <div class="event-time">15:40</div>
+                                        <div class="event-indicator scan-indicator">
+                                            <svg viewBox="0 0 24 24" width="14" height="14">
+                                                <path fill="#00ff88" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="event-content">
+                                        <div class="event-title" data-en="Full System Scan Completed" data-ar="اكتمل الفحص الشامل للنظام">اكتمل الفحص الشامل للنظام</div>
+                                        <div class="event-details">
+                                            <span class="event-category scan" data-en="SCAN" data-ar="فحص">فحص</span>
+                                            <span class="event-result success" data-en="Clean" data-ar="نظيف">نظيف</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-event threat" data-type="threats">
+                                    <div class="event-timeline">
+                                        <div class="event-time">15:38</div>
+                                        <div class="event-indicator threat-indicator">
+                                            <svg viewBox="0 0 24 24" width="14" height="14">
+                                                <path fill="#ff4757" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="event-content">
+                                        <div class="event-title" data-en="Malware Attempt Blocked" data-ar="تم حجب محاولة برمجية خبيثة">تم حجب محاولة برمجية خبيثة</div>
+                                        <div class="event-details">
+                                            <span class="event-category threat" data-en="THREAT" data-ar="تهديد">تهديد</span>
+                                            <span class="event-priority high" data-en="High" data-ar="عالي">عالي</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

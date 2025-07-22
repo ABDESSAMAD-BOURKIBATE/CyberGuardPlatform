@@ -5858,6 +5858,233 @@ function generatePasswordPolicy() {
     }, 1800);
 }
 
+// === Professional Dashboard Enhancement ===
+function initializeProfessionalDashboard() {
+    // Initialize security gauge
+    initializeSecurityGauge();
+    
+    // Start real-time updates
+    updateEnhancedDashboardStats();
+    setInterval(updateEnhancedDashboardStats, 30000); // Update every 30 seconds
+    
+    // Initialize chart interactions
+    initializeChartTabs();
+    
+    // Initialize activity monitor
+    initializeEnhancedActivityMonitor();
+    
+    // Add professional animations
+    addProfessionalAnimations();
+}
+
+function initializeSecurityGauge() {
+    const securityLevel = 85; // Current security level
+    const circle = document.querySelector('.security-circle');
+    if (!circle) return;
+    
+    const radius = 60;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (securityLevel / 100) * circumference;
+    
+    circle.style.strokeDasharray = circumference;
+    circle.style.strokeDashoffset = offset;
+    
+    // Animate gauge on load
+    setTimeout(() => {
+        circle.style.transition = 'stroke-dashoffset 2s ease-in-out';
+    }, 100);
+}
+
+function updateEnhancedDashboardStats() {
+    const stats = {
+        threats: Math.floor(Math.random() * 5) + 2,
+        scans: Math.floor(Math.random() * 100) + 150,
+        blocked: Math.floor(Math.random() * 20) + 45,
+        uptime: '99.9%'
+    };
+    
+    // Update enhanced stat cards
+    updateStatCard(1, stats.threats, stats.threats > 3);
+    updateStatCard(2, stats.scans, false);
+    updateStatCard(3, stats.blocked, false);
+    updateStatCard(4, stats.uptime, false);
+    
+    // Update security metrics
+    updateEnhancedSecurityMetrics();
+}
+
+function updateStatCard(cardIndex, value, shouldPulse) {
+    const statValue = document.querySelector(`.stat-card.enhanced:nth-child(${cardIndex}) .stat-value`);
+    if (statValue) {
+        statValue.textContent = value;
+        if (shouldPulse) {
+            statValue.style.animation = 'pulse 1s ease-in-out';
+            setTimeout(() => {
+                statValue.style.animation = '';
+            }, 1000);
+        }
+    }
+}
+
+function updateEnhancedSecurityMetrics() {
+    const metrics = {
+        firewallStatus: 'نشط',
+        antivirusStatus: 'محدث',
+        intrusionPrevention: 'مراقب',
+        dataEncryption: 'محمي'
+    };
+    
+    const metricValues = document.querySelectorAll('.metric-value');
+    metricValues.forEach((value, index) => {
+        switch(index) {
+            case 0:
+                value.textContent = metrics.firewallStatus;
+                break;
+            case 1:
+                value.textContent = metrics.antivirusStatus;
+                break;
+            case 2:
+                value.textContent = metrics.intrusionPrevention;
+                break;
+            case 3:
+                value.textContent = metrics.dataEncryption;
+                break;
+        }
+    });
+}
+
+function initializeChartTabs() {
+    const chartTabs = document.querySelectorAll('.chart-tab');
+    chartTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            chartTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            updateChartContent(this.textContent.trim());
+        });
+    });
+    
+    if (chartTabs.length > 0) {
+        chartTabs[0].classList.add('active');
+        updateChartContent(chartTabs[0].textContent.trim());
+    }
+}
+
+function updateChartContent(chartType) {
+    const chartContent = document.querySelector('.chart-content');
+    if (!chartContent) return;
+    
+    const placeholder = chartContent.querySelector('.chart-placeholder');
+    if (placeholder) {
+        switch(chartType) {
+            case 'التهديدات':
+                placeholder.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.2rem; color: #00ff88; margin-bottom: 10px;">
+                            📊 مراقبة التهديدات المباشرة
+                        </div>
+                        <div style="color: rgba(255,255,255,0.7);">
+                            عرض تفاعلي لآخر التهديدات المكتشفة والمحجوبة
+                        </div>
+                    </div>
+                `;
+                break;
+            case 'الشبكة':
+                placeholder.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.2rem; color: #00ff88; margin-bottom: 10px;">
+                            🌐 حالة الشبكة
+                        </div>
+                        <div style="color: rgba(255,255,255,0.7);">
+                            مراقبة حركة البيانات وأداء الشبكة
+                        </div>
+                    </div>
+                `;
+                break;
+            case 'الأداء':
+                placeholder.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.2rem; color: #00ff88; margin-bottom: 10px;">
+                            ⚡ مؤشرات الأداء
+                        </div>
+                        <div style="color: rgba(255,255,255,0.7);">
+                            إحصائيات الأداء ومعدل الاستجابة
+                        </div>
+                    </div>
+                `;
+                break;
+        }
+    }
+}
+
+function initializeEnhancedActivityMonitor() {
+    setInterval(addRandomEnhancedActivity, 15000);
+}
+
+function addRandomEnhancedActivity() {
+    const activities = [
+        { type: 'success', title: 'فحص أمني مكتمل', time: 'الآن' },
+        { type: 'warning', title: 'تحديث نظام الحماية', time: 'منذ دقيقة' },
+        { type: 'success', title: 'حجب محاولة اختراق', time: 'منذ دقيقتين' },
+        { type: 'error', title: 'تنبيه أمني عالي', time: 'منذ 3 دقائق' },
+        { type: 'success', title: 'نسخ احتياطي مكتمل', time: 'منذ 5 دقائق' }
+    ];
+    
+    const activityList = document.querySelector('.activity-list.enhanced');
+    if (!activityList) return;
+    
+    const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+    
+    const activityItem = document.createElement('div');
+    activityItem.className = 'activity-item enhanced';
+    activityItem.innerHTML = `
+        <div class="activity-indicator ${randomActivity.type}"></div>
+        <div class="activity-info">
+            <div class="activity-title">${randomActivity.title}</div>
+            <div class="activity-time enhanced">${randomActivity.time}</div>
+        </div>
+    `;
+    
+    activityItem.style.opacity = '0';
+    activityItem.style.transform = 'translateY(-10px)';
+    
+    activityList.insertBefore(activityItem, activityList.firstChild);
+    
+    setTimeout(() => {
+        activityItem.style.transition = 'all 0.3s ease';
+        activityItem.style.opacity = '1';
+        activityItem.style.transform = 'translateY(0)';
+    }, 100);
+    
+    const items = activityList.querySelectorAll('.activity-item.enhanced');
+    if (items.length > 8) {
+        items[items.length - 1].remove();
+    }
+}
+
+function addProfessionalAnimations() {
+    // Add entrance animations to dashboard elements
+    const elements = [
+        '.security-level-container',
+        '.stat-card.enhanced',
+        '.chart-container.enhanced',
+        '.activity-section.enhanced'
+    ];
+    
+    elements.forEach((selector, index) => {
+        const els = document.querySelectorAll(selector);
+        els.forEach((el, elIndex) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                el.style.transition = 'all 0.6s ease';
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, (index * 100) + (elIndex * 50));
+        });
+    });
+}
+
 // === Advanced Dashboard Functions ===
 let dashboardStats = {
     toolsUsed: 0,
@@ -6638,3 +6865,826 @@ function startIncidentSimulation() {
         resultDiv.innerHTML = result;
     }, 3800);
 }
+
+// === Enhanced Live Security Monitor Functions ===
+let scanTimer = 150; // 2.5 minutes in seconds
+let scanInterval;
+let activityData = [];
+let currentFilter = 'all';
+
+function initializeLiveSecurityMonitor() {
+    console.log('🔰 Initializing Live Security Monitor...');
+    
+    // Initialize scan timer
+    startScanTimer();
+    
+    // Initialize activity data
+    loadInitialActivityData();
+    
+    // Start real-time updates
+    setInterval(updateSecurityStats, 10000); // Every 10 seconds
+    setInterval(addRandomSecurityEvent, 20000); // Every 20 seconds
+    
+    // Initialize current time for system init
+    updateInitTime();
+    
+    // Setup activity filtering
+    setupActivityFiltering();
+    
+    // Initialize dashboard system activity
+    initializeSystemActivity();
+    
+    console.log('🔰 Live Security Monitor initialized successfully!');
+}
+
+function initializeSystemActivity() {
+    // Set the system initialization time
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('ar', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+    });
+    
+    // Update system init time in the activity feed
+    const systemInitTime = document.getElementById('systemInitTime');
+    if (systemInitTime) {
+        systemInitTime.textContent = timeString;
+    }
+    
+    // Add initial system activity if not exists
+    const activityList = document.getElementById('securityActivityList');
+    if (activityList) {
+        const existingSystemEvent = activityList.querySelector('.activity-event[data-type="system"]');
+        if (existingSystemEvent) {
+            // Update existing event time
+            const eventTime = existingSystemEvent.querySelector('.event-time');
+            if (eventTime) {
+                eventTime.textContent = timeString;
+            }
+        }
+    }
+    
+    // Show initialization notification
+    setTimeout(() => {
+        showSecurityNotification('تم تفعيل مراقب الأمان المباشر بنجاح');
+    }, 1000);
+}
+
+function startScanTimer() {
+    console.log('🔰 Starting security scan timer...');
+    
+    clearInterval(scanInterval);
+    scanTimer = 150; // Reset to 2.5 minutes
+    
+    scanInterval = setInterval(() => {
+        scanTimer--;
+        updateTimerDisplay();
+        
+        if (scanTimer <= 0) {
+            triggerAutomaticScan();
+            scanTimer = 150; // Reset timer
+        }
+    }, 1000);
+    
+    // Initial display update
+    updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(scanTimer / 60);
+    const seconds = scanTimer % 60;
+    const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    const timerDisplay = document.getElementById('timerDisplay');
+    if (timerDisplay) {
+        timerDisplay.textContent = display;
+        
+        // Add urgency color when time is low
+        if (scanTimer <= 30) {
+            timerDisplay.style.color = '#ff4757';
+            timerDisplay.style.animation = 'pulse 1s infinite';
+        } else if (scanTimer <= 60) {
+            timerDisplay.style.color = '#ffa502';
+            timerDisplay.style.animation = '';
+        } else {
+            timerDisplay.style.color = '#00ff88';
+            timerDisplay.style.animation = '';
+        }
+    }
+}
+
+function triggerManualScan() {
+    // Show scanning animation
+    const scanBtn = document.querySelector('.scan-now');
+    if (scanBtn) {
+        scanBtn.style.background = 'rgba(0, 255, 136, 0.3)';
+        scanBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" width="16" height="16" style="animation: spin 1s linear infinite;">
+                <path fill="currentColor" d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
+            </svg>
+            <span>جاري الفحص...</span>
+        `;
+        
+        setTimeout(() => {
+            scanBtn.style.background = '';
+            scanBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <span>فحص الآن</span>
+            `;
+        }, 3000);
+    }
+    
+    // Add scan event to activity
+    addSecurityEvent('scan', 'تم إجراء فحص يدوي شامل', 'نظيف', 'normal');
+    
+    // Reset timer
+    scanTimer = 150;
+    
+    showSecurityNotification('تم بدء الفحص اليدوي بنجاح');
+}
+
+function triggerAutomaticScan() {
+    console.log('🔰 Triggering automatic security scan...');
+    
+    // Add automatic scan event
+    addSecurityEvent('scan', 'فحص تلقائي مجدول مكتمل', 'نظيف', 'normal');
+    
+    // Show notification with scan details
+    showSecurityNotification('تم إجراء الفحص التلقائي - النظام نظيف');
+    
+    // Update scan statistics
+    const scansPerformed = document.getElementById('scansPerformed');
+    if (scansPerformed) {
+        const currentCount = parseInt(scansPerformed.textContent) || 0;
+        scansPerformed.textContent = currentCount + 1;
+    }
+}
+
+function clearSecurityLog() {
+    console.log('🔰 Clearing security activity log...');
+    
+    const activityList = document.getElementById('securityActivityList');
+    if (activityList) {
+        // Keep only system init event
+        const systemEvent = activityList.querySelector('.activity-event[data-type="system"]');
+        const systemEventClone = systemEvent ? systemEvent.cloneNode(true) : null;
+        
+        // Clear the list
+        activityList.innerHTML = '';
+        
+        // Re-add system event if it existed
+        if (systemEventClone) {
+            activityList.appendChild(systemEventClone);
+        }
+        
+        // Add clearing animation effect
+        activityList.style.opacity = '0.5';
+        setTimeout(() => {
+            activityList.style.opacity = '1';
+        }, 300);
+    }
+    
+    // Reset activity data but keep system events
+    activityData = activityData.filter(event => 
+        event.type === 'system' && event.title.includes('تفعيل')
+    );
+    
+    updateTabCounts();
+    showSecurityNotification('تم مسح سجل الأنشطة بنجاح');
+    
+    console.log('🔰 Security activity log cleared successfully');
+}
+
+function openMonitorSettings() {
+    showSecurityNotification('إعدادات المراقب - قريباً');
+}
+
+function updateSecurityStats() {
+    // Update events today
+    const eventsToday = document.getElementById('eventsToday');
+    if (eventsToday) {
+        const count = Math.floor(Math.random() * 20) + 120;
+        eventsToday.textContent = count;
+    }
+    
+    // Update threats blocked
+    const threatsBlocked = document.getElementById('threatsBlocked');
+    if (threatsBlocked) {
+        const count = Math.floor(Math.random() * 10) + 20;
+        threatsBlocked.textContent = count;
+    }
+    
+    // Update system health
+    const systemHealth = document.getElementById('systemHealth');
+    if (systemHealth) {
+        const statuses = ['ممتاز', 'جيد', 'مقبول'];
+        const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+        systemHealth.textContent = randomStatus;
+        
+        // Update color based on status
+        if (randomStatus === 'ممتاز') {
+            systemHealth.style.color = '#00ff88';
+        } else if (randomStatus === 'جيد') {
+            systemHealth.style.color = '#ffa502';
+        } else {
+            systemHealth.style.color = '#ff4757';
+        }
+    }
+    
+    // Update last update time
+    const lastUpdate = document.getElementById('lastUpdate');
+    if (lastUpdate) {
+        const timeOptions = ['منذ ثانيتين', 'منذ دقيقة', 'منذ 30 ثانية', 'الآن'];
+        lastUpdate.textContent = timeOptions[Math.floor(Math.random() * timeOptions.length)];
+    }
+}
+
+function addRandomSecurityEvent() {
+    const eventTypes = [
+        { type: 'scan', title: 'فحص سريع مكتمل', result: 'نظيف', priority: 'normal' },
+        { type: 'threats', title: 'محاولة اختراق محجوبة', result: 'محجوب', priority: 'high' },
+        { type: 'system', title: 'تحديث تعريفات الأمان', result: 'مكتمل', priority: 'normal' },
+        { type: 'scan', title: 'فحص الملفات المؤقتة', result: 'نظيف', priority: 'normal' },
+        { type: 'threats', title: 'رابط مشبوه محجوب', result: 'محجوب', priority: 'medium' }
+    ];
+    
+    const randomEvent = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+    addSecurityEvent(randomEvent.type, randomEvent.title, randomEvent.result, randomEvent.priority);
+}
+
+function addSecurityEvent(type, title, result, priority) {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('ar', { hour: '2-digit', minute: '2-digit' });
+    
+    const event = {
+        type: type,
+        title: title,
+        result: result,
+        priority: priority,
+        time: timeString,
+        timestamp: now.getTime()
+    };
+    
+    activityData.unshift(event);
+    
+    // Keep only last 20 events
+    if (activityData.length > 20) {
+        activityData = activityData.slice(0, 20);
+    }
+    
+    renderActivityEvents();
+    updateTabCounts();
+}
+
+function renderActivityEvents() {
+    const activityList = document.getElementById('securityActivityList');
+    if (!activityList) return;
+    
+    // Filter events based on current filter
+    let filteredEvents = activityData;
+    if (currentFilter !== 'all') {
+        filteredEvents = activityData.filter(event => event.type === currentFilter);
+    }
+    
+    // Clear existing events except system init
+    const systemEvent = activityList.querySelector('[data-type="system"]');
+    activityList.innerHTML = '';
+    if (systemEvent) {
+        activityList.appendChild(systemEvent);
+    }
+    
+    // Add filtered events
+    filteredEvents.forEach((event, index) => {
+        if (event.type === 'system' && event.title.includes('تفعيل')) return; // Skip duplicate system init
+        
+        const eventElement = createEventElement(event);
+        activityList.appendChild(eventElement);
+        
+        // Animate new event
+        if (index === 0) {
+            eventElement.style.opacity = '0';
+            eventElement.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                eventElement.style.transition = 'all 0.3s ease';
+                eventElement.style.opacity = '1';
+                eventElement.style.transform = 'translateY(0)';
+            }, 100);
+        }
+    });
+}
+
+function createEventElement(event) {
+    const eventDiv = document.createElement('div');
+    eventDiv.className = `activity-event ${event.type}`;
+    eventDiv.setAttribute('data-type', event.type);
+    
+    const indicatorClass = `${event.type}-indicator`;
+    let iconPath = '';
+    
+    switch (event.type) {
+        case 'scan':
+            iconPath = 'M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z';
+            break;
+        case 'threats':
+            iconPath = 'M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z';
+            break;
+        default:
+            iconPath = 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z';
+    }
+    
+    eventDiv.innerHTML = `
+        <div class="event-timeline">
+            <div class="event-time">${event.time}</div>
+            <div class="event-indicator ${indicatorClass}">
+                <svg viewBox="0 0 24 24" width="14" height="14">
+                    <path fill="currentColor" d="${iconPath}"/>
+                </svg>
+            </div>
+        </div>
+        <div class="event-content">
+            <div class="event-title">${event.title}</div>
+            <div class="event-details">
+                <span class="event-category ${event.type}">${getEventCategoryText(event.type)}</span>
+                <span class="event-priority ${event.priority}">${event.result || event.priority}</span>
+            </div>
+        </div>
+    `;
+    
+    return eventDiv;
+}
+
+function getEventCategoryText(type) {
+    const categoryMap = {
+        'scan': 'فحص',
+        'threats': 'تهديد',
+        'system': 'النظام'
+    };
+    return categoryMap[type] || type;
+}
+
+function filterActivity(filter) {
+    currentFilter = filter;
+    
+    // Update active tab
+    document.querySelectorAll('.feed-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
+    
+    // Re-render events
+    renderActivityEvents();
+}
+
+function searchActivity(query) {
+    const events = document.querySelectorAll('.activity-event');
+    events.forEach(event => {
+        const title = event.querySelector('.event-title').textContent.toLowerCase();
+        const category = event.querySelector('.event-category').textContent.toLowerCase();
+        
+        if (title.includes(query.toLowerCase()) || category.includes(query.toLowerCase()) || query === '') {
+            event.classList.remove('hidden');
+        } else {
+            event.classList.add('hidden');
+        }
+    });
+}
+
+function updateTabCounts() {
+    const allCount = activityData.length;
+    const threatsCount = activityData.filter(e => e.type === 'threats').length;
+    const scansCount = activityData.filter(e => e.type === 'scan').length;
+    const systemCount = activityData.filter(e => e.type === 'system').length;
+    
+    const counters = {
+        'allCount': allCount,
+        'threatsCount': threatsCount,
+        'scansCount': scansCount,
+        'systemCount': systemCount
+    };
+    
+    Object.keys(counters).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = counters[id];
+        }
+    });
+}
+
+function loadInitialActivityData() {
+    console.log('🔰 Loading initial activity data...');
+    
+    // Get current time in Arabic format
+    const currentTime = getCurrentTime();
+    
+    // Add initial system activity
+    activityData = [
+        { 
+            type: 'system', 
+            title: 'تم تفعيل لوحة قيادة الأمان', 
+            result: 'مكتمل', 
+            priority: 'normal', 
+            time: currentTime, 
+            timestamp: Date.now() 
+        }
+    ];
+    
+    // Add some initial security events for demonstration
+    setTimeout(() => {
+        addSecurityEvent('scan', 'فحص النظام الأولي مكتمل', 'نظيف', 'normal');
+    }, 2000);
+    
+    setTimeout(() => {
+        addSecurityEvent('system', 'تحديث قواعد بيانات الأمان', 'محدث', 'normal');
+    }, 4000);
+    
+    updateTabCounts();
+    console.log('🔰 Initial activity data loaded successfully');
+}
+
+function updateInitTime() {
+    const initTimeElement = document.getElementById('systemInitTime');
+    if (initTimeElement) {
+        const currentTime = getCurrentTime();
+        initTimeElement.textContent = currentTime;
+        console.log(`🔰 System init time updated to: ${currentTime}`);
+    }
+}
+
+function getCurrentTime() {
+    const now = new Date();
+    return now.toLocaleTimeString('ar', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+    });
+}
+
+function setupActivityFiltering() {
+    console.log('🔰 Setting up activity filtering...');
+    
+    // Initialize tab event listeners (they're already in HTML onclick)
+    renderActivityEvents();
+    
+    // Ensure proper display of system activity
+    setTimeout(() => {
+        const systemEvents = document.querySelectorAll('.activity-event[data-type="system"]');
+        systemEvents.forEach(event => {
+            const timeElement = event.querySelector('.event-time');
+            if (timeElement && timeElement.textContent === '--:--') {
+                timeElement.textContent = getCurrentTime();
+            }
+        });
+    }, 500);
+    
+    console.log('🔰 Activity filtering setup completed');
+}
+
+function showSecurityNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'security-notification';
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.9) 0%, rgba(0, 255, 136, 0.8) 100%);
+        color: #000;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        z-index: 10000;
+        box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+        border: 1px solid rgba(0, 255, 136, 0.5);
+        animation: slideInRight 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Add CSS animations for security notifications
+const securityStyle = document.createElement('style');
+securityStyle.textContent = `
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(securityStyle);
+
+// === Enhanced Risk Assessment Matrix Functions ===
+function refreshRiskMatrix() {
+    // Simulate data refresh with animation
+    const refreshBtn = document.querySelector('.risk-refresh-btn');
+    if (refreshBtn) {
+        refreshBtn.style.transform = 'rotate(360deg)';
+        setTimeout(() => {
+            refreshBtn.style.transform = 'rotate(0deg)';
+        }, 600);
+    }
+    
+    // Update risk percentages with random variations
+    updateRiskDistribution();
+    
+    // Update coverage circle
+    updateCoverageCircle();
+    
+    // Update insights
+    updateRiskInsights();
+    
+    // Show refresh notification
+    showRiskNotification('تم تحديث مصفوفة تقييم المخاطر بنجاح');
+}
+
+function updateRiskPeriod(period) {
+    const periodMap = {
+        '24h': 'آخر 24 ساعة',
+        '7d': 'آخر 7 أيام',
+        '30d': 'آخر 30 يوم'
+    };
+    
+    // Simulate different data for different periods
+    const riskData = {
+        '24h': { critical: 12, medium: 28, low: 60 },
+        '7d': { critical: 15, medium: 25, low: 60 },
+        '30d': { critical: 18, medium: 22, low: 60 }
+    };
+    
+    const data = riskData[period] || riskData['30d'];
+    updateRiskBars(data);
+    
+    showRiskNotification(`تم التحديث لفترة: ${periodMap[period]}`);
+}
+
+function updateRiskDistribution() {
+    // Generate realistic risk distribution
+    const criticalRisk = Math.floor(Math.random() * 10) + 10; // 10-20%
+    const mediumRisk = Math.floor(Math.random() * 15) + 20;   // 20-35%
+    const lowRisk = 100 - criticalRisk - mediumRisk;          // Remaining
+    
+    updateRiskBars({ critical: criticalRisk, medium: mediumRisk, low: lowRisk });
+    updateRiskCounts({ critical: criticalRisk, medium: mediumRisk, low: lowRisk });
+}
+
+function updateRiskBars(data) {
+    const criticalBar = document.querySelector('.critical-bar');
+    const mediumBar = document.querySelector('.medium-bar');
+    const lowBar = document.querySelector('.low-bar');
+    
+    const criticalPercentage = document.querySelector('.risk-category.critical .risk-percentage');
+    const mediumPercentage = document.querySelector('.risk-category.medium .risk-percentage');
+    const lowPercentage = document.querySelector('.risk-category.low .risk-percentage');
+    
+    if (criticalBar && mediumBar && lowBar) {
+        // Animate bar widths
+        setTimeout(() => {
+            criticalBar.style.width = `${data.critical}%`;
+            mediumBar.style.width = `${data.medium}%`;
+            lowBar.style.width = `${data.low}%`;
+        }, 100);
+        
+        // Update percentage displays
+        if (criticalPercentage) criticalPercentage.textContent = `${data.critical}%`;
+        if (mediumPercentage) mediumPercentage.textContent = `${data.medium}%`;
+        if (lowPercentage) lowPercentage.textContent = `${data.low}%`;
+    }
+}
+
+function updateRiskCounts(data) {
+    const criticalCount = Math.ceil(data.critical / 5); // Approximate threat count
+    const mediumCount = Math.ceil(data.medium / 4);
+    const lowCount = Math.ceil(data.low / 5);
+    
+    const criticalCountEl = document.querySelector('.risk-category.critical .risk-count');
+    const mediumCountEl = document.querySelector('.risk-category.medium .risk-count');
+    const lowCountEl = document.querySelector('.risk-category.low .risk-count');
+    
+    if (criticalCountEl) criticalCountEl.textContent = `${criticalCount} تهديدات`;
+    if (mediumCountEl) mediumCountEl.textContent = `${mediumCount} تهديدات`;
+    if (lowCountEl) lowCountEl.textContent = `${lowCount} تهديدات`;
+}
+
+function updateCoverageCircle() {
+    const coverageCircle = document.getElementById('coverageCircle');
+    if (!coverageCircle) return;
+    
+    // Calculate total coverage (always near 100% for security)
+    const coverage = Math.floor(Math.random() * 3) + 97; // 97-100%
+    const circumference = 2 * Math.PI * 50; // radius = 50
+    const offset = circumference - (coverage / 100) * circumference;
+    
+    coverageCircle.style.strokeDashoffset = offset;
+    
+    // Update percentage display
+    const coveragePercentage = document.querySelector('.coverage-percentage');
+    if (coveragePercentage) {
+        coveragePercentage.textContent = `${coverage}%`;
+    }
+}
+
+function updateRiskInsights() {
+    // Update trend analysis
+    const trendIndicator = document.querySelector('.trend-indicator');
+    const trends = [
+        { text: '↗ +2.3%', class: 'positive' },
+        { text: '↘ -1.1%', class: 'negative' },
+        { text: '→ 0.0%', class: 'neutral' }
+    ];
+    
+    const randomTrend = trends[Math.floor(Math.random() * trends.length)];
+    if (trendIndicator) {
+        trendIndicator.textContent = randomTrend.text;
+        trendIndicator.className = `trend-indicator ${randomTrend.class}`;
+    }
+    
+    // Update threat forecast
+    const forecastLevel = document.querySelector('.forecast-level');
+    const levels = [
+        { text: 'منخفض', class: 'low' },
+        { text: 'متوسط', class: 'moderate' },
+        { text: 'عالي', class: 'high' }
+    ];
+    
+    const randomLevel = levels[Math.floor(Math.random() * levels.length)];
+    if (forecastLevel) {
+        forecastLevel.textContent = randomLevel.text;
+        forecastLevel.className = `forecast-level ${randomLevel.class}`;
+    }
+    
+    // Update compliance score
+    const complianceValue = document.querySelector('.compliance-value');
+    if (complianceValue) {
+        const score = Math.floor(Math.random() * 10) + 90; // 90-100
+        complianceValue.textContent = `${score}/100`;
+    }
+}
+
+function showRiskNotification(message) {
+    // Create temporary notification
+    const notification = document.createElement('div');
+    notification.className = 'risk-notification';
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 255, 136, 0.9);
+        color: #000;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 2000);
+}
+
+function initializeRiskMatrix() {
+    // Initial data setup
+    updateRiskDistribution();
+    updateCoverageCircle();
+    updateRiskInsights();
+    
+    // Set up periodic updates
+    setInterval(() => {
+        if (Math.random() < 0.3) { // 30% chance every interval
+            updateRiskDistribution();
+        }
+    }, 45000); // Every 45 seconds
+    
+    // Add hover effects for risk categories
+    const riskCategories = document.querySelectorAll('.risk-category');
+    riskCategories.forEach(category => {
+        category.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(8px) scale(1.02)';
+        });
+        
+        category.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0) scale(1)';
+        });
+    });
+}
+
+// Add CSS animations for notifications
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOutRight {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+`;
+document.head.appendChild(style);
+
+// === Enhanced Professional Dashboard Enhancement ===
+// Enhanced DOMContentLoaded event for professional dashboard
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize professional dashboard if elements exist
+    if (document.querySelector('.security-level-container')) {
+        setTimeout(() => {
+            initializeProfessionalDashboard();
+        }, 500);
+    }
+    
+    // Initialize risk assessment matrix
+    if (document.querySelector('.risk-assessment-container')) {
+        setTimeout(() => {
+            initializeRiskMatrix();
+        }, 800);
+    }
+    
+    // Initialize live security monitor
+    if (document.querySelector('.live-security-monitor')) {
+        setTimeout(() => {
+            initializeLiveSecurityMonitor();
+            
+            // Ensure proper initialization of activity display
+            setTimeout(() => {
+                const systemInitTime = document.getElementById('systemInitTime');
+                if (systemInitTime && systemInitTime.textContent === '--:--') {
+                    systemInitTime.textContent = getCurrentTime();
+                }
+                
+                // Check if activity list is empty and populate it
+                const activityList = document.getElementById('securityActivityList');
+                if (activityList && activityList.children.length === 0) {
+                    renderActivityEvents();
+                }
+            }, 500);
+        }, 1000);
+    }
+    
+    // Add global keyboard shortcuts for enhanced features
+    document.addEventListener('keydown', function(e) {
+        // Ctrl+D to toggle dashboard
+        if (e.ctrlKey && e.key === 'd') {
+            e.preventDefault();
+            toggleDashboard();
+        }
+        
+        // Ctrl+R to refresh dashboard stats
+        if (e.ctrlKey && e.key === 'r' && document.querySelector('.security-level-container')) {
+            e.preventDefault();
+            updateEnhancedDashboardStats();
+        }
+        
+        // Ctrl+M to refresh risk matrix
+        if (e.ctrlKey && e.key === 'm' && document.querySelector('.risk-assessment-container')) {
+            e.preventDefault();
+            refreshRiskMatrix();
+        }
+        
+        // Ctrl+S to trigger manual scan
+        if (e.ctrlKey && e.key === 's' && document.querySelector('.live-security-monitor')) {
+            e.preventDefault();
+            triggerManualScan();
+        }
+        
+        // Ctrl+L to clear security log
+        if (e.ctrlKey && e.key === 'l' && document.querySelector('.live-security-monitor')) {
+            e.preventDefault();
+            clearSecurityLog();
+        }
+        
+        // Escape to close any open overlays
+        if (e.key === 'Escape') {
+            const overlays = document.querySelectorAll('.overlay:not([style*="display: none"])');
+            overlays.forEach(overlay => {
+                overlay.style.display = 'none';
+            });
+        }
+    });
+    
+    // Enhanced console logs for professional platform
+    console.log('🔰 CyberGuard Professional Platform Initialized');
+    console.log('🔰 Enhanced Dashboard Active');
+    console.log('🔰 Advanced Risk Assessment Matrix Loaded');
+    console.log('🔰 Live Security Monitor Online');
+    console.log('🔰 Real-time Security Monitoring Enabled');
+    console.log('🔰 25 Advanced Security Tools Ready');
+    console.log('🔰 Professional UI Components Loaded');
+    console.log('🔰 Keyboard Shortcuts: Ctrl+S (Scan), Ctrl+L (Clear Log), Ctrl+M (Risk Matrix)');
+});
