@@ -324,10 +324,48 @@ document.addEventListener('DOMContentLoaded', () => {
         initializeNetworkMonitor();
         loadStoredData();
         initializeTooltips();
+        
+        // Initialize modal close events
+        initializeModalEvents();
     } catch (e) {
         console.error('Error in DOMContentLoaded:', e);
     }
 });
+
+// Initialize modal events
+function initializeModalEvents() {
+    try {
+        // Close modals when clicking outside
+        const platformModal = document.getElementById('platformInfoModal');
+        const developerModal = document.getElementById('developerInfoModal');
+        
+        if (platformModal) {
+            platformModal.addEventListener('click', (e) => {
+                if (e.target === platformModal) {
+                    closePlatformInfo();
+                }
+            });
+        }
+        
+        if (developerModal) {
+            developerModal.addEventListener('click', (e) => {
+                if (e.target === developerModal) {
+                    closeDeveloperInfo();
+                }
+            });
+        }
+        
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePlatformInfo();
+                closeDeveloperInfo();
+            }
+        });
+    } catch (e) {
+        console.error('Error initializing modal events:', e);
+    }
+}
 
 // Initialize tooltips and interactive elements
 function initializeTooltips() {
@@ -2060,6 +2098,25 @@ function closePlatformInfo() {
     }
 }
 
+// Developer Info Modal Functions
+function showDeveloperInfo() {
+    try {
+        const modal = document.getElementById('developerInfoModal');
+        modal.classList.add('show');
+    } catch (e) {
+        console.error('Error showing developer info:', e);
+    }
+}
+
+function closeDeveloperInfo() {
+    try {
+        const modal = document.getElementById('developerInfoModal');
+        modal.classList.remove('show');
+    } catch (e) {
+        console.error('Error closing developer info:', e);
+    }
+}
+
 // Update modal content language
 function updateModalLanguage() {
     try {
@@ -2067,8 +2124,23 @@ function updateModalLanguage() {
         const platformModal = document.getElementById('platformInfoModal');
         if (platformModal) {
             platformModal.querySelectorAll('[data-en][data-ar]').forEach(elem => {
-                elem.textContent = elem.getAttribute(`data-${currentLang}`);
-                elem.innerHTML = elem.getAttribute(`data-${currentLang}`);
+                const newText = elem.getAttribute(`data-${currentLang}`);
+                if (newText) {
+                    elem.textContent = newText;
+                    elem.innerHTML = newText;
+                }
+            });
+        }
+        
+        // Update developer info modal
+        const developerModal = document.getElementById('developerInfoModal');
+        if (developerModal) {
+            developerModal.querySelectorAll('[data-en][data-ar]').forEach(elem => {
+                const newText = elem.getAttribute(`data-${currentLang}`);
+                if (newText) {
+                    elem.textContent = newText;
+                    elem.innerHTML = newText;
+                }
             });
         }
     } catch (e) {

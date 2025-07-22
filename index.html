@@ -52,6 +52,16 @@
                 <button class="lang-btn active" onclick="switchLanguage('ar')">العربية</button>
                 <button class="lang-btn" onclick="switchLanguage('en')">English</button>
             </div>
+            <div class="developer-info-container">
+                <button class="btn developer-info-btn" onclick="showDeveloperInfo()" data-en="Developer Info" data-ar="معلومات المطور">
+                    <svg class="icon" viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="#00ff88" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <circle cx="12" cy="8" r="2" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.6"/>
+                        <path fill="none" stroke="#00ff88" stroke-width="1" opacity="0.4" d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <span data-en="Developer Info" data-ar="معلومات المطور">معلومات المطور</span>
+                </button>
+            </div>
         </div>
         
         <div class="tools-grid">
@@ -414,6 +424,72 @@
         
         <div class="copyright">
             <p data-en="Copyright © Abdessamad Bourkibate - 2025" data-ar="حقوق النشر © عبد الصمد بوركيبات - 2025">حقوق النشر © عبد الصمد بوركيبات - 2025</p>
+        </div>
+    </div>
+    
+    <!-- Developer Info Modal -->
+    <div class="developer-info-modal" id="developerInfoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-en="Developer Information" data-ar="معلومات المطور">معلومات المطور</h3>
+                <span class="close-modal" onclick="closeDeveloperInfo()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="developer-profile">
+                    <div class="developer-avatar">
+                        <svg viewBox="0 0 24 24" width="80" height="80">
+                            <path fill="#00ff88" d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 7.5V9L21 9ZM3 9V7L9 7.5V9L3 9ZM15 10.5V19L13.5 17.5L12 19L10.5 17.5L9 19V10.5L9 8.5C9 7.7 9.7 7 10.5 7L13.5 7C14.3 7 15 7.7 15 8.5V10.5Z"/>
+                        </svg>
+                    </div>
+                    <div class="developer-details">
+                        <h4 data-en="This tool was developed by:" data-ar="تم تطوير هذه الأداة من قبل:">تم تطوير هذه الأداة من قبل:</h4>
+                        <div class="developer-name">
+                            <strong>عبد الصمد بوركيبات</strong><br>
+                            <strong>Abdessamad Bourkibate</strong>
+                        </div>
+                        <div class="developer-credentials">
+                            <p data-en="Expert in Cybersecurity, Researcher in Family Cybersecurity Jurisprudence,<br>Student at Al-Madinah International University - Malaysia (Quranic Sciences),<br>and American University (Computer Science)." data-ar="خبير في الأمن السيبراني، وباحث في فقه الأمن السيبراني الأسري،<br>وطالب بجامعة المدينة العالمية - ماليزيا (علوم القرآن الكريم)،<br>وجامعة الأمريكية (علوم الحاسوب).">خبير في الأمن السيبراني، وباحث في فقه الأمن السيبراني الأسري،<br>وطالب بجامعة المدينة العالمية - ماليزيا (علوم القرآن الكريم)،<br>وجامعة الأمريكية (علوم الحاسوب).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-info">
+                    <h4 data-en="📧 Contact Information" data-ar="📧 معلومات التواصل">📧 معلومات التواصل</h4>
+                    <div class="contact-item">
+                        <span data-en="Email:" data-ar="البريد الإلكتروني للتواصل:">البريد الإلكتروني للتواصل:</span>
+                        <a href="mailto:bourkibate.abdessamad@gmail.com" class="contact-link">bourkibate.abdessamad@gmail.com</a>
+                    </div>
+                </div>
+                
+                <div class="tool-info">
+                    <h4 data-en="🔢 Tool Information" data-ar="🔢 معلومات الأداة">🔢 معلومات الأداة</h4>
+                    <div class="serial-number">
+                        <span data-en="Tool Serial Number:" data-ar="الرقم التسلسلي للأداة:">الرقم التسلسلي للأداة:</span>
+                        <code>Serial Number: 20250721/1.0</code>
+                    </div>
+                </div>
+                
+                <div class="usage-policy">
+                    <h4 data-en="⚠️ Usage Policy" data-ar="⚠️ سياسة الاستخدام">⚠️ سياسة الاستخدام</h4>
+                    <div class="warning-notice">
+                        <p data-en="❗ Important Notice:" data-ar="❗ تنبيه هام:"><strong data-en="❗ Important Notice:" data-ar="❗ تنبيه هام:">❗ تنبيه هام:</strong></p>
+                        <div class="prohibited-actions">
+                            <h5 data-en="Strictly Prohibited:" data-ar="يُمنع منعًا باتًا:">يُمنع منعًا باتًا:</h5>
+                            <ul>
+                                <li data-en="Using this tool for malicious purposes, hacking, or distributing malware." data-ar="استخدام هذه الأداة لأغراض خبيثة أو قرصنة أو نشر برمجيات ضارة.">استخدام هذه الأداة لأغراض خبيثة أو قرصنة أو نشر برمجيات ضارة.</li>
+                                <li data-en="Redistributing or modifying it without written permission from the developer." data-ar="إعادة توزيعها أو تعديلها دون إذن خطي من المطور.">إعادة توزيعها أو تعديلها دون إذن خطي من المطور.</li>
+                                <li data-en="Using it in legally or ethically unauthorized environments." data-ar="استخدامها في بيئات غير مشروعة قانونيًا أو أخلاقيًا.">استخدامها في بيئات غير مشروعة قانونيًا أو أخلاقيًا.</li>
+                            </ul>
+                        </div>
+                        <div class="agreement-notice">
+                            <p data-en="By using this tool, you implicitly agree to fully comply with the terms and conditions of use." data-ar="باستخدامك لهذه الأداة، فإنك توافق ضمنيًا على الالتزام الكامل بشروط وأحكام الاستخدام.">باستخدامك لهذه الأداة، فإنك توافق ضمنيًا على الالتزام الكامل بشروط وأحكام الاستخدام.</p>
+                        </div>
+                        <div class="legal-warning">
+                            <p><strong data-en="Any violation will subject the violator to legal accountability." data-ar="كل انتهاك سيُعرض المخالف للمساءلة القانونية">كل انتهاك سيُعرض المخالف للمساءلة القانونية</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
