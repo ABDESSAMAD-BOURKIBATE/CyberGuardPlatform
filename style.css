@@ -24,100 +24,135 @@ body {
     overflow-x: hidden;
 }
 
-/* Custom Cursor - يظهر فقط على الشاشات الكبيرة */
-@media (min-width: 769px) {
+/* Professional Custom Cursor - Desktop Only */
+@media (min-width: 769px) and (pointer: fine) {
     body {
-        cursor: none;
+        cursor: none !important;
     }
     
-    .custom-cursor {
-        display: block;
+    * {
+        cursor: none !important;
     }
 }
 
 .custom-cursor {
     position: fixed;
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+    z-index: 99999;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: none; /* سيتم تفعيله عبر JavaScript */
+    background: radial-gradient(circle, 
+        rgba(0, 255, 136, 0.8) 0%, 
+        rgba(0, 255, 136, 0.6) 30%, 
+        rgba(0, 255, 136, 0.3) 60%, 
+        transparent 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 136, 0.8),
+        0 0 40px rgba(0, 255, 136, 0.4),
+        inset 0 0 10px rgba(0, 255, 136, 0.6);
+    backdrop-filter: blur(3px);
+    mix-blend-mode: screen;
+}
+
+/* Active state for cursor when initialized */
+.custom-cursor.active {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.custom-cursor::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 10px #00ff88,
+        0 0 20px rgba(0, 255, 136, 0.6);
+    animation: cursorPulse 2s ease-in-out infinite;
+}
+
+.custom-cursor::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 24px;
     height: 24px;
-    border: 3px solid #00ff88;
+    border: 2px solid rgba(0, 255, 136, 0.8);
     border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s ease;
-    box-shadow: 
-        0 0 15px #00ff88, 
-        0 0 30px #00ff88,
-        0 0 45px rgba(0, 255, 136, 0.3);
-    backdrop-filter: blur(2px);
-    display: none; /* مخفي افتراضياً */
+    animation: cursorRing 3s linear infinite;
+}
+
+@keyframes cursorPulse {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.3);
+        opacity: 0.7;
+    }
+}
+
+@keyframes cursorRing {
+    0% { 
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+        opacity: 0.5;
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(1) rotate(360deg);
+        opacity: 0.8;
+    }
 }
 
 .custom-cursor.click {
-    transform: scale(1.8);
-    background: rgba(0, 255, 136, 0.4);
-    border-width: 4px;
+    transform: scale(1.5);
+    background: radial-gradient(circle, 
+        rgba(0, 255, 136, 1) 0%, 
+        rgba(0, 255, 136, 0.8) 30%, 
+        rgba(0, 255, 136, 0.5) 60%, 
+        transparent 100%);
+    box-shadow: 
+        0 0 30px rgba(0, 255, 136, 1),
+        0 0 60px rgba(0, 255, 136, 0.6),
+        inset 0 0 15px rgba(0, 255, 136, 0.8);
 }
 
-/* Animated Particles Background */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 15% 25%, rgba(0, 255, 136, 0.15) 0%, transparent 60%),
-        radial-gradient(circle at 85% 75%, rgba(0, 255, 136, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 45% 10%, rgba(0, 255, 136, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 70% 40%, rgba(0, 255, 136, 0.06) 0%, transparent 35%);
-    pointer-events: none;
-    z-index: -2;
-    animation: particleFloat 20s ease-in-out infinite;
+.custom-cursor.hover {
+    transform: scale(1.2);
+    background: radial-gradient(circle, 
+        rgba(0, 255, 136, 0.9) 0%, 
+        rgba(0, 255, 136, 0.7) 30%, 
+        rgba(0, 255, 136, 0.4) 60%, 
+        transparent 100%);
 }
 
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, rgba(0, 255, 136, 0.3), transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(0, 255, 136, 0.2), transparent),
-        radial-gradient(1px 1px at 90px 40px, rgba(0, 255, 136, 0.4), transparent),
-        radial-gradient(1px 1px at 130px 80px, rgba(0, 255, 136, 0.3), transparent),
-        radial-gradient(2px 2px at 160px 30px, rgba(0, 255, 136, 0.2), transparent);
-    background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: particleMove 15s linear infinite;
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.6;
-}
-
-@keyframes particleFloat {
-    0%, 100% { 
-        transform: translateY(0) rotate(0deg) scale(1);
-        opacity: 0.6;
+/* Interactive Elements Cursor Effects */
+@media (min-width: 769px) and (pointer: fine) {
+    .btn, .lang-btn, .tool-card, .input-field, .textarea-field, 
+    select.input-field, .explain-btn, .copy-btn, .toggle-monitor,
+    .close-modal, .close-explanation, .info-icon, a, button {
+        cursor: none !important;
     }
-    33% { 
-        transform: translateY(-20px) rotate(120deg) scale(1.1);
-        opacity: 0.8;
+    
+    .btn:hover, .lang-btn:hover, .tool-card:hover, 
+    .toggle-monitor:hover, .close-modal:hover, .close-explanation:hover {
+        cursor: none !important;
     }
-    66% { 
-        transform: translateY(10px) rotate(240deg) scale(0.9);
-        opacity: 0.5;
-    }
-}
-
-@keyframes particleMove {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-10px, -10px) rotate(90deg); }
-    50% { transform: translate(10px, -20px) rotate(180deg); }
-    75% { transform: translate(-5px, 10px) rotate(270deg); }
-    100% { transform: translate(0, 0) rotate(360deg); }
 }
 
 .container {
@@ -144,21 +179,64 @@ body::after {
     backdrop-filter: blur(10px);
 }
 
+/* Only particles - NO moving rectangle or shine effects */
 .header::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 136, 0.05) 50%, transparent 70%);
-    animation: headerShine 8s ease-in-out infinite;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 15% 25%, rgba(0, 255, 136, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 85% 75%, rgba(0, 255, 136, 0.10) 0%, transparent 50%),
+        radial-gradient(circle at 45% 10%, rgba(0, 255, 136, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 70% 40%, rgba(0, 255, 136, 0.06) 0%, transparent 35%);
     pointer-events: none;
+    z-index: -2;
+    animation: staticParticleFloat 25s ease-in-out infinite;
+    border-radius: 20px;
 }
 
-@keyframes headerShine {
-    0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 25px 35px, rgba(0, 255, 136, 0.25), transparent),
+        radial-gradient(2px 2px at 45px 75px, rgba(0, 255, 136, 0.15), transparent),
+        radial-gradient(1px 1px at 95px 45px, rgba(0, 255, 136, 0.3), transparent),
+        radial-gradient(1px 1px at 135px 85px, rgba(0, 255, 136, 0.2), transparent),
+        radial-gradient(2px 2px at 165px 35px, rgba(0, 255, 136, 0.15), transparent);
+    background-repeat: repeat;
+    background-size: 200px 120px;
+    animation: particleMove 18s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.5;
+    border-radius: 20px;
+}
+
+@keyframes staticParticleFloat {
+    0%, 100% { 
+        transform: translateY(0) scale(1);
+        opacity: 0.4;
+    }
+    50% { 
+        transform: translateY(-5px) scale(1.02);
+        opacity: 0.6;
+    }
+}
+
+@keyframes particleMove {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-5px, -5px) rotate(90deg); }
+    50% { transform: translate(5px, -10px) rotate(180deg); }
+    75% { transform: translate(-3px, 5px) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
 }
 
 /* Enhanced Header Styles */

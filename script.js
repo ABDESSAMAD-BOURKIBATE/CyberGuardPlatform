@@ -122,32 +122,121 @@ let activeScans = 0;
 let networkTraffic = 0;
 let monitorInterval = null;
 
-// Custom Cursor - يعمل فقط على الشاشات الكبيرة
+// Professional Custom Cursor - Desktop Only
 const cursor = document.getElementById('customCursor');
-const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
 
-if (!isMobile && cursor) {
+// Better desktop detection
+const isDesktop = () => {
+    return window.innerWidth > 768 && 
+           !('ontouchstart' in window) && 
+           !navigator.maxTouchPoints && 
+           window.matchMedia('(pointer: fine)').matches;
+};
+
+// Initialize cursor for desktop only
+if (cursor && isDesktop()) {
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    
+    // Force show cursor with proper styling
+    cursor.style.display = 'block';
+    cursor.style.visibility = 'visible';
+    cursor.style.opacity = '1';
+    
+    // Add active class for immediate styling
+    cursor.classList.add('active');
+    
+    console.log('🖱️ Custom cursor element found and activated!');
+    
+    // Smooth cursor following
+    const animateCursor = () => {
+        const delay = 0.15;
+        cursorX += (mouseX - cursorX) * delay;
+        cursorY += (mouseY - cursorY) * delay;
+        
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        
+        requestAnimationFrame(animateCursor);
+    };
+    
     document.addEventListener('mousemove', e => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+        mouseX = e.clientX - 16; // Center the cursor
+        mouseY = e.clientY - 16;
     });
-    document.addEventListener('mousedown', () => cursor.classList.add('click'));
-    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+    
+    document.addEventListener('mousedown', () => {
+        cursor.classList.add('click');
+    });
+    
+    document.addEventListener('mouseup', () => {
+        cursor.classList.remove('click');
+    });
+    
+    // Add hover effects for interactive elements
+    const updateInteractiveElements = () => {
+        const interactiveElements = document.querySelectorAll('.btn, .lang-btn, .tool-card, .input-field, .textarea-field, select.input-field, .explain-btn, .copy-btn, .toggle-monitor, .close-modal, .close-explanation');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+    };
+    
+    // Initial setup
+    updateInteractiveElements();
+    
+    // Update when DOM changes
+    const observer = new MutationObserver(updateInteractiveElements);
+    observer.observe(document.body, { childList: true, subtree: true });
+    
+    // Start cursor animation
+    animateCursor();
+    
+    console.log('🖱️ Professional custom cursor activated for desktop!');
+} else {
+    console.log('📱 Mobile device detected - using default cursor');
 }
 
-// Mouse Movement Animation for Tool Cards - يعمل فقط على الشاشات الكبيرة
-if (!isMobile) {
-    document.querySelectorAll('.tool-card').forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-            const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
-            card.style.transform = `translateY(-8px) scale(1.02) rotateX(${y * 10}deg) rotateY(${x * 10}deg)`;
+// Enhanced Mouse Movement Animation for Tool Cards - Desktop Only
+if (isDesktop()) {
+    const setupCardAnimations = () => {
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+                const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+                
+                card.style.transform = `translateY(-8px) scale(1.02) rotateX(${y * 8}deg) rotateY(${x * 8}deg)`;
+                card.style.boxShadow = `
+                    0 20px 50px rgba(0, 255, 136, 0.4),
+                    inset 0 0 30px rgba(0, 255, 136, 0.1),
+                    ${x * 20}px ${y * 20}px 40px rgba(0, 255, 136, 0.2)
+                `;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
+                card.style.boxShadow = `
+                    0 8px 32px rgba(0, 255, 136, 0.2),
+                    inset 0 0 20px rgba(0, 255, 136, 0.05)
+                `;
+            });
         });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
-        });
-    });
+    };
+    
+    // Setup after page loads
+    document.addEventListener('DOMContentLoaded', setupCardAnimations);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupCardAnimations);
+    } else {
+        setupCardAnimations();
+    }
 }
 
 // Typing Effect with Sound - محسن لتجنب التقطيع خاصة للنص العربي
