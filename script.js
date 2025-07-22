@@ -1,18 +1,3 @@
-// Dashboard Statistics Tracking
-let dashboardStats = {
-    toolsUsed: 0,
-    scansPerformed: 0,
-    threatsDetected: 0,
-    sessionStartTime: Date.now(),
-    securityLevel: 85,
-    activeTools: 0,
-    riskLevels: {
-        high: 15,
-        medium: 25,
-        low: 60
-    }
-};
-
 // Language data for results
 const resultMessages = {
     ar: {
@@ -5890,120 +5875,34 @@ function toggleDashboard() {
         overlay.classList.add('active');
         updateDashboardStats();
         updateSessionTime();
-        updateSecurityChart();
-        startDashboardTimers();
     }
 }
 
 function updateDashboardStats() {
-    // Update main statistics
     document.getElementById('toolsUsedCount').textContent = dashboardStats.toolsUsed;
     document.getElementById('scansPerformed').textContent = dashboardStats.scansPerformed;
     document.getElementById('threatsDetected').textContent = dashboardStats.threatsDetected;
     
-    // Update session time
-    updateSessionTime();
+    // Update security level indicator
+    const securityProgress = document.getElementById('securityProgress');
+    const securityText = document.getElementById('securityText');
+    const securityLevel = calculateSecurityLevel();
+    securityProgress.style.width = securityLevel + '%';
+    securityText.textContent = securityLevel + '%';
     
-    // Update security level with animation
-    updateSecurityLevel();
+    // Update active tools counter
+    document.getElementById('activeToolsCounter').textContent = document.querySelectorAll('.tool-card.active').length;
 }
 
-function updateSecurityLevel() {
-    const level = dashboardStats.securityLevel;
-    const progressElement = document.querySelector('.security-progress');
-    const levelElement = document.querySelector('.security-level-text');
-    
-    if (progressElement && levelElement) {
-        progressElement.style.width = level + '%';
-        levelElement.textContent = level + '%';
-        
-        // Color coding based on level
-        progressElement.className = 'security-progress';
-        if (level >= 80) {
-            progressElement.classList.add('high');
-        } else if (level >= 60) {
-            progressElement.classList.add('medium');
-        } else {
-            progressElement.classList.add('low');
-        }
-    }
-}
-
-function updateSecurityChart() {
-    const chart = document.getElementById('securityChart');
-    const segments = chart.querySelectorAll('.chart-segment');
-    
-    // Animate chart segments
-    segments.forEach((segment, index) => {
-        const percentages = [dashboardStats.riskLevels.high, dashboardStats.riskLevels.medium, dashboardStats.riskLevels.low];
-        setTimeout(() => {
-            segment.style.setProperty('--percentage', percentages[index] + '%');
-        }, index * 200);
-    });
+function calculateSecurityLevel() {
+    const base = 60;
+    const toolsBonus = Math.min(dashboardStats.toolsUsed * 2, 30);
+    const scansBonus = Math.min(dashboardStats.scansPerformed * 3, 15);
+    return Math.min(base + toolsBonus + scansBonus, 100);
 }
 
 function updateSessionTime() {
-    const elapsed = Math.floor((Date.now() - dashboardStats.sessionStartTime) / 1000);
-    const minutes = Math.floor(elapsed / 60);
-    const seconds = elapsed % 60;
-    const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    
-    const sessionTimeElement = document.getElementById('sessionTime');
-    if (sessionTimeElement) {
-        sessionTimeElement.textContent = timeString;
-    }
-}
-
-function startDashboardTimers() {
-    // Update session time every second
-    setInterval(updateSessionTime, 1000);
-    
-    // Simulate real-time updates
-    setInterval(() => {
-        simulateRealTimeUpdates();
-    }, 5000);
-}
-
-function simulateRealTimeUpdates() {
-    // Randomly update security level
-    if (Math.random() < 0.3) {
-        dashboardStats.securityLevel = Math.min(100, Math.max(60, dashboardStats.securityLevel + (Math.random() - 0.5) * 10));
-        updateSecurityLevel();
-    }
-    
-    // Randomly update threat detection
-    if (Math.random() < 0.2) {
-        dashboardStats.threatsDetected += Math.floor(Math.random() * 3);
-        updateDashboardStats();
-        addActivity(currentLang === 'ar' ? 'تم اكتشاف تهديد جديد' : 'New threat detected');
-    }
-    
-    // Update risk levels
-    if (Math.random() < 0.4) {
-        const total = 100;
-        const variation = 5;
-        dashboardStats.riskLevels.high = Math.max(5, Math.min(30, dashboardStats.riskLevels.high + (Math.random() - 0.5) * variation));
-        dashboardStats.riskLevels.medium = Math.max(15, Math.min(40, dashboardStats.riskLevels.medium + (Math.random() - 0.5) * variation));
-        dashboardStats.riskLevels.low = total - dashboardStats.riskLevels.high - dashboardStats.riskLevels.medium;
-        updateSecurityChart();
-    }
-}
-
-function incrementToolUsage() {
-    dashboardStats.toolsUsed++;
-    dashboardStats.activeTools++;
-    updateDashboardStats();
-}
-
-function incrementScanCount() {
-    dashboardStats.scansPerformed++;
-    updateDashboardStats();
-}
-
-function addThreatDetection(count = 1) {
-    dashboardStats.threatsDetected += count;
-    updateDashboardStats();
-}
+    const now = new Date();
     const sessionTime = Math.floor((now - dashboardStats.sessionStartTime) / 1000);
     const minutes = Math.floor(sessionTime / 60);
     const seconds = sessionTime % 60;
